@@ -63,8 +63,11 @@ public class ConsoleUI {
     private void processInput() {
         System.out.println("Enter command (X - exit, OA1 - open, MB3 - mark: ");
         String line = scanner.nextLine().toUpperCase().trim();
-        if ("X".equals(line))
-            System.exit(0);
+        if ("X".equals(line)) {
+            //System.exit(0);
+            field.quit();
+            return;
+        }
         Matcher matcher = INPUT_PATTERN.matcher(line);
         if (matcher.matches()) {
             int row = matcher.group(2).charAt(0) - 'A';

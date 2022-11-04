@@ -156,7 +156,7 @@ public class Field {
         return start;
     }
 
-    private int computeScore() {
+    public int computeScore() {
         int score = 0;
 
         if (state == FieldState.SOLVED) {
@@ -173,5 +173,9 @@ public class Field {
 
     public int getScore(){
         return score;
+    }
+
+    public void quit() {
+        state=FieldState.FAILED;
     }
 }
