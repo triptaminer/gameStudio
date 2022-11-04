@@ -1,6 +1,6 @@
-package sk.tuke.game.mines;
+package sk.tuke.gamestudio.game.mines;
 
-import sk.tuke.game.mines.core.Field;
+import sk.tuke.gamestudio.game.mines.core.Field;
 
 import java.io.IOException;
 

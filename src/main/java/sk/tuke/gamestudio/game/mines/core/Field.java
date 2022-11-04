@@ -1,6 +1,4 @@
-package sk.tuke.game.mines.core;
-
-import sk.tuke.game.mines.core.HiScores;
+package sk.tuke.gamestudio.game.mines.core;
 
 import java.io.IOException;
 import java.util.Random;
@@ -25,6 +23,7 @@ public class Field {
     private long start;
 
     private HiScores scores;
+    private int score;
 
     public Field(int rowCount, int columnCount, int mineCount) throws IOException {
         if (rowCount * columnCount <= mineCount)
@@ -34,7 +33,7 @@ public class Field {
         this.columnCount = columnCount;
         this.mineCount = mineCount;
         tiles = new Tile[rowCount][columnCount];
-        start = currentTimeMillis()/1000;
+        start = currentTimeMillis() / 1000;
         moves = 0;
         scores = new HiScores();
         generate();
@@ -122,22 +121,24 @@ public class Field {
                 state = FieldState.FAILED;
                 return;
             }
-            Clue c= (Clue) getTile(row,column);
-            if (c.getValue()==0){
-                openNeighborTiles(row,column);
+            Clue c = (Clue) getTile(row, column);
+            if (c.getValue() == 0) {
+                openNeighborTiles(row, column);
             }
 
             if (isSolved()) {
                 state = FieldState.SOLVED;
-                scores.saveScore(0,"Player", (int) (currentTimeMillis()/1000-getActualTime()));
+                //scores.saveScore(0, "Player", (int) (currentTimeMillis() / 1000 - getActualTime()));
+                score = computeScore();
             }
         }
     }
-    private void openNeighborTiles(int r, int c){
+
+    private void openNeighborTiles(int r, int c) {
         for (int i = r - 1; i <= r + 1; i++) {
             for (int j = c - 1; j <= c + 1; j++) {
                 if (i >= 0 && i < rowCount && j >= 0 && j < columnCount) {
-                    openTile(i,j);
+                    openTile(i, j);
                 }
             }
         }
@@ -147,11 +148,30 @@ public class Field {
         return rowCount * columnCount - mineCount == openCount;
     }
 
-    public void addMove(){
+    public void addMove() {
         this.moves++;
     }
 
     public long getActualTime() {
         return start;
+    }
+
+    private int computeScore() {
+        int score = 0;
+
+        if (state == FieldState.SOLVED) {
+
+            score = rowCount * columnCount * 10 -
+                    (int) ((currentTimeMillis() - start) / 1000);
+            if (score < 0) score = 0;
+
+        }
+
+
+        return score;
+    }
+
+    public int getScore(){
+        return score;
     }
 }

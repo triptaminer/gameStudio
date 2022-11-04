@@ -1,4 +1,4 @@
-package sk.tuke.game.kamene.core;
+package sk.tuke.gamestudio.game.kamene.core;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

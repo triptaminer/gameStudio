@@ -1,9 +1,9 @@
-package sk.tuke.game.mines;
+package sk.tuke.gamestudio.game.mines;
 
-import sk.tuke.game.mines.core.Clue;
-import sk.tuke.game.mines.core.Field;
-import sk.tuke.game.mines.core.FieldState;
-import sk.tuke.game.mines.core.Tile;
+import sk.tuke.gamestudio.game.mines.core.Clue;
+import sk.tuke.gamestudio.game.mines.core.Field;
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+import sk.tuke.gamestudio.game.mines.core.Tile;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

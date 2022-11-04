@@ -1,4 +1,4 @@
-package sk.tuke.game.mines.core;
+package sk.tuke.gamestudio.game.mines.core;
 
 import java.io.File;
 import java.io.FileWriter;

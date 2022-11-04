@@ -1,7 +1,7 @@
-package sk.tuke.game.kamene.consoleui;
+package sk.tuke.gamestudio.game.kamene.consoleui;
 
-import sk.tuke.game.kamene.core.FieldState;
-import sk.tuke.game.kamene.core.Game;
+import sk.tuke.gamestudio.game.kamene.core.FieldState;
+import sk.tuke.gamestudio.game.kamene.core.Game;
 
 import java.io.IOException;
 import java.util.Scanner;

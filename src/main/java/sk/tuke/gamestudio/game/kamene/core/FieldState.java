@@ -1,4 +1,4 @@
-package sk.tuke.game.kamene.core;
+package sk.tuke.gamestudio.game.kamene.core;
 
 public enum FieldState {
     PLAYING, SOLVED

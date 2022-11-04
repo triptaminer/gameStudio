@@ -1,4 +1,4 @@
-package sk.tuke.game.mines.core;
+package sk.tuke.gamestudio.game.mines.core;
 
 public class Clue extends Tile {
     private final int value;

@@ -1,7 +1,7 @@
-package sk.tuke.game.kamene;
+package sk.tuke.gamestudio.game.kamene;
 
-import sk.tuke.game.kamene.consoleui.ConsoleUI;
-import sk.tuke.game.kamene.core.Game;
+import sk.tuke.gamestudio.game.kamene.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.game.kamene.core.Game;
 
 import java.io.IOException;
 
