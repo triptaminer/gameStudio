@@ -1,4 +1,4 @@
-package sk.tuke.game.kamene.core;
+package sk.tuke.game.mines.core;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +19,7 @@ public class HiScores {
 
     //TODO split to separate class (or inteface to support some sql engine later?)
     public void loadScores() throws IOException {
-        File f = new File("scores.csv");
+        File f = new File("mines-scores.csv");
 //TODO fix fileNotFound
         Scanner reader = new Scanner(f);
 

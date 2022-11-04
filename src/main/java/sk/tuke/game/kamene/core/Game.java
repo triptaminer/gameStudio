@@ -1,5 +1,6 @@
 package sk.tuke.game.kamene.core;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,14 +38,14 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     generate();
 }
 
-    public Game() {
+    public Game() throws IOException {
         long timestamp = currentTimeMillis()/1000;
 
         tiles = new HashMap<String, Integer>();
         userMoves=0;
         startTime=timestamp;
         actualTime=0;
-        //scores=new HiScores();
+        scores=new HiScores();
 
     }
 
@@ -64,14 +65,12 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         tiles.put((rowCount - 1) + "x" + (columnCount - 1), 0);
 
         //shuffle
+        //int shuffleCount=2;// :DDD
         int shuffleCount=150;
         for (int i = 0; i < shuffleCount; i++) {
             String[] empty=getEmpty().toString().replace("[","").replace("]","").split("x");
             moveShuffle(Integer.parseInt(empty[0]),Integer.parseInt(empty[1]));
         }
-
-
-
     }
 
 
@@ -108,7 +107,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         updateTimer();
         if (isSolved()) {
             state = FieldState.SOLVED;
-            //finishTimer()
+            //scores.saveScore(category,);
         }
     }
 
@@ -116,8 +115,12 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         long current = currentTimeMillis()/1000;
         actualTime=current-startTime;
     }
+
     public String getTimer(){
-        String t= new SimpleDateFormat("D:HH-mm:ss").format(new Date(actualTime*1000));
+    return niceTimer(actualTime*1000);
+    }
+    public String niceTimer(long timestamp){
+        String t= new SimpleDateFormat("D:HH-mm:ss").format(new Date(timestamp));
         String minutes=t.split("-")[1];
         int days=Integer.parseInt(t.split("-")[0].split(":")[0])-1;
         String daysText=days>0? days +"d ":"";

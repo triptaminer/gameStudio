@@ -1,6 +1,11 @@
 package sk.tuke.game.mines.core;
 
+import sk.tuke.game.mines.core.HiScores;
+
+import java.io.IOException;
 import java.util.Random;
+
+import static java.lang.System.currentTimeMillis;
 
 public class Field {
     private final int rowCount;
@@ -15,7 +20,13 @@ public class Field {
 
     private int openCount;
 
-    public Field(int rowCount, int columnCount, int mineCount) {
+    private int moves;
+
+    private long start;
+
+    private HiScores scores;
+
+    public Field(int rowCount, int columnCount, int mineCount) throws IOException {
         if (rowCount * columnCount <= mineCount)
             throw new IllegalArgumentException("Invalid number of mines in the field");
 
@@ -23,6 +34,9 @@ public class Field {
         this.columnCount = columnCount;
         this.mineCount = mineCount;
         tiles = new Tile[rowCount][columnCount];
+        start = currentTimeMillis()/1000;
+        moves = 0;
+        scores = new HiScores();
         generate();
     }
 
@@ -102,6 +116,7 @@ public class Field {
         if (tile.getState() == TileState.CLOSED) {
             tile.setState(TileState.OPEN);
             openCount++;
+            addMove();
 
             if (tile instanceof Mine) {
                 state = FieldState.FAILED;
@@ -112,8 +127,10 @@ public class Field {
                 openNeighborTiles(row,column);
             }
 
-            if (isSolved())
+            if (isSolved()) {
                 state = FieldState.SOLVED;
+                scores.saveScore(0,"Player", (int) (currentTimeMillis()/1000-getActualTime()));
+            }
         }
     }
     private void openNeighborTiles(int r, int c){
@@ -128,5 +145,13 @@ public class Field {
 
     private boolean isSolved() {
         return rowCount * columnCount - mineCount == openCount;
+    }
+
+    public void addMove(){
+        this.moves++;
+    }
+
+    public long getActualTime() {
+        return start;
     }
 }
