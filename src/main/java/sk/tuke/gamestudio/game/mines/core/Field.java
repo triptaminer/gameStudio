@@ -33,10 +33,10 @@ public class Field {
         this.columnCount = columnCount;
         this.mineCount = mineCount;
         tiles = new Tile[rowCount][columnCount];
-        start = currentTimeMillis() / 1000;
         moves = 0;
         scores = new HiScores();
         generate();
+        start = currentTimeMillis();
     }
 
     private void generate() {
@@ -158,24 +158,19 @@ public class Field {
 
     public int computeScore() {
         int score = 0;
-
         if (state == FieldState.SOLVED) {
-
             score = rowCount * columnCount * 10 -
                     (int) ((currentTimeMillis() - start) / 1000);
             if (score < 0) score = 0;
-
         }
-
-
         return score;
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 
     public void quit() {
-        state=FieldState.FAILED;
+        state = FieldState.FAILED;
     }
 }

@@ -1,9 +1,13 @@
 package sk.tuke.gamestudio;
 
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.mines.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
+import sk.tuke.gamestudio.services.ScoreService;
+import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class GameStudioConsole {
@@ -28,7 +32,8 @@ public class GameStudioConsole {
             switch (line.toUpperCase()) {
                 case "M":
                     System.out.println("Starting Minesweeper...");
-                    Field field = new Field(8, 8, 10);
+//                    Field field = new Field(8, 8, 10);
+                    Field field = new Field(8, 8, 1);
                     ConsoleUI ui = new ConsoleUI(field);
                     ui.play();
 
@@ -85,8 +90,9 @@ public class GameStudioConsole {
 
     }
     private static void processScore(String gameName, String userName, int score){
-
-
-
+        System.out.println("Congrats "+userName+", you got "+score+"pts in "+gameName);
+//        addScore(
+//                new Score(0, gameName, userName, score, new Date())
+//        );
     }
 }
