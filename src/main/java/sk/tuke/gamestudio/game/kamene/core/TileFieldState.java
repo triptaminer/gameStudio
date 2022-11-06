@@ -1,5 +1,5 @@
 package sk.tuke.gamestudio.game.kamene.core;
 
-public enum FieldState {
+public enum TileFieldState {
     PLAYING, SOLVED
 }

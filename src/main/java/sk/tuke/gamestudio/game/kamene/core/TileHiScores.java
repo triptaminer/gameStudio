@@ -5,10 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class HiScores {
+public class TileHiScores {
 
     List<Map<Integer,String>> scores ;
-    public HiScores() throws IOException {
+    public TileHiScores() throws IOException {
         scores = new ArrayList<>();
         loadScores();
     }

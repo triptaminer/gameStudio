@@ -7,4 +7,10 @@ CREATE TABLE score(
     played_at TIMESTAMP NOT NULL
 );
 
-
+CREATE TABLE comments(
+    id int generated always as identity,
+    game VARCHAR(64) NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    text TEXT NOT NULL,
+    commented_at TIMESTAMP NOT NULL
+);

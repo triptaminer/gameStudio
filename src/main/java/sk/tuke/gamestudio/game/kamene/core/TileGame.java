@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
 
-public class Game {
+public class TileGame {
     private int rowCount;
 
     private int columnCount;
 
-    private FieldState state = FieldState.PLAYING;
+    private TileFieldState state = TileFieldState.PLAYING;
 
     private final Map<String, Integer> tiles;
 
@@ -28,7 +28,7 @@ public class Game {
 
     private int category;
 
-    public HiScores scores;
+    public TileHiScores scores;
 
 public void setGameProperties(int rowCount, int columnCount, int category){
     this.rowCount = rowCount;
@@ -38,14 +38,14 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     generate();
 }
 
-    public Game() throws IOException {
+    public TileGame() throws IOException {
         long timestamp = currentTimeMillis()/1000;
 
         tiles = new HashMap<String, Integer>();
         userMoves=0;
         startTime=timestamp;
         actualTime=0;
-        scores=new HiScores();
+        scores=new TileHiScores();
 
     }
 
@@ -82,7 +82,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         return columnCount;
     }
 
-    public FieldState getState() {
+    public TileFieldState getState() {
         return state;
     }
 
@@ -106,7 +106,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         userMoves++;
         updateTimer();
         if (isSolved()) {
-            state = FieldState.SOLVED;
+            state = TileFieldState.SOLVED;
             //scores.saveScore(category,);
         }
     }

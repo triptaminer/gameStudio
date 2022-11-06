@@ -1,16 +1,16 @@
 package sk.tuke.gamestudio.game.kamene.consoleui;
 
-import sk.tuke.gamestudio.game.kamene.core.FieldState;
-import sk.tuke.gamestudio.game.kamene.core.Game;
+import sk.tuke.gamestudio.game.kamene.core.TileFieldState;
+import sk.tuke.gamestudio.game.kamene.core.TileGame;
 
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConsoleUI {
-    private Game game;
-    private final Controls controls;
+public class TileConsoleUI {
+    private TileGame game;
+    private final TileControls controls;
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -23,9 +23,9 @@ public class ConsoleUI {
         EASY_3X3, MEDIUM_4X4, HARD_5X5, CUSTOM_SIZE, BACK
     }
 
-    public ConsoleUI(Game game) {
+    public TileConsoleUI(TileGame game) {
         this.game = game;
-        controls = new Controls();
+        controls = new TileControls();
 
     }
 
@@ -37,7 +37,7 @@ public class ConsoleUI {
                 //we are leaving aa game
                 return false;
             }
-        } while (game.getState() == FieldState.PLAYING);
+        } while (game.getState() == TileFieldState.PLAYING);
         printGame();
         saveNickname();
 

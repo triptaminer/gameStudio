@@ -1,15 +1,15 @@
 package sk.tuke.gamestudio.game.kamene;
 
-import sk.tuke.gamestudio.game.kamene.consoleui.ConsoleUI;
-import sk.tuke.gamestudio.game.kamene.core.Game;
+import sk.tuke.gamestudio.game.kamene.consoleui.TileConsoleUI;
+import sk.tuke.gamestudio.game.kamene.core.TileGame;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Game game = new Game();
-        ConsoleUI ui = new ConsoleUI(game);
+        TileGame game = new TileGame();
+        TileConsoleUI ui = new TileConsoleUI(game);
 //        ui.playGame();
         ui.Menu();
     }

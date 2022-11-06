@@ -3,11 +3,11 @@ package sk.tuke.gamestudio.game.kamene.consoleui;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Controls {
+public class TileControls {
 
     Map<String, Integer> controls = new HashMap<>();
 
-    Controls() {
+    TileControls() {
         controls.put("w",0);
         controls.put("a",1);
         controls.put("s",2);

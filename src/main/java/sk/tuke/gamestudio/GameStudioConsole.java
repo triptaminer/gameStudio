@@ -1,6 +1,8 @@
 package sk.tuke.gamestudio;
 
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.game.kamene.consoleui.TileConsoleUI;
+import sk.tuke.gamestudio.game.kamene.core.TileGame;
 import sk.tuke.gamestudio.game.mines.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.services.ScoreService;
@@ -34,13 +36,16 @@ public class GameStudioConsole {
                     System.out.println("Starting Minesweeper...");
 //                    Field field = new Field(8, 8, 10);
                     Field field = new Field(8, 8, 1);
-                    ConsoleUI ui = new ConsoleUI(field);
-                    ui.play();
+                    ConsoleUI uiMine = new ConsoleUI(field);
+                    uiMine.play();
 
                     processScore("Mines",playerName,field.computeScore());
                     break;
                 case "T":
                     System.out.println("Starting Tiles...");
+                    TileGame game = new TileGame();
+                    TileConsoleUI uiTile = new TileConsoleUI(game);
+                    uiTile.Menu();
                     break;
                 case "X":
                     System.out.println("Exiting...");
