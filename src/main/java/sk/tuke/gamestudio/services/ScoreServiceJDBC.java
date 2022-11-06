@@ -3,10 +3,8 @@ package sk.tuke.gamestudio.services;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreServiceJDBC implements ScoreService{
@@ -29,32 +27,55 @@ public class ScoreServiceJDBC implements ScoreService{
     @Override
     public void addScore(Score score) {
 
-        final String STATEMENT="insert into score (game,  username, points, played_at) values (?, ?, ?, ?)";
+        final String STATEMENT_ADD_SCORE = "INSERT INTO score VALUES (?, ?, ?, ?)";
 
-        try{
-            var connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
-            var statement= connection.prepareStatement(STATEMENT);
-
+        try(
+                Connection connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(STATEMENT_ADD_SCORE)
+        )
+        {
             statement.setString(1, score.getGame());
-            statement.setString(2, score.getUser());
+            statement.setString(2, score.getUsername());
             statement.setInt(3, score.getPoints());
-            statement.setTimestamp(4, new Timestamp(score.getPlayedAt().getTime()));
-            statement.execute();
+            statement.setTimestamp(4,new Timestamp(score.getPlayedAt().getTime()));
+            statement.executeUpdate();
 
-        }
-         catch (SQLException e) {
+        }catch (SQLException e){
             throw new ServiceException();
         }
-
     }
 
     @Override
-    public List<Score> getBestScores(String gameName) {
-        return null;
+    public List<Score> getBestScores(String game) {
+        final String STATEMENT_BEST_SCORES = "SELECT game, username, points, played_at FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
+
+        try( Connection connection =DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(STATEMENT_BEST_SCORES)
+        )
+        {
+            statement.setString(1,game);
+            try(ResultSet rs = statement.executeQuery()){
+                ArrayList scores= new ArrayList<Score>();
+                while(rs.next()) {
+                    scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
+                }
+                return scores;
+            }
+        }catch (SQLException e) {
+            throw new ServiceException(e);
+        }
     }
+
 
     @Override
     public void reset() {
-
-    }
-}
+        final String STATEMENT_RESET = "DELETE FROM score";
+        try(Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            Statement statement = connection.createStatement()
+        )
+        {
+            statement.executeUpdate(STATEMENT_RESET);
+        }catch(SQLException e){
+            throw new ServiceException(e);
+        }
+    }}

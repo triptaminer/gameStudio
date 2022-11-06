@@ -6,17 +6,17 @@ public class Score {
 
     private int id;
     private String game;
-    private String user;
+    private String username;
     private int points;
     private Date playedAt;
 
     public Score() {
     }
 
-    public Score(int id, String game, String user, int points, Date playedAt) {
-        this.id = id;
+    public Score(String game, String username, int points, Date playedAt) {
+//        this.id = id;
         this.game = game;
-        this.user = user;
+        this.username = username;
         this.points = points;
         this.playedAt = playedAt;
     }
@@ -29,12 +29,12 @@ public class Score {
         this.game = game;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public int getPoints() {
@@ -53,5 +53,15 @@ public class Score {
         this.playedAt = playedAt;
     }
 
+        @Override
+        public String toString() {
+            return "Score{" +
+                    "game='" + game + '\'' +
+                    ", username='" + username + '\'' +
+                    ", points=" + points +
+                    ", playedAt=" + playedAt +
+                    '}';
+        }
 
-}
+
+    }
