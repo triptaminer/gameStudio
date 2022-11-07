@@ -2,7 +2,9 @@ package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
+import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,24 +27,33 @@ public class ScoreServiceJDBC implements ScoreService{
 
 
     @Override
-    public void addScore(Score score) {
+    public void addScore(Score score) throws FileNotFoundException, SQLException {
 
         final String STATEMENT_ADD_SCORE = "INSERT INTO score VALUES (?, ?, ?, ?)";
 
-        try(
-                Connection connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
-                PreparedStatement statement = connection.prepareStatement(STATEMENT_ADD_SCORE)
-        )
-        {
-            statement.setString(1, score.getGame());
-            statement.setString(2, score.getUsername());
-            statement.setInt(3, score.getPoints());
-            statement.setTimestamp(4,new Timestamp(score.getPlayedAt().getTime()));
-            statement.executeUpdate();
+        PostgresDirectConnector connection=new PostgresDirectConnector();
 
-        }catch (SQLException e){
-            throw new ServiceException();
-        }
+
+        connection.setQuery(
+                STATEMENT_ADD_SCORE,
+                new String[][]{
+                        {score.getGame(),score.getUsername(),String.valueOf(score.getPoints()),new Timestamp(score.getPlayedAt().getTime()).toString()}
+                }
+        );
+//        try(
+//                Connection connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
+//                PreparedStatement statement = connection.prepareStatement(STATEMENT_ADD_SCORE)
+//        )
+//        {
+//            statement.setString(1, score.getGame());
+//            statement.setString(2, score.getUsername());
+//            statement.setInt(3, score.getPoints());
+//            statement.setTimestamp(4,new Timestamp(score.getPlayedAt().getTime()));
+//            statement.executeUpdate();
+//
+//        }catch (SQLException e){
+//            throw new ServiceException();
+//        }
     }
 
     @Override

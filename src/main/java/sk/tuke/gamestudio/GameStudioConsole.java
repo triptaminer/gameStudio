@@ -10,7 +10,9 @@ import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.services.ScoreService;
 import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -18,7 +20,9 @@ public class GameStudioConsole {
 
     private static String playerName;
 
-    public static void main(String[] args) throws IOException {
+    private static final ScoreService scoreService = new ScoreServiceJDBC();
+
+    public static void main(String[] args) throws IOException, SQLException {
 
         Scanner scanner=new Scanner(System.in);
 
@@ -103,10 +107,10 @@ public class GameStudioConsole {
         }while (isWrongName);
 
     }
-    private static void processScore(String gameName, String userName, int score){
+    private static void processScore(String gameName, String userName, int score) throws SQLException, FileNotFoundException {
         System.out.println("Congrats "+userName+", you got "+score+"pts in "+gameName);
-//        addScore(
-//                new Score(0, gameName, userName, score, new Date())
-//        );
+        scoreService.addScore(
+                new Score(gameName, userName, score, new Date())
+        );
     }
 }

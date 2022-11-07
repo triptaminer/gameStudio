@@ -5,6 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import sk.tuke.gamestudio.entity.Score;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class ScoreServiceTest {
@@ -12,7 +14,7 @@ public class ScoreServiceTest {
     private final ScoreService scoreService = new ScoreServiceJDBC();
 
     @Test
-    public void testReset(){
+    public void testReset() throws SQLException, FileNotFoundException {
         scoreService.addScore(new Score("mines", "Feri", 200, new Date()));
         assertTrue(scoreService.getBestScores("mines").size()>0);
         scoreService.addScore(new Score("tiles", "Feri", 200, new Date()));
