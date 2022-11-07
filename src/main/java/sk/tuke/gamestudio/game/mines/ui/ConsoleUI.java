@@ -106,7 +106,7 @@ public class ConsoleUI {
         while (true) {
             switch (showMenu()) {
                 //TODO: save/load game state
-//            case CONTINUE:
+//             case CONTINUE:
 //                Game game = new Game(gameState);
 //                playGame();
 //                break;
