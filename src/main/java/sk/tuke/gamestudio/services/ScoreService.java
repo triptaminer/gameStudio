@@ -18,7 +18,7 @@ public interface ScoreService {
      * @param gameName Name of the game
      * @return List&lt;Score&gt;
      */
-    List<Score> getBestScores(String gameName);
+    List<Score> getBestScores(String gameName) throws FileNotFoundException, SQLException;
 
     /**
      * deletes all scores from storage
