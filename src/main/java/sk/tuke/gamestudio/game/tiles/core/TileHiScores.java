@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.kamene.core;
+package sk.tuke.gamestudio.game.tiles.core;
 
 import java.io.File;
 import java.io.FileWriter;

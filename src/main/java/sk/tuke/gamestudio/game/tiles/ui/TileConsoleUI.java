@@ -1,7 +1,7 @@
-package sk.tuke.gamestudio.game.kamene.consoleui;
+package sk.tuke.gamestudio.game.tiles.ui;
 
-import sk.tuke.gamestudio.game.kamene.core.TileFieldState;
-import sk.tuke.gamestudio.game.kamene.core.TileGame;
+import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
+import sk.tuke.gamestudio.game.tiles.core.TileGame;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,10 +15,12 @@ public class TileConsoleUI {
     private Scanner scanner = new Scanner(System.in);
 
     private static final Pattern INPUT_PATTERN = Pattern.compile("[a-zA-Z0-9]*");
+
     enum Option {
-//        CONTINUE, NEW_GAME, HISCORES, EXIT
+        //        CONTINUE, NEW_GAME, HISCORES, EXIT
         NEW_GAME, HISCORES, EXIT
     }
+
     enum OptionGame {
         EASY_3X3, MEDIUM_4X4, HARD_5X5, CUSTOM_SIZE, BACK
     }
@@ -33,7 +35,7 @@ public class TileConsoleUI {
     public boolean playGame() throws IOException {
         do {
             printGame();
-            if(!processInput()){
+            if (!processInput()) {
                 //we are leaving aa game
                 return false;
             }
@@ -45,14 +47,14 @@ public class TileConsoleUI {
     }
 
     private void printGame() {
-        System.out.println(game.getState()+" "+ game.getTimer());
+        System.out.println(game.getState() + " " + game.getTimer());
 
         System.out.println();
         for (int row = 0; row < game.getRowCount(); row++) {
             for (int column = 0; column < game.getColumnCount(); column++) {
-                int value = game.getTile(row,column);
+                int value = game.getTile(row, column);
 
-                System.out.printf("%3s",value>0?value:" ");
+                System.out.printf("%3s", value > 0 ? value : " ");
 
             }
             System.out.println();
@@ -72,34 +74,35 @@ public class TileConsoleUI {
         Matcher matcher = INPUT_PATTERN.matcher(line);
         if (matcher.matches()) {
 
-            int direction= controls.translate(line);
-            if(direction==-1){
+            int direction = controls.translate(line);
+            if (direction == -1) {
                 System.err.println("Bad input");
                 return false;
             }
 
-            String emptyTile= game.getEmpty().toString().replace("[","").replace("]","");
+            String emptyTile = game.getEmpty().toString().replace("[", "").replace("]", "");
 
-            int row= Integer.parseInt(emptyTile.split("x")[0]);
-            int column= Integer.parseInt(emptyTile.split("x")[1]);
+            int row = Integer.parseInt(emptyTile.split("x")[0]);
+            int column = Integer.parseInt(emptyTile.split("x")[1]);
 
-            game.moveTile(row,column,direction);
+            game.moveTile(row, column, direction);
 
         } else
             System.err.println("Bad input");
         return true;
     }
-private void saveNickname(){
-    System.out.println("Congratulations! You have solved puzzle in "+ game.getTimer()+"\n"
-    +"Please enter your nickname:");
-    String name = scanner.nextLine().toLowerCase().trim();
-    game.scores.saveScore(game.getCategory(),name, game.getActualTime());
-    try {
-        game.scores.saveScores();
-    } catch (IOException e) {
-        throw new RuntimeException(e);
+
+    private void saveNickname() {
+        System.out.println("Congratulations! You have solved puzzle in " + game.getTimer() + "\n"
+                + "Please enter your nickname:");
+        String name = scanner.nextLine().toLowerCase().trim();
+        game.scores.saveScore(game.getCategory(), name, game.getActualTime());
+        try {
+            game.scores.saveScores();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
     public void Menu() throws IOException {
         while (true) {
@@ -122,10 +125,11 @@ private void saveNickname(){
         }
 
     }
+
     public Option showMenu() {
         System.out.println("Menu.");
         for (var option : Option.values()) {
-            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_"," "));
+            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_", " "));
         }
         System.out.println("-----------------------------------------------");
 
@@ -143,6 +147,7 @@ private void saveNickname(){
 
 
     }
+
     public void chooseLevel() throws IOException {
         while (true) {
             switch (showLevel()) {
@@ -151,11 +156,11 @@ private void saveNickname(){
                     playGame();
                     break;
                 case MEDIUM_4X4:
-                    game.setGameProperties(4, 4,1);
+                    game.setGameProperties(4, 4, 1);
                     playGame();
                     break;
                 case HARD_5X5:
-                    game.setGameProperties(5, 5,2);
+                    game.setGameProperties(5, 5, 2);
                     playGame();
                     break;
                 case CUSTOM_SIZE:
@@ -174,13 +179,14 @@ private void saveNickname(){
         int rows = Integer.parseInt(scanner.nextLine().trim());
         System.out.println("Enter number of columns:");
         int cols = Integer.parseInt(scanner.nextLine().trim());
-        game.setGameProperties(rows, cols,3);
+        game.setGameProperties(rows, cols, 3);
         playGame();
     }
+
     public OptionGame showLevel() {
         System.out.println("Choose level.");
         for (var option : OptionGame.values()) {
-            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_"," "));
+            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_", " "));
         }
         System.out.println("-----------------------------------------------");
 
@@ -217,7 +223,7 @@ private void saveNickname(){
                 case BACK:
 //TODO how to go back?
                     break;
-           }
+            }
         }
 
     }
@@ -225,7 +231,7 @@ private void saveNickname(){
     public OptionGame showHiscores() {
         System.out.println("Hiscores.");
         for (var option : OptionGame.values()) {
-            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_"," "));
+            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_", " "));
         }
         System.out.println("-----------------------------------------------");
 
@@ -246,16 +252,16 @@ private void saveNickname(){
 
     private void viewLevel(int i) {
         System.out.println("HiScores:");
-        game.scores.getHiScores(i).forEach((integer, s) ->{
-            System.out.printf("%15s%15s%n",s,game.niceTimer(integer*1000));
+        game.scores.getHiScores(i).forEach((integer, s) -> {
+            System.out.printf("%15s%15s%n", s, game.niceTimer(integer * 1000));
         });
 
         //TODO apply findPersonByName() from register?
         System.out.println("\n");
-        do{
+        do {
             System.out.println("Enter x for exit:");
-        }while( !scanner.nextLine().equalsIgnoreCase("x"));
-            System.out.println("\n\n\n\n\n");
+        } while (!scanner.nextLine().equalsIgnoreCase("x"));
+        System.out.println("\n\n\n\n\n");
     }
 
 

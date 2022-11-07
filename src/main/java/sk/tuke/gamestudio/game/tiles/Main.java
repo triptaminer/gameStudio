@@ -1,7 +1,7 @@
-package sk.tuke.gamestudio.game.kamene;
+package sk.tuke.gamestudio.game.tiles;
 
-import sk.tuke.gamestudio.game.kamene.consoleui.TileConsoleUI;
-import sk.tuke.gamestudio.game.kamene.core.TileGame;
+import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
+import sk.tuke.gamestudio.game.tiles.core.TileGame;
 
 import java.io.IOException;
 

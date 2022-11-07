@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.lights.consoleui;
+package sk.tuke.gamestudio.game.lights.ui;
 
 import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
@@ -19,9 +19,10 @@ public class LightsConsoleUI {
     private static final Pattern INPUT_PATTERN = Pattern.compile("([A-I])([1-99])");
 
     enum Option {
-//        CONTINUE, NEW_GAME, HISCORES, EXIT
+        //        CONTINUE, NEW_GAME, HISCORES, EXIT
         NEW_GAME, HISCORES, EXIT
     }
+
     enum OptionGame {
         EASY_3X3, MEDIUM_4X4, HARD_5X5, CUSTOM_SIZE, BACK
     }
@@ -36,7 +37,7 @@ public class LightsConsoleUI {
     public boolean playGame() throws IOException {
         do {
             printGame();
-            if(!processInput()){
+            if (!processInput()) {
                 //we are leaving aa game
                 return false;
             }
@@ -48,14 +49,20 @@ public class LightsConsoleUI {
     }
 
     private void printGame() {
-        System.out.println(game.getState()+" "+ game.getTimer());
+        System.out.println(game.getState() + " " + game.getTimer());
+        System.out.print(" ");
+        for (int column = 0; column < game.getColumnCount(); column++) {
+            System.out.print("  ");
+            System.out.print(column + 1);
+        }
 
         System.out.println();
         for (int row = 0; row < game.getRowCount(); row++) {
+            System.out.print((char) (row + 'A'));
             for (int column = 0; column < game.getColumnCount(); column++) {
-                boolean value = game.getTile(row,column);
+                boolean value = game.getTile(row, column);
 
-                System.out.printf("%3s",value?"O":".");
+                System.out.printf("%3s", value ? "O" : ".");
 
             }
             System.out.println();
@@ -73,13 +80,15 @@ public class LightsConsoleUI {
         }
         Matcher matcher = INPUT_PATTERN.matcher(line);
         if (matcher.matches()) {
+//            System.out.println("dbg: "+matcher.group(0)+" "+matcher.group(1)+" "+matcher.group(2));
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
 
-            if (row+1 > game.getRowCount() || column+1 > game.getColumnCount()) {
+//            System.out.println("dbg xy: "+row+"/"+column);
+            if (row + 1 > game.getRowCount() || column + 1 > game.getColumnCount()) {
                 System.err.println("Bad input");
             } else {
-                    game.switchTile(row, column);
+                game.switchTile(row, column);
             }
 
         } else
@@ -87,24 +96,25 @@ public class LightsConsoleUI {
 
         return true;
     }
-private void saveNickname(){
-    System.out.println("Congratulations! You have solved puzzle in "+ game.getTimer()+"\n"
-    +"Please enter your nickname:");
-    String name = scanner.nextLine().toLowerCase().trim();
-    game.scores.saveScore(game.getCategory(),name, game.getActualTime());
-    try {
-        game.scores.saveScores();
-    } catch (IOException e) {
-        throw new RuntimeException(e);
+
+    private void saveNickname() {
+        System.out.println("Congratulations! You have solved puzzle in " + game.getTimer() + "\n"
+                + "Please enter your nickname:");
+        String name = scanner.nextLine().toLowerCase().trim();
+        game.scores.saveScore(game.getCategory(), name, game.getActualTime());
+        try {
+            game.scores.saveScores();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
     public void Menu() throws IOException {
         while (true) {
             switch (showMenu()) {
                 case NEW_GAME:
                     //TODO: remove category
-                    game.setGameProperties(5, 5,0);
+                    game.setGameProperties(5, 5, 0);
                     playGame();
                     break;
                 case HISCORES:
@@ -117,10 +127,11 @@ private void saveNickname(){
         }
 
     }
+
     public Option showMenu() {
         System.out.println("Menu.");
         for (var option : Option.values()) {
-            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_"," "));
+            System.out.printf("%d. %s%n", option.ordinal() + 1, option.toString().replace("_", " "));
         }
         System.out.println("-----------------------------------------------");
 
@@ -141,16 +152,16 @@ private void saveNickname(){
 
     private void viewLevel(int i) {
         System.out.println("HiScores:");
-        game.scores.getHiScores(i).forEach((integer, s) ->{
-            System.out.printf("%15s%15s%n",s,game.niceTimer(integer*1000));
+        game.scores.getHiScores(i).forEach((integer, s) -> {
+            System.out.printf("%15s%15s%n", s, game.niceTimer(integer * 1000));
         });
 
         //TODO apply findPersonByName() from register?
         System.out.println("\n");
-        do{
+        do {
             System.out.println("Enter x for exit:");
-        }while( !scanner.nextLine().equalsIgnoreCase("x"));
-            System.out.println("\n\n\n\n\n");
+        } while (!scanner.nextLine().equalsIgnoreCase("x"));
+        System.out.println("\n\n\n\n\n");
     }
 
 

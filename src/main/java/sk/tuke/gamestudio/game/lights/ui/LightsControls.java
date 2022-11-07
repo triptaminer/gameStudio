@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.lights.consoleui;
+package sk.tuke.gamestudio.game.lights.ui;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.kamene.core;
+package sk.tuke.gamestudio.game.tiles.core;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import static java.lang.System.currentTimeMillis;
 
 public class TileGame {
+
+    public final String gameName="Tiles";
     private int rowCount;
 
     private int columnCount;

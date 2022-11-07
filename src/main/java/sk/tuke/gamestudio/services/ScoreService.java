@@ -23,6 +23,6 @@ public interface ScoreService {
     /**
      * deletes all scores from storage
      */
-    void reset();
+    void reset() throws FileNotFoundException, SQLException;
 
 }

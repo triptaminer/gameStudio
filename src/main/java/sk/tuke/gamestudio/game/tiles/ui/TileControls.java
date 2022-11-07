@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.kamene.consoleui;
+package sk.tuke.gamestudio.game.tiles.ui;
 
 import java.util.HashMap;
 import java.util.Map;

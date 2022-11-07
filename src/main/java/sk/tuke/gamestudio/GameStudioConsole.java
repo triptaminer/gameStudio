@@ -1,12 +1,14 @@
 package sk.tuke.gamestudio;
 
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.game.kamene.consoleui.TileConsoleUI;
-import sk.tuke.gamestudio.game.kamene.core.TileGame;
-import sk.tuke.gamestudio.game.lights.consoleui.LightsConsoleUI;
+import sk.tuke.gamestudio.exceptions.ServiceException;
+import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
+import sk.tuke.gamestudio.game.tiles.core.TileGame;
+import sk.tuke.gamestudio.game.lights.ui.LightsConsoleUI;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
-import sk.tuke.gamestudio.game.mines.ConsoleUI;
+import sk.tuke.gamestudio.game.mines.ui.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
+import sk.tuke.gamestudio.services.HiScores;
 import sk.tuke.gamestudio.services.ScoreService;
 import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
@@ -20,7 +22,9 @@ public class GameStudioConsole {
 
     private static String playerName;
 
-    private static final ScoreService scoreService = new ScoreServiceJDBC();
+    public static final HiScores hiScores = new HiScores();
+
+    public static final ScoreService scoreService = new ScoreServiceJDBC();
 
     public static void main(String[] args) throws IOException, SQLException {
 
@@ -30,9 +34,10 @@ public class GameStudioConsole {
         boolean shouldRepeat=true;
 
         printMenuHeader();
-
         askPlayerName();
         System.out.println("Hi "+playerName);
+
+        hiScores.setUserName(playerName);
 
         while (shouldRepeat) {
             printMenuOptions();
@@ -41,22 +46,23 @@ public class GameStudioConsole {
                 case "M":
                     System.out.println("Starting Minesweeper...");
 //                    Field field = new Field(8, 8, 10);
-                    Field field = new Field(8, 8, 1);
-                    ConsoleUI uiMine = new ConsoleUI(field);
-                    uiMine.play();
+                    Field mines = new Field(8, 8, 1);
+                    ConsoleUI uiMine = new ConsoleUI(mines);
+//                    uiMine.play();
+                    uiMine.menu();
 
-                    processScore("Mines",playerName,field.computeScore());
+
                     break;
                 case "T":
                     System.out.println("Starting Tiles...");
-                    TileGame game = new TileGame();
-                    TileConsoleUI uiTile = new TileConsoleUI(game);
+                    TileGame tiles = new TileGame();
+                    TileConsoleUI uiTile = new TileConsoleUI(tiles);
                     uiTile.Menu();
                     break;
                 case "L":
                     System.out.println("Starting Lights...");
-                    LightsGame lightsGame = new LightsGame();
-                    LightsConsoleUI lightsUI = new LightsConsoleUI(lightsGame);
+                    LightsGame light = new LightsGame();
+                    LightsConsoleUI lightsUI = new LightsConsoleUI(light);
                     lightsUI.Menu();
                     break;
                 case "X":
@@ -106,11 +112,5 @@ public class GameStudioConsole {
 
         }while (isWrongName);
 
-    }
-    private static void processScore(String gameName, String userName, int score) throws SQLException, FileNotFoundException {
-        System.out.println("Congrats "+userName+", you got "+score+"pts in "+gameName);
-        scoreService.addScore(
-                new Score(gameName, userName, score, new Date())
-        );
     }
 }

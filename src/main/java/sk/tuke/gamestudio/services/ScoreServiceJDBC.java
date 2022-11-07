@@ -32,25 +32,22 @@ public class ScoreServiceJDBC implements ScoreService {
 
     @Override
     public List<Score> getBestScores(String game) throws FileNotFoundException, SQLException {
-        final String STATEMENT_BEST_SCORES = "SELECT game, username, points, played_at FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
+        final String STATEMENT_BEST_SCORES = "SELECT username, points, played_at FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
 
         PostgresDirectConnector connection = new PostgresDirectConnector();
-        ResultSet rs = connection.getQuery(STATEMENT_BEST_SCORES, new Object[][]{{game}});
+        ResultSet rs = connection.getQuery(STATEMENT_BEST_SCORES, new Object[]{game});
 
         ArrayList scores = new ArrayList<Score>();
         while (rs.next()) {
-            scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
+            scores.add(new Score(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3)));
         }
         return scores;
     }
 
     @Override
-    public void reset() {
+    public void reset() throws FileNotFoundException, SQLException {
         final String STATEMENT_RESET = "DELETE FROM score";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(STATEMENT_RESET);
-        } catch (SQLException e) {
-            throw new ServiceException(e);
-        }
+        PostgresDirectConnector connection = new PostgresDirectConnector();
+        connection.setQuery(STATEMENT_RESET);
     }
 }

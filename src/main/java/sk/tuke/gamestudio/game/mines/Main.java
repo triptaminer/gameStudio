@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.game.mines;
 
 import sk.tuke.gamestudio.game.mines.core.Field;
+import sk.tuke.gamestudio.game.mines.ui.ConsoleUI;
 
 import java.io.IOException;
 

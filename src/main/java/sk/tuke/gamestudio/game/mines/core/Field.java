@@ -1,11 +1,16 @@
 package sk.tuke.gamestudio.game.mines.core;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import static java.lang.System.currentTimeMillis;
 
 public class Field {
+
+    public final String gameName="Mines";
+
     private final int rowCount;
 
     private final int columnCount;
@@ -173,4 +178,17 @@ public class Field {
     public void quit() {
         state = FieldState.FAILED;
     }
+
+    public String niceTimer(long timestamp){
+        String t= new SimpleDateFormat("D:HH-mm:ss").format(new Date(timestamp));
+        String minutes=t.split("-")[1];
+        int days=Integer.parseInt(t.split("-")[0].split(":")[0])-1;
+        String daysText=days>0? days +"d ":"";
+
+        int hours=Integer.parseInt(t.split("-")[0].split(":")[1])-1;//FIXME later: locale/timezones?
+        String hoursText=hours>0? hours +":":"";
+
+        return daysText+hoursText+minutes;
+    }
+
 }
