@@ -26,7 +26,7 @@ public class ScoreServiceTest {
     }
 
     @Test
-    public void testAddScore(){
+    public void testAddScore() throws SQLException, FileNotFoundException {
         scoreService.reset();
         var date = new Date();
         final String gameName="mines";
@@ -45,7 +45,7 @@ public class ScoreServiceTest {
 
 
     @Test
-    public void testGetBestScores(){
+    public void testGetBestScores() throws SQLException, FileNotFoundException {
         scoreService.reset();
         var date = new Date();
         scoreService.addScore(new Score("mines", "Palo", 330, date));
