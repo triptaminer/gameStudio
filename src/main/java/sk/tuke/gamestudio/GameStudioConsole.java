@@ -3,6 +3,8 @@ package sk.tuke.gamestudio;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.kamene.consoleui.TileConsoleUI;
 import sk.tuke.gamestudio.game.kamene.core.TileGame;
+import sk.tuke.gamestudio.game.lights.consoleui.LightsConsoleUI;
+import sk.tuke.gamestudio.game.lights.core.LightsGame;
 import sk.tuke.gamestudio.game.mines.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.services.ScoreService;
@@ -47,6 +49,12 @@ public class GameStudioConsole {
                     TileConsoleUI uiTile = new TileConsoleUI(game);
                     uiTile.Menu();
                     break;
+                case "L":
+                    System.out.println("Starting Lights...");
+                    LightsGame lightsGame = new LightsGame();
+                    LightsConsoleUI lightsUI = new LightsConsoleUI(lightsGame);
+                    lightsUI.Menu();
+                    break;
                 case "X":
                     System.out.println("Exiting...");
                     shouldRepeat=false;
@@ -69,6 +77,7 @@ public class GameStudioConsole {
         System.out.println("\nPlease choose option:");
         System.out.println("M          play Minesweeper");
         System.out.println("T          play Tiles");
+        System.out.println("L          play Lights");
         System.out.println("");
         System.out.println("X          exit\n\n");
         System.out.println("Your choise?");
