@@ -55,7 +55,7 @@ public class PostgresDirectConnector {
             throw new RuntimeException("Incorrect pattern or number of items in query: " + query);
         }
 
-        System.out.println("dbg: "+query);
+//        System.out.println("dbg: "+query);
         int result = 0;
         PreparedStatement statement = connection.prepareStatement(query);
         for (Object[] row : values) {
@@ -69,7 +69,7 @@ public class PostgresDirectConnector {
                 if(col instanceof Timestamp)
                     statement.setTimestamp(i, Timestamp.valueOf(col.toString()));
 
-                System.out.println("dbg: "+i+":"+col);
+//                System.out.println("dbg: "+i+":"+col);
                 i++;
             }
             result += statement.executeUpdate();
