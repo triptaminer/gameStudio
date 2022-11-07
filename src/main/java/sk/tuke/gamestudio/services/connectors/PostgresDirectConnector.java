@@ -50,23 +50,30 @@ public class PostgresDirectConnector {
         return statement.executeUpdate();
     }
 
-    public int setQuery(String query, String[][] values) throws SQLException {
+    public int setQuery(String query, Object[][] values) throws SQLException {
         if (values[0].length != query.replaceAll("[^?]*", "").length()) {
             throw new RuntimeException("Incorrect pattern or number of items in query: " + query);
         }
 
-
+        System.out.println("dbg: "+query);
         int result = 0;
         PreparedStatement statement = connection.prepareStatement(query);
-        for (String[] row : values) {
+        for (Object[] row : values) {
             int i = 1;
-            for (String col : row) {
-                statement.setString(i, col);
+            for (Object col : row) {
+
+                if(col instanceof String)
+                    statement.setString(i, col.toString());
+                if(col instanceof Integer)
+                    statement.setInt(i, Integer.parseInt(col.toString()));
+                if(col instanceof Timestamp)
+                    statement.setTimestamp(i, Timestamp.valueOf(col.toString()));
+
+                System.out.println("dbg: "+i+":"+col);
                 i++;
             }
             result += statement.executeUpdate();
         }
-        System.out.println("dbg: "+result);
         return result;
     }
 

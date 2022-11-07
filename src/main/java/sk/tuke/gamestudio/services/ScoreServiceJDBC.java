@@ -29,15 +29,15 @@ public class ScoreServiceJDBC implements ScoreService{
     @Override
     public void addScore(Score score) throws FileNotFoundException, SQLException {
 
-        final String STATEMENT_ADD_SCORE = "INSERT INTO score VALUES (?, ?, ?, ?)";
+        final String STATEMENT_ADD_SCORE = "INSERT INTO score (game,username,points,played_at) VALUES (?, ?, ?, ?)";
 
         PostgresDirectConnector connection=new PostgresDirectConnector();
 
 
         connection.setQuery(
                 STATEMENT_ADD_SCORE,
-                new String[][]{
-                        {score.getGame(),score.getUsername(),String.valueOf(score.getPoints()),new Timestamp(score.getPlayedAt().getTime()).toString()}
+                new Object[][]{
+                        {score.getGame(),score.getUsername(),score.getPoints(),new Timestamp(score.getPlayedAt().getTime())}
                 }
         );
 //        try(
