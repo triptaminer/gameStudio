@@ -14,10 +14,11 @@ import java.util.List;
 public class CommentServiceJDBC implements CommentService {
     @Override
     public void addComment(Comment comment) throws FileNotFoundException, SQLException {
-        final String STATEMENT_ADD_SCORE = "INSERT INTO comments (game,username,text,commented_at) VALUES (?, ?, ?, ?)";
-        PostgresDirectConnector connection = new PostgresDirectConnector();
-        connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{comment.getGameName(), comment.getUserName(), comment.getText(), new Timestamp(comment.getCommentedAt().getTime())}});
-
+        if(comment.getText().length()>0) {
+            final String STATEMENT_ADD_SCORE = "INSERT INTO comments (game,username,text,commented_at) VALUES (?, ?, ?, ?)";
+            PostgresDirectConnector connection = new PostgresDirectConnector();
+            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{comment.getGameName(), comment.getUserName(), comment.getText(), new Timestamp(comment.getCommentedAt().getTime())}});
+        }
     }
 
     @Override

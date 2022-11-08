@@ -1,11 +1,14 @@
 package sk.tuke.gamestudio.game.lights.core;
 
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
+import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class LightsGame {
 
@@ -40,11 +43,10 @@ public class LightsGame {
     }
 
     public LightsGame() throws IOException {
-        long timestamp = currentTimeMillis() / 1000;
 
         tiles = new HashMap<String, Boolean>();
         userMoves = 0;
-        startTime = timestamp;
+        startTime = currentTimeMillis();
         actualTime = 0;
         scores = new LightsHiScores();
 
@@ -102,6 +104,8 @@ public class LightsGame {
         updateTimer();
         if (isSolved()) {
             state = LightsFieldState.SOLVED;
+            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
+
         }
     }
 
@@ -161,5 +165,16 @@ public class LightsGame {
     public int getCategory() {
         return category;
     }
+
+    public int computeScore() {
+        int score = 0;
+        if (state == LightsFieldState.SOLVED) {
+            score = rowCount * columnCount * 10 -
+                    (int) ((currentTimeMillis() - startTime) / 1000);
+            if (score < 0) score = 0;
+        }
+        return score;
+    }
+
 
 }
