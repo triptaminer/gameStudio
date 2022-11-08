@@ -16,13 +16,19 @@ import java.util.Scanner;
 
 public class GameStudioConsole {
 
-    private static String playerName;
+    private String playerName;
 
-    public static final GameStudioServices GAME_STUDIO_SERVICES = new GameStudioServices();
+    public GameStudioServices GAME_STUDIO_SERVICES;
 
-    public static final ScoreService scoreService = new ScoreServiceJDBC();
+    //public ScoreService scoreService;
 
     public static void main(String[] args) throws IOException, SQLException {
+        new GameStudioConsole().run();
+    }
+    private void run() throws IOException {
+
+        GAME_STUDIO_SERVICES = new GameStudioServices();
+
 
         Scanner scanner=new Scanner(System.in);
 
@@ -42,21 +48,21 @@ public class GameStudioConsole {
                     System.out.println("Starting Minesweeper...");
                     GAME_STUDIO_SERVICES.setGameName("Mines");
 //                    Field field = new Field(8, 8, 10);
-                    Field mines = new Field(8, 8, 1);
+                    Field mines = new Field(8, 8, 1,GAME_STUDIO_SERVICES);
                     ConsoleUI uiMine = new ConsoleUI(mines);
                     uiMine.menu();
                     break;
                 case "T":
                     System.out.println("Starting Tiles...");
                     GAME_STUDIO_SERVICES.setGameName("Tiles");
-                    TileGame tiles = new TileGame();
+                    TileGame tiles = new TileGame(GAME_STUDIO_SERVICES);
                     TileConsoleUI uiTile = new TileConsoleUI(tiles);
                     uiTile.Menu();
                     break;
                 case "L":
                     System.out.println("Starting Lights...");
                     GAME_STUDIO_SERVICES.setGameName("Lights");
-                    LightsGame light = new LightsGame();
+                    LightsGame light = new LightsGame(GAME_STUDIO_SERVICES);
                     LightsConsoleUI lightsUI = new LightsConsoleUI(light);
                     lightsUI.Menu();
                     break;
@@ -70,14 +76,14 @@ public class GameStudioConsole {
         }
     }
 
-    private static void printMenuHeader() {
+    private void printMenuHeader() {
         System.out.println("-----------------------");
         System.out.println("Welcome to Game Studio.");
         System.out.println("-----------------------");
 
     }
 
-    private static void printMenuOptions() {
+    private void printMenuOptions() {
         System.out.println("\nPlease choose option:");
         System.out.println("M          play Minesweeper");
         System.out.println("T          play Tiles");
@@ -87,7 +93,7 @@ public class GameStudioConsole {
         System.out.println("Your choise?");
     }
 
-    private static void askPlayerName(){
+    private void askPlayerName(){
         System.out.println("What is your name? (3-15 letters)");
         Scanner scanner=new Scanner(System.in);
 

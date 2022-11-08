@@ -6,6 +6,7 @@ import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
+import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         print();
 
-        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("Congrats "+field.GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+field.GAME_STUDIO_SERVICES.getGameName());
 
     }
 
@@ -128,7 +129,7 @@ public class ConsoleUI {
         System.out.println("HiScores:");
         List<Score> hiScores=null;
         try {
-            hiScores=scoreService.getBestScores(field.gameName);
+            hiScores= field.GAME_STUDIO_SERVICES.scoreService.getBestScores(field.gameName);
         } catch (FileNotFoundException e) {
             throw new ServiceException("Missing configuration file! "+e);
         } catch (SQLException e) {

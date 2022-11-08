@@ -1,14 +1,13 @@
 package sk.tuke.gamestudio.game.lights.core;
 
 import sk.tuke.gamestudio.game.mines.core.FieldState;
+import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class LightsGame {
 
@@ -30,6 +29,9 @@ public class LightsGame {
     private int category;
 
     public LightsHiScores scores;
+
+    public GameStudioServices GAME_STUDIO_SERVICES;
+
     public int getActualTime() {
         return (int) actualTime;
     }
@@ -42,13 +44,14 @@ public class LightsGame {
         generate();
     }
 
-    public LightsGame() throws IOException {
+    public LightsGame(GameStudioServices gss) throws IOException {
 
         tiles = new HashMap<String, Boolean>();
         userMoves = 0;
         startTime = currentTimeMillis();
         actualTime = 0;
         scores = new LightsHiScores();
+        GAME_STUDIO_SERVICES=gss;
 
     }
 

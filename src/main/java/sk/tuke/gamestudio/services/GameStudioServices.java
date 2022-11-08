@@ -7,15 +7,15 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static sk.tuke.gamestudio.GameStudioConsole.scoreService;
 
 public class GameStudioServices {
 
     private String userName;
     private String gameName;
-
+    public ScoreService scoreService;
 
     public GameStudioServices() {
+        scoreService = new ScoreServiceJDBC();
     }
 
     public String getUserName() {
@@ -33,7 +33,7 @@ public class GameStudioServices {
         this.gameName = gameName;
     }
 
-    public static void processScore(String gameName, String userName, int score) {
+    public void processScore(String gameName, String userName, int score) {
         try {
             scoreService.addScore(
                     new Score(gameName, userName, score, new Date())

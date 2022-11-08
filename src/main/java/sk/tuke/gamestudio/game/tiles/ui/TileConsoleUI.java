@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class TileConsoleUI {
     private TileGame game;
@@ -41,7 +40,7 @@ public class TileConsoleUI {
             }
         } while (game.getState() == TileFieldState.PLAYING);
         printGame();
-        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("Congrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName());
 
         return true;
     }
@@ -107,7 +106,7 @@ public class TileConsoleUI {
                     chooseHiscores();
                     break;
                 case EXIT:
-                    game.scores.saveScores();
+//                    game.scores.saveScores();
                     return;
             }
         }

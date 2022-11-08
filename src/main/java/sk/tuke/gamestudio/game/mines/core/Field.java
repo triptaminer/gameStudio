@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+
 import static java.lang.System.currentTimeMillis;
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
+import sk.tuke.gamestudio.GameStudioConsole.*;
+import sk.tuke.gamestudio.services.GameStudioServices;
 
 public class Field {
 
@@ -31,7 +33,10 @@ public class Field {
     private HiScores scores;
     private int score;
 
-    public Field(int rowCount, int columnCount, int mineCount) throws IOException {
+    public GameStudioServices GAME_STUDIO_SERVICES;
+
+
+    public Field(int rowCount, int columnCount, int mineCount, GameStudioServices gss) throws IOException {
         if (rowCount * columnCount <= mineCount)
             throw new IllegalArgumentException("Invalid number of mines in the field");
 
@@ -43,6 +48,7 @@ public class Field {
         scores = new HiScores();
         generate();
         start = currentTimeMillis();
+        GAME_STUDIO_SERVICES=gss;
     }
 
     private void generate() {
@@ -133,9 +139,10 @@ public class Field {
             }
 
             if (isSolved()) {
+                //send score only once
+                //if(!state.equals(FieldState.SOLVED))
                 state = FieldState.SOLVED;
                 GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
-
             }
         }
     }

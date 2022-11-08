@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class LightsConsoleUI {
     private LightsGame game;
@@ -44,7 +43,7 @@ public class LightsConsoleUI {
         } while (game.getState() == LightsFieldState.PLAYING);
         printGame();
 //        saveNickname();
-        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("Congrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName());
 
         return true;
     }
