@@ -1,28 +1,24 @@
 package sk.tuke.gamestudio;
 
-import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.lights.ui.LightsConsoleUI;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
 import sk.tuke.gamestudio.game.mines.ui.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
-import sk.tuke.gamestudio.services.HiScores;
+import sk.tuke.gamestudio.services.GameStudioServices;
 import sk.tuke.gamestudio.services.ScoreService;
 import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Scanner;
 
 public class GameStudioConsole {
 
     private static String playerName;
 
-    public static final HiScores hiScores = new HiScores();
+    public static final GameStudioServices GAME_STUDIO_SERVICES = new GameStudioServices();
 
     public static final ScoreService scoreService = new ScoreServiceJDBC();
 
@@ -30,14 +26,13 @@ public class GameStudioConsole {
 
         Scanner scanner=new Scanner(System.in);
 
-
         boolean shouldRepeat=true;
 
         printMenuHeader();
         askPlayerName();
         System.out.println("Hi "+playerName);
 
-        hiScores.setUserName(playerName);
+        GAME_STUDIO_SERVICES.setUserName(playerName);
 
         while (shouldRepeat) {
             printMenuOptions();
@@ -45,22 +40,22 @@ public class GameStudioConsole {
             switch (line.toUpperCase()) {
                 case "M":
                     System.out.println("Starting Minesweeper...");
+                    GAME_STUDIO_SERVICES.setGameName("Mines");
 //                    Field field = new Field(8, 8, 10);
                     Field mines = new Field(8, 8, 1);
                     ConsoleUI uiMine = new ConsoleUI(mines);
-//                    uiMine.play();
                     uiMine.menu();
-
-
                     break;
                 case "T":
                     System.out.println("Starting Tiles...");
+                    GAME_STUDIO_SERVICES.setGameName("Tiles");
                     TileGame tiles = new TileGame();
                     TileConsoleUI uiTile = new TileConsoleUI(tiles);
                     uiTile.Menu();
                     break;
                 case "L":
                     System.out.println("Starting Lights...");
+                    GAME_STUDIO_SERVICES.setGameName("Lights");
                     LightsGame light = new LightsGame();
                     LightsConsoleUI lightsUI = new LightsConsoleUI(light);
                     lightsUI.Menu();
@@ -68,7 +63,6 @@ public class GameStudioConsole {
                 case "X":
                     System.out.println("Exiting...");
                     shouldRepeat=false;
-
                     break;
                 default:
                     System.out.println("Wrong input! Please try again:");

@@ -1,5 +1,7 @@
 package sk.tuke.gamestudio.game.tiles.core;
 
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -210,5 +212,15 @@ public void setGameProperties(int rowCount, int columnCount, int category){
 
     public int getCategory() {
         return category;
+    }
+
+    public int computeScore() {
+        int score = 0;
+        if (state == TileFieldState.SOLVED) {
+            score = rowCount * columnCount * 10 -
+                    (int) ((currentTimeMillis() - startTime) / 1000);
+            if (score < 0) score = 0;
+        }
+        return score;
     }
 }

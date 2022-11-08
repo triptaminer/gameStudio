@@ -9,13 +9,13 @@ import java.util.Date;
 
 import static sk.tuke.gamestudio.GameStudioConsole.scoreService;
 
-public class HiScores {
+public class GameStudioServices {
 
     private String userName;
     private String gameName;
 
 
-    public HiScores() {
+    public GameStudioServices() {
     }
 
     public String getUserName() {
@@ -34,7 +34,6 @@ public class HiScores {
     }
 
     public static void processScore(String gameName, String userName, int score) {
-        System.out.println("Congrats "+userName+", you got "+score+"pts in "+gameName);
         try {
             scoreService.addScore(
                     new Score(gameName, userName, score, new Date())

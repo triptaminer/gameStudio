@@ -41,7 +41,8 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         print();
 
-        hiScores.processScore(field.gameName,hiScores.getUserName(),field.computeScore());
+        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
+
     }
 
     private void print() {
