@@ -14,14 +14,15 @@ import java.util.List;
 public class CommentServiceJDBC implements CommentService {
     @Override
     public void addComment(Comment comment) throws FileNotFoundException, SQLException {
-        final String STATEMENT_ADD_SCORE = "INSERT INTO comments (game,username,text,commented_at) VALUES (?, ?, ?, ?)";
-        PostgresDirectConnector connection = new PostgresDirectConnector();
-        connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{comment.getGameName(), comment.getUserName(), comment.getText(), new Timestamp(comment.getCommentedAt().getTime())}});
-
+        if(comment.getText().length()>0) {
+            final String STATEMENT_ADD_SCORE = "INSERT INTO comments (game,username,text,commented_at) VALUES (?, ?, ?, ?)";
+            PostgresDirectConnector connection = new PostgresDirectConnector();
+            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{comment.getGameName(), comment.getUserName(), comment.getText(), new Timestamp(comment.getCommentedAt().getTime())}});
+        }
     }
 
     @Override
-    public List<Score> getComments(String gameName) throws FileNotFoundException, SQLException {
+    public List<Comment> getComments(String gameName) throws FileNotFoundException, SQLException {
         final String STATEMENT_COMMENTS = "SELECT username, text, commented_at FROM comments WHERE game= ? ORDER BY commented_at DESC";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_COMMENTS, new Object[]{gameName});

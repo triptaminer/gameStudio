@@ -1,32 +1,39 @@
 package sk.tuke.gamestudio.game.lights.core;
 
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+import sk.tuke.gamestudio.services.GameStudioServices;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
 
 public class LightsGame {
 
     private int rowCount;
-
     private int columnCount;
-
     private LightsFieldState state = LightsFieldState.PLAYING;
-
     private final Map<String, Boolean> tiles;
 
     private int userMoves;
-
     private final long startTime;
-
-
     private long actualTime;
 
     private int category;
 
-    public LightsHiScores scores;
+    public GameStudioServices GAME_STUDIO_SERVICES;
+
+    public LightsGame(GameStudioServices gss){
+
+        tiles = new HashMap<String, Boolean>();
+        userMoves = 0;
+        startTime = currentTimeMillis();
+        actualTime = 0;
+        GAME_STUDIO_SERVICES=gss;
+
+    }
+
     public int getActualTime() {
         return (int) actualTime;
     }
@@ -37,17 +44,6 @@ public class LightsGame {
         this.category = category;
 
         generate();
-    }
-
-    public LightsGame() throws IOException {
-        long timestamp = currentTimeMillis() / 1000;
-
-        tiles = new HashMap<String, Boolean>();
-        userMoves = 0;
-        startTime = timestamp;
-        actualTime = 0;
-        scores = new LightsHiScores();
-
     }
 
     private void generate() {
@@ -102,6 +98,8 @@ public class LightsGame {
         updateTimer();
         if (isSolved()) {
             state = LightsFieldState.SOLVED;
+            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
+
         }
     }
 
@@ -149,17 +147,26 @@ public class LightsGame {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 if (!tiles.get(i + "x" + j)) {
-//                    System.out.println("dbg: "+i + "x" + j+"="+tiles.get(i + "x" + j));
                     totalCount++;
                 }
             }
         }
-//        System.out.println("dbg: " + totalCount + "=" + rowCount + "*" + columnCount);
         return totalCount == rowCount * columnCount;
     }
 
     public int getCategory() {
         return category;
     }
+
+    public int computeScore() {
+        int score = 0;
+        if (state == LightsFieldState.SOLVED) {
+            score = rowCount * columnCount * 10 -
+                    (int) ((currentTimeMillis() - startTime) / 1000);
+            if (score < 0) score = 0;
+        }
+        return score;
+    }
+
 
 }

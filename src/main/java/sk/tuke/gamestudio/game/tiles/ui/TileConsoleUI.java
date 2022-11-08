@@ -1,14 +1,17 @@
 package sk.tuke.gamestudio.game.tiles.ui;
 
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class TileConsoleUI {
     private TileGame game;
@@ -41,8 +44,8 @@ public class TileConsoleUI {
             }
         } while (game.getState() == TileFieldState.PLAYING);
         printGame();
-        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
-
+        System.out.println("\n\nCongrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
+        viewLevel(game.getCategory());
         return true;
     }
 
@@ -53,9 +56,7 @@ public class TileConsoleUI {
         for (int row = 0; row < game.getRowCount(); row++) {
             for (int column = 0; column < game.getColumnCount(); column++) {
                 int value = game.getTile(row, column);
-
                 System.out.printf("%3s", value > 0 ? value : " ");
-
             }
             System.out.println();
         }
@@ -66,9 +67,7 @@ public class TileConsoleUI {
         System.out.println("Enter command (wasd or 'up','left','down','right' or x for exit)");
         String line = scanner.nextLine().toLowerCase().trim();
         if ("x".equals(line)) {
-
-        //TODO find a better way how to destroy/leave current game
-
+        //TODO find a better way how to destroy/leave current game?
             return false;
         }
         Matcher matcher = INPUT_PATTERN.matcher(line);
@@ -107,7 +106,6 @@ public class TileConsoleUI {
                     chooseHiscores();
                     break;
                 case EXIT:
-                    game.scores.saveScores();
                     return;
             }
         }
@@ -131,7 +129,6 @@ public class TileConsoleUI {
         } while (selection <= 0 || selection > Option.values().length);
 
         return Option.values()[selection - 1];
-
 
     }
 
@@ -208,11 +205,10 @@ public class TileConsoleUI {
                     viewLevel(3);
                     break;
                 case BACK:
-//TODO how to go back?
+                //TODO how to go back?
                     break;
             }
         }
-
     }
 
     public OptionGame showHiscores() {
@@ -234,22 +230,22 @@ public class TileConsoleUI {
 
         return OptionGame.values()[selection - 1];
 
-
     }
 
     private void viewLevel(int i) {
         System.out.println("HiScores:");
-        game.scores.getHiScores(i).forEach((integer, s) -> {
-            System.out.printf("%15s%15s%n", s, game.niceTimer(integer * 1000));
-        });
+        List<Score> hiScores = null;
+        try {
+            hiScores = game.GAME_STUDIO_SERVICES.scoreService.getBestScores(game.GAME_STUDIO_SERVICES.getGameName());
+        } catch (FileNotFoundException e) {
+            throw new ServiceException("Missing configuration file! " + e);
+        } catch (SQLException e) {
+            throw new ServiceException("Cannot execute SQL query! " + e);
+        }
 
-        //TODO apply findPersonByName() from register?
-        System.out.println("\n");
-        do {
-            System.out.println("Enter x for exit:");
-        } while (!scanner.nextLine().equalsIgnoreCase("x"));
-        System.out.println("\n\n\n\n\n");
+        for (Score score : hiScores) {
+            System.out.printf("%15s%15s%30s%n", score.getUsername(), score.getPoints(), score.getPlayedAt());
+        }
     }
-
 
 }

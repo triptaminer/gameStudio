@@ -6,6 +6,7 @@ import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
+import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,7 +42,8 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         print();
 
-        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("\n\nCongrats "+field.GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+field.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
+        viewHiscores();
 
     }
 
@@ -128,33 +130,18 @@ public class ConsoleUI {
         System.out.println("HiScores:");
         List<Score> hiScores=null;
         try {
-            hiScores=scoreService.getBestScores(field.gameName);
+            hiScores= field.GAME_STUDIO_SERVICES.scoreService.getBestScores(field.gameName);
         } catch (FileNotFoundException e) {
             throw new ServiceException("Missing configuration file! "+e);
         } catch (SQLException e) {
             throw new ServiceException("Cannot execute SQL query! "+e);
         }
 
-//        while(hiScores.iterator().hasNext()){
-//            Score score = hiScores.iterator().next();
-//        }
         for (Score score:hiScores){
             System.out.printf("%15s%15s%30s%n",score.getUsername(),score.getPoints(),score.getPlayedAt());
-
         }
-
-
-//        hiScores.forEach((integer, s) -> {
-//            System.out.printf("%15s%15s%n", s, field.niceTimer(integer * 1000));
-//        });
-
-        //TODO apply findPersonByName() from register?
-        System.out.println("\n");
-        do {
-            System.out.println("Enter x for exit:");
-        } while (!scanner.nextLine().equalsIgnoreCase("x"));
-        System.out.println("\n\n\n\n\n");
     }
+
     public ConsoleUI.Option showMenu() {
         System.out.println("Menu.");
         for (var option : ConsoleUI.Option.values()) {

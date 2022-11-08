@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.game.tiles.core;
 
 import sk.tuke.gamestudio.game.mines.core.FieldState;
+import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -8,7 +9,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
-import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class TileGame {
 
@@ -33,7 +33,7 @@ public class TileGame {
 
     private int category;
 
-    public TileHiScores scores;
+    public GameStudioServices GAME_STUDIO_SERVICES;
 
 public void setGameProperties(int rowCount, int columnCount, int category){
     this.rowCount = rowCount;
@@ -43,11 +43,12 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     generate();
 }
 
-    public TileGame() throws IOException {
+    public TileGame(GameStudioServices gss) throws IOException {
 
         tiles = new HashMap<String, Integer>();
         userMoves=0;
         startTime=currentTimeMillis();
+        GAME_STUDIO_SERVICES=gss;
         //actualTime=0;
         //scores=new TileHiScores();
 
