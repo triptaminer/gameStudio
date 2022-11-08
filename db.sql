@@ -11,6 +11,6 @@ CREATE TABLE comments(
     id int generated always as identity,
     game VARCHAR(64) NOT NULL,
     username VARCHAR(64) NOT NULL,
-    text TEXT NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     commented_at TIMESTAMP NOT NULL
 );

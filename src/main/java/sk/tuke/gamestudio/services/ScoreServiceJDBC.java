@@ -11,17 +11,6 @@ import java.util.List;
 
 public class ScoreServiceJDBC implements ScoreService {
 
-    private static final String JDBC_PROTOCOL = "jdbc:postgresql://";
-
-    private static final String JDBC_USER = "postgres";
-    private static final String JDBC_PASSWORD = "rootPWD";
-    private static final String JDBC_HOST = "localhost";
-    private static final String JDBC_PORT = "5433";
-    private static final String JDBC_DATABASE = "gamestudio";
-
-    private static final String JDBC_URL = JDBC_PROTOCOL + JDBC_HOST + ":" + JDBC_PORT + "/" + JDBC_DATABASE;
-
-
     @Override
     public void addScore(Score score) throws FileNotFoundException, SQLException {
 
@@ -33,10 +22,8 @@ public class ScoreServiceJDBC implements ScoreService {
     @Override
     public List<Score> getBestScores(String game) throws FileNotFoundException, SQLException {
         final String STATEMENT_BEST_SCORES = "SELECT username, points, played_at FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
-
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_BEST_SCORES, new Object[]{game});
-
         ArrayList scores = new ArrayList<Score>();
         while (rs.next()) {
             scores.add(new Score(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3)));

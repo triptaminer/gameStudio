@@ -2,7 +2,7 @@ package sk.tuke.gamestudio.entity;
 
 import java.util.Date;
 
-public class Comments {
+public class Comment {
 
     private int id;
     private String game;
@@ -10,10 +10,10 @@ public class Comments {
     private String text;
     private Date commentedAt;
 
-    public Comments() {
+    public Comment() {
     }
 
-    public Comments(int id, String game, String user, String text, Date commentedAt) {
+    public Comment(String game, String user, String text, Date commentedAt) {
         this.id = id;
         this.game = game;
         this.user = user;
@@ -21,19 +21,19 @@ public class Comments {
         this.commentedAt = commentedAt;
     }
 
-    public String getGame() {
+    public String getGameName() {
         return game;
     }
 
-    public void setGame(String game) {
+    public void setGameName(String game) {
         this.game = game;
     }
 
-    public String getUser() {
+    public String getUserName() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUserName(String user) {
         this.user = user;
     }
 
