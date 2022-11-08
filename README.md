@@ -1,7 +1,7 @@
 # gameStudio
 
 
-**Configuration** is in file /psql.conf
+**Configuration** is in file /psql.conf (using Properties !!!)
 
 **DB schemas** are in file /db.sql
 
