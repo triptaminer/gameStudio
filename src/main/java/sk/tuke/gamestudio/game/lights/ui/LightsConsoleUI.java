@@ -14,8 +14,6 @@ public class LightsConsoleUI {
 
     private Scanner scanner = new Scanner(System.in);
 
-    //private static final Pattern INPUT_PATTERN = Pattern.compile("[a-zA-Z0-9]*");
-
     private static final Pattern INPUT_PATTERN = Pattern.compile("([A-I])([1-99])");
 
     enum Option {
@@ -74,8 +72,6 @@ public class LightsConsoleUI {
         System.out.println("Enter command (X - exit, OA1 - open, MB3 - mark: ");
         String line = scanner.nextLine().toUpperCase().trim();
         if ("X".equals(line)) {
-            //System.exit(0);
-            game.quit();
             return false;
         }
         Matcher matcher = INPUT_PATTERN.matcher(line);

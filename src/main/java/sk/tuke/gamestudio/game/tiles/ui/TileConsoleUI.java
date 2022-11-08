@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
+
 public class TileConsoleUI {
     private TileGame game;
     private final TileControls controls;
@@ -31,17 +33,15 @@ public class TileConsoleUI {
 
     }
 
-
     public boolean playGame() throws IOException {
         do {
             printGame();
             if (!processInput()) {
-                //we are leaving aa game
                 return false;
             }
         } while (game.getState() == TileFieldState.PLAYING);
         printGame();
-        saveNickname();
+        System.out.println("Congrats "+GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+GAME_STUDIO_SERVICES.getGameName());
 
         return true;
     }
@@ -67,7 +67,7 @@ public class TileConsoleUI {
         String line = scanner.nextLine().toLowerCase().trim();
         if ("x".equals(line)) {
 
-//TODO find a better way how to destroy/leave current game
+        //TODO find a better way how to destroy/leave current game
 
             return false;
         }
@@ -92,18 +92,6 @@ public class TileConsoleUI {
         return true;
     }
 
-    private void saveNickname() {
-        System.out.println("Congratulations! You have solved puzzle in " + game.getTimer() + "\n"
-                + "Please enter your nickname:");
-        String name = scanner.nextLine().toLowerCase().trim();
-        game.scores.saveScore(game.getCategory(), name, game.getActualTime());
-        try {
-            game.scores.saveScores();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void Menu() throws IOException {
         while (true) {
             switch (showMenu()) {
@@ -123,7 +111,6 @@ public class TileConsoleUI {
                     return;
             }
         }
-
     }
 
     public Option showMenu() {

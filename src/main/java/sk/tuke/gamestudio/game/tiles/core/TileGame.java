@@ -1,11 +1,14 @@
 package sk.tuke.gamestudio.game.tiles.core;
 
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.System.currentTimeMillis;
+import static sk.tuke.gamestudio.GameStudioConsole.GAME_STUDIO_SERVICES;
 
 public class TileGame {
 
@@ -41,13 +44,12 @@ public void setGameProperties(int rowCount, int columnCount, int category){
 }
 
     public TileGame() throws IOException {
-        long timestamp = currentTimeMillis()/1000;
 
         tiles = new HashMap<String, Integer>();
         userMoves=0;
-        startTime=timestamp;
-        actualTime=0;
-        scores=new TileHiScores();
+        startTime=currentTimeMillis();
+        //actualTime=0;
+        //scores=new TileHiScores();
 
     }
 
@@ -67,8 +69,8 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         tiles.put((rowCount - 1) + "x" + (columnCount - 1), 0);
 
         //shuffle
-        //int shuffleCount=2;// :DDD
-        int shuffleCount=150;
+        int shuffleCount=2;// :DDD
+        //int shuffleCount=150;
         for (int i = 0; i < shuffleCount; i++) {
             String[] empty=getEmpty().toString().replace("[","").replace("]","").split("x");
             moveShuffle(Integer.parseInt(empty[0]),Integer.parseInt(empty[1]));
@@ -109,6 +111,9 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         updateTimer();
         if (isSolved()) {
             state = TileFieldState.SOLVED;
+
+            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
+
             //scores.saveScore(category,);
         }
     }
@@ -184,6 +189,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     }
 
     private boolean isSolved() {
+    //FIXME: position zero tile at the end
         int totalCount = 1;
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
@@ -192,6 +198,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
                 }
             }
         }
+//erte        if (tiles.get(rowCount-1 + "x" + columnCount-1) == totalCount)
  //       System.out.println(totalCount + "=" + rowCount + "*" + columnCount);
         return totalCount == rowCount * columnCount;
     }
@@ -210,5 +217,15 @@ public void setGameProperties(int rowCount, int columnCount, int category){
 
     public int getCategory() {
         return category;
+    }
+
+    public int computeScore() {
+        int score = 0;
+        if (state == TileFieldState.SOLVED) {
+            score = rowCount * columnCount * 10 -
+                    (int) ((currentTimeMillis() - startTime) / 1000);
+            if (score < 0) score = 0;
+        }
+        return score;
     }
 }

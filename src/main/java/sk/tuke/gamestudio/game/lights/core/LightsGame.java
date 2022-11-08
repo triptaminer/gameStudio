@@ -9,8 +9,6 @@ import static java.lang.System.currentTimeMillis;
 
 public class LightsGame {
 
-    public final String gameName="Light";
-
     private int rowCount;
 
     private int columnCount;
@@ -23,15 +21,15 @@ public class LightsGame {
 
     private final long startTime;
 
-    public int getActualTime() {
-        return (int) actualTime;
-    }
 
     private long actualTime;
 
     private int category;
 
     public LightsHiScores scores;
+    public int getActualTime() {
+        return (int) actualTime;
+    }
 
     public void setGameProperties(int rowCount, int columnCount, int category) {
         this.rowCount = rowCount;
@@ -60,9 +58,7 @@ public class LightsGame {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 tiles.put(i + "x" + j, value);
-
             }
-
         }
 
         //shuffle
@@ -72,7 +68,6 @@ public class LightsGame {
             switchLights(random.nextInt(rowCount), random.nextInt(columnCount));
         }
     }
-
 
     public int getRowCount() {
         return rowCount;
@@ -107,7 +102,6 @@ public class LightsGame {
         updateTimer();
         if (isSolved()) {
             state = LightsFieldState.SOLVED;
-            //scores.saveScore(category,);
         }
     }
 
@@ -164,20 +158,8 @@ public class LightsGame {
         return totalCount == rowCount * columnCount;
     }
 
-
-    public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-        return map.entrySet()
-                .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), value))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-    }
-
     public int getCategory() {
         return category;
     }
 
-    public void quit() {
-        state = LightsFieldState.QUIT;
-    }
 }

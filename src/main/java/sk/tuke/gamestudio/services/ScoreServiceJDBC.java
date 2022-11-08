@@ -13,10 +13,11 @@ public class ScoreServiceJDBC implements ScoreService {
 
     @Override
     public void addScore(Score score) throws FileNotFoundException, SQLException {
-
-        final String STATEMENT_ADD_SCORE = "INSERT INTO score (game,username,points,played_at) VALUES (?, ?, ?, ?)";
-        PostgresDirectConnector connection = new PostgresDirectConnector();
-        connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{score.getGame(), score.getUsername(), score.getPoints(), new Timestamp(score.getPlayedAt().getTime())}});
+        if (score.getPoints() > 0) {
+            final String STATEMENT_ADD_SCORE = "INSERT INTO score (game,username,points,played_at) VALUES (?, ?, ?, ?)";
+            PostgresDirectConnector connection = new PostgresDirectConnector();
+            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{score.getGame(), score.getUsername(), score.getPoints(), new Timestamp(score.getPlayedAt().getTime())}});
+        }
     }
 
     @Override
