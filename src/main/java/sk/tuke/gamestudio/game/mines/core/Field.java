@@ -134,9 +134,6 @@ public class Field {
 
             if (isSolved()) {
                 state = FieldState.SOLVED;
-                //scores.saveScore(0, "Player", (int) (currentTimeMillis() / 1000 - getActualTime()));
-                score = computeScore();
-
                 GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
 
             }
