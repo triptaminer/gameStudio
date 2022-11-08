@@ -140,9 +140,10 @@ public class Field {
 
             if (isSolved()) {
                 //send score only once
-                //if(!state.equals(FieldState.SOLVED))
+                if(state!=FieldState.SOLVED) {
+                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(), computeScore());
+                }
                 state = FieldState.SOLVED;
-                GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
             }
         }
     }
@@ -171,11 +172,9 @@ public class Field {
 
     public int computeScore() {
         int score = 0;
-        if (state == FieldState.SOLVED) {
             score = rowCount * columnCount * 10 -
                     (int) ((currentTimeMillis() - start) / 1000);
             if (score < 0) score = 0;
-        }
         return score;
     }
 
