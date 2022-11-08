@@ -33,7 +33,6 @@ public class TileGame {
 
     private int category;
 
-    public TileHiScores scores;
     public GameStudioServices GAME_STUDIO_SERVICES;
 
 public void setGameProperties(int rowCount, int columnCount, int category){

@@ -22,7 +22,7 @@ public class CommentServiceJDBC implements CommentService {
     }
 
     @Override
-    public List<Score> getComments(String gameName) throws FileNotFoundException, SQLException {
+    public List<Comment> getComments(String gameName) throws FileNotFoundException, SQLException {
         final String STATEMENT_COMMENTS = "SELECT username, text, commented_at FROM comments WHERE game= ? ORDER BY commented_at DESC";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_COMMENTS, new Object[]{gameName});

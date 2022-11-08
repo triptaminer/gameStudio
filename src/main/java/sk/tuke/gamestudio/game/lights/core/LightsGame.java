@@ -12,25 +12,27 @@ import static java.lang.System.currentTimeMillis;
 public class LightsGame {
 
     private int rowCount;
-
     private int columnCount;
-
     private LightsFieldState state = LightsFieldState.PLAYING;
-
     private final Map<String, Boolean> tiles;
 
     private int userMoves;
-
     private final long startTime;
-
-
     private long actualTime;
 
     private int category;
 
-    public LightsHiScores scores;
-
     public GameStudioServices GAME_STUDIO_SERVICES;
+
+    public LightsGame(GameStudioServices gss){
+
+        tiles = new HashMap<String, Boolean>();
+        userMoves = 0;
+        startTime = currentTimeMillis();
+        actualTime = 0;
+        GAME_STUDIO_SERVICES=gss;
+
+    }
 
     public int getActualTime() {
         return (int) actualTime;
@@ -42,17 +44,6 @@ public class LightsGame {
         this.category = category;
 
         generate();
-    }
-
-    public LightsGame(GameStudioServices gss) throws IOException {
-
-        tiles = new HashMap<String, Boolean>();
-        userMoves = 0;
-        startTime = currentTimeMillis();
-        actualTime = 0;
-        scores = new LightsHiScores();
-        GAME_STUDIO_SERVICES=gss;
-
     }
 
     private void generate() {
@@ -156,12 +147,10 @@ public class LightsGame {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 if (!tiles.get(i + "x" + j)) {
-//                    System.out.println("dbg: "+i + "x" + j+"="+tiles.get(i + "x" + j));
                     totalCount++;
                 }
             }
         }
-//        System.out.println("dbg: " + totalCount + "=" + rowCount + "*" + columnCount);
         return totalCount == rowCount * columnCount;
     }
 

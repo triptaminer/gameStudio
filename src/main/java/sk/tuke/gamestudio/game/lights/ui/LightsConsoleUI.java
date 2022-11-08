@@ -1,19 +1,25 @@
 package sk.tuke.gamestudio.game.lights.ui;
 
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
+import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class LightsConsoleUI {
-    private LightsGame game;
+    private final LightsGame game;
     private final LightsControls controls;
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     private static final Pattern INPUT_PATTERN = Pattern.compile("([A-I])([1-99])");
 
@@ -42,8 +48,8 @@ public class LightsConsoleUI {
             }
         } while (game.getState() == LightsFieldState.PLAYING);
         printGame();
-//        saveNickname();
-        System.out.println("Congrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("\n\nCongrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
+        viewLevel(0);
 
         return true;
     }
@@ -61,9 +67,7 @@ public class LightsConsoleUI {
             System.out.print((char) (row + 'A'));
             for (int column = 0; column < game.getColumnCount(); column++) {
                 boolean value = game.getTile(row, column);
-
                 System.out.printf("%3s", value ? "O" : ".");
-
             }
             System.out.println();
         }
@@ -78,11 +82,8 @@ public class LightsConsoleUI {
         }
         Matcher matcher = INPUT_PATTERN.matcher(line);
         if (matcher.matches()) {
-//            System.out.println("dbg: "+matcher.group(0)+" "+matcher.group(1)+" "+matcher.group(2));
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
-
-//            System.out.println("dbg xy: "+row+"/"+column);
             if (row + 1 > game.getRowCount() || column + 1 > game.getColumnCount()) {
                 System.err.println("Bad input");
             } else {
@@ -93,18 +94,6 @@ public class LightsConsoleUI {
             System.err.println("Bad input");
 
         return true;
-    }
-
-    private void saveNickname() {
-        System.out.println("Congratulations! You have solved puzzle in " + game.getTimer() + "\n"
-                + "Please enter your nickname:");
-        String name = scanner.nextLine().toLowerCase().trim();
-        game.scores.saveScore(game.getCategory(), name, game.getActualTime());
-        try {
-            game.scores.saveScores();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void Menu() throws IOException {
@@ -119,7 +108,6 @@ public class LightsConsoleUI {
                     viewLevel(0);
                     break;
                 case EXIT:
-                    game.scores.saveScores();
                     return;
             }
         }
@@ -145,22 +133,21 @@ public class LightsConsoleUI {
 
         return Option.values()[selection - 1];
 
-
     }
 
     private void viewLevel(int i) {
         System.out.println("HiScores:");
-        game.scores.getHiScores(i).forEach((integer, s) -> {
-            System.out.printf("%15s%15s%n", s, game.niceTimer(integer * 1000));
-        });
+        List<Score> hiScores = null;
+        try {
+            hiScores = game.GAME_STUDIO_SERVICES.scoreService.getBestScores(game.GAME_STUDIO_SERVICES.getGameName());
+        } catch (FileNotFoundException e) {
+            throw new ServiceException("Missing configuration file! " + e);
+        } catch (SQLException e) {
+            throw new ServiceException("Cannot execute SQL query! " + e);
+        }
 
-        //TODO apply findPersonByName() from register?
-        System.out.println("\n");
-        do {
-            System.out.println("Enter x for exit:");
-        } while (!scanner.nextLine().equalsIgnoreCase("x"));
-        System.out.println("\n\n\n\n\n");
+        for (Score score : hiScores) {
+            System.out.printf("%15s%15s%30s%n", score.getUsername(), score.getPoints(), score.getPlayedAt());
+        }
     }
-
-
 }

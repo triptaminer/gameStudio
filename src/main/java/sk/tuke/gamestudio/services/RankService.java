@@ -1,25 +1,25 @@
 package sk.tuke.gamestudio.services;
 
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.Rank;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CommentService {
+public interface RankService {
     /**
      * Adds new score to storage
-     * @param score score object to be added
+     * @param rank score object to be added
      */
-    void addComment(Comment comment) throws FileNotFoundException, SQLException;
+    void addRanking(Rank rank) throws FileNotFoundException, SQLException;
 
     /**
      * Loads 5 best scores from given game
+     *
      * @param gameName Name of the game
      * @return List&lt;Score&gt;
      */
-    List<Comment> getComments(String gameName) throws FileNotFoundException, SQLException;
+    List<Rank> getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
 
     /**
      * deletes all scores from storage

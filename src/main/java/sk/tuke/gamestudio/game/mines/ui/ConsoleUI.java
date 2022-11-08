@@ -42,7 +42,8 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         print();
 
-        System.out.println("Congrats "+field.GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+field.GAME_STUDIO_SERVICES.getGameName());
+        System.out.println("\n\nCongrats "+field.GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+field.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
+        viewHiscores();
 
     }
 
@@ -136,26 +137,11 @@ public class ConsoleUI {
             throw new ServiceException("Cannot execute SQL query! "+e);
         }
 
-//        while(hiScores.iterator().hasNext()){
-//            Score score = hiScores.iterator().next();
-//        }
         for (Score score:hiScores){
             System.out.printf("%15s%15s%30s%n",score.getUsername(),score.getPoints(),score.getPlayedAt());
-
         }
-
-
-//        hiScores.forEach((integer, s) -> {
-//            System.out.printf("%15s%15s%n", s, field.niceTimer(integer * 1000));
-//        });
-
-        //TODO apply findPersonByName() from register?
-        System.out.println("\n");
-        do {
-            System.out.println("Enter x for exit:");
-        } while (!scanner.nextLine().equalsIgnoreCase("x"));
-        System.out.println("\n\n\n\n\n");
     }
+
     public ConsoleUI.Option showMenu() {
         System.out.println("Menu.");
         for (var option : ConsoleUI.Option.values()) {
