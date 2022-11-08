@@ -12,3 +12,9 @@ main - stable working version
 beta - working version
 
 work - not stable, sometimes not even working!
+
+Status:
+---
+- all 3 games
+- hiscore service implemented and working in every game
+- comments service created, not yet implemented
