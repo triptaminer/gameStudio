@@ -40,12 +40,9 @@ public class SpringClient {
         return new GameStudioServices();
     }
 
-//    @Bean
-//    public ScoreService scoreService(){
-//        //return new ScoreServiceJDBC();
-//        return new ScoreServiceJPA();
-//
-//    }
-
+    @Bean
+    public ScoreService scoreService(){
+        return new ScoreServiceJPA();
+    }
 
 }
