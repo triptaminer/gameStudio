@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.services;
 
 import org.springframework.context.annotation.Bean;
+import sk.tuke.gamestudio.GameStudioConsole;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.ui.ServiceUI;
@@ -29,6 +30,7 @@ public class GameStudioServices {
         rankService = new RankServiceJDBC();
         serviceUI= new ServiceUIConsole(this);
     }
+
 
     public String getUserName() {
         return userName;

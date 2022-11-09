@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sk.tuke.gamestudio.services.GameStudioServices;
+import sk.tuke.gamestudio.services.ScoreService;
+import sk.tuke.gamestudio.services.ScoreServiceJPA;
 
 @SpringBootApplication
 //@Configuration
@@ -37,4 +39,13 @@ public class SpringClient {
     public GameStudioServices gameStudioServices(){
         return new GameStudioServices();
     }
+
+//    @Bean
+//    public ScoreService scoreService(){
+//        //return new ScoreServiceJDBC();
+//        return new ScoreServiceJPA();
+//
+//    }
+
+
 }
