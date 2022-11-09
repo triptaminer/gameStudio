@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.services;
 
+import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.ui.ServiceUI;
@@ -20,8 +21,10 @@ public class GameStudioServices {
 
     public ServiceUI serviceUI;
 
+
     public GameStudioServices() {
-        scoreService = new ScoreServiceJDBC();
+//        scoreService = new ScoreServiceJDBC();
+        scoreService = new ScoreServiceJPA();
         commentService = new CommentServiceJDBC();
         rankService = new RankServiceJDBC();
         serviceUI= new ServiceUIConsole(this);

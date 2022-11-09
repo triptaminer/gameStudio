@@ -1,11 +1,18 @@
 package sk.tuke.gamestudio.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Score {
 
+    @Id
+    @GeneratedValue
     private int id;
     private String game;
+
     private String username;
     private int points;
     private Date playedAt;
@@ -53,15 +60,15 @@ public class Score {
         this.playedAt = playedAt;
     }
 
-        @Override
-        public String toString() {
-            return "Score{" +
-                    "game='" + game + '\'' +
-                    ", username='" + username + '\'' +
-                    ", points=" + points +
-                    ", playedAt=" + playedAt +
-                    '}';
-        }
-
-
+    public int getId() {
+        return id;
     }
+
+
+    @Override
+    public String toString() {
+        return "Score{" + "game='" + game + '\'' + ", username='" + username + '\'' + ", points=" + points + ", playedAt=" + playedAt + '}';
+    }
+
+
+}

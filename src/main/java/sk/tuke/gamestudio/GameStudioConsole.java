@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.lights.ui.LightsConsoleUI;
@@ -18,6 +19,7 @@ public class GameStudioConsole {
 
     private String playerName;
 
+    @Autowired
     public GameStudioServices GAME_STUDIO_SERVICES;
 
     //public ScoreService scoreService;
@@ -25,9 +27,9 @@ public class GameStudioConsole {
     public static void main(String[] args) throws IOException, SQLException {
         new GameStudioConsole().run();
     }
-    private void run() throws IOException {
+    public void run() throws IOException {
 
-        GAME_STUDIO_SERVICES = new GameStudioServices();
+        //forSpring GAME_STUDIO_SERVICES = new GameStudioServices();
 
 
         Scanner scanner=new Scanner(System.in);

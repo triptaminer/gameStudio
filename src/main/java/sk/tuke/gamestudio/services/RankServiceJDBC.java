@@ -1,15 +1,12 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Rank;
-import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RankServiceJDBC implements RankService {
 
@@ -34,15 +31,15 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
     }
 
     @Override
-    public List<Rank> getAvgRanking(String game) throws FileNotFoundException, SQLException {
-        final String STATEMENT_AVG_RANK = "SELECT avg(rank) FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
+    public Rank getAvgRanking(String game) throws FileNotFoundException, SQLException {
+        final String STATEMENT_AVG_RANK = "SELECT avg(rank) FROM score WHERE game= ?";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_AVG_RANK, new Object[]{game});
-        ArrayList scores = new ArrayList<Rank>();
-        while (rs.next()) {
-            scores.add(new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3)));
-        }
-        return scores;
+//        ArrayList scores = new ArrayList<Rank>();
+//        while (rs.next()) {
+//            scores.add(new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3)));
+//        }
+        return new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3));
     }
 
     @Override
