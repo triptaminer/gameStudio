@@ -44,6 +44,7 @@ public class ConsoleUI {
 
         System.out.println("\n\nCongrats "+field.GAME_STUDIO_SERVICES.getUserName()+", you got "+field.computeScore()+"pts in "+field.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
         viewHiscores();
+        field.GAME_STUDIO_SERVICES.serviceUI.askForRanking();
 
     }
 

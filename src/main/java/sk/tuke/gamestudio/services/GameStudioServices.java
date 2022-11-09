@@ -1,7 +1,12 @@
 package sk.tuke.gamestudio.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import sk.tuke.gamestudio.GameStudioConsole;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
+import sk.tuke.gamestudio.ui.ServiceUI;
+import sk.tuke.gamestudio.ui.ServiceUIConsole;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -10,13 +15,25 @@ import java.util.Date;
 
 public class GameStudioServices {
 
+    public final CommentService commentService;
+    public final RankService rankService;
     private String userName;
     private String gameName;
+
+    @Autowired
     public ScoreService scoreService;
 
+    public ServiceUI serviceUI;
+
+
     public GameStudioServices() {
-        scoreService = new ScoreServiceJDBC();
+//        scoreService = new ScoreServiceJDBC();
+   //     scoreService = new ScoreServiceJPA();
+        commentService = new CommentServiceJDBC();
+        rankService = new RankServiceJDBC();
+        serviceUI= new ServiceUIConsole(this);
     }
+
 
     public String getUserName() {
         return userName;

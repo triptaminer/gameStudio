@@ -19,7 +19,7 @@ CREATE TABLE rankings(
     game VARCHAR(64) NOT NULL,
     username VARCHAR(64) NOT NULL,
     rank INT NOT NULL CHECK(rank >= 1 AND rank <=9),
-    commented_at TIMESTAMP NOT NULL,
-    unique (game,username)
+    ranked_at TIMESTAMP NOT NULL,
+    constraint uniq unique (game,username)
 );
 commit;

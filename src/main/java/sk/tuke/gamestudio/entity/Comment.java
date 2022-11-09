@@ -1,9 +1,16 @@
 package sk.tuke.gamestudio.entity;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import java.util.Date;
 
+//@Entity
 public class Comment {
 
+//    @Id
+//    @GeneratedValue
     private int id;
     private String game;
     private String user;
@@ -14,6 +21,7 @@ public class Comment {
     }
 
     public Comment(String game, String user, String text, Date commentedAt) {
+
         this.id = id;
         this.game = game;
         this.user = user;
