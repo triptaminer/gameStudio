@@ -25,7 +25,9 @@ DO
 UPDATE SET email = EXCLUDED.email || ';' || customers.email;
              */
             //final String STATEMENT_ADD_SCORE = "INSERT INTO rankings (game,username,rank,ranked_at) VALUES (?, ?, ?, ?)";
-            final String STATEMENT_ADD_SCORE = "INSERT INTO rankings (game,username,rank,ranked_at) VALUES (?, ?, ?, ?) ON CONFLICT (username,rank) DO UPDATE SET game = ?,username = ?,rank = ?,ranked_at = ?";
+//            final String STATEMENT_ADD_SCORE = "INSERT INTO rankings (game,username,rank,ranked_at) VALUES (?, ?, ?, ?) ON CONFLICT (username,rank) DO UPDATE SET game = ?,username = ?,rank = ?,ranked_at = ?";
+            final String STATEMENT_ADD_SCORE = "INSERT INTO rankings (game,username,rank,ranked_at) VALUES (?, ?, ?, ?) " +
+                    "ON CONFLICT ON CONSTRAINT uniq DO UPDATE SET rank = EXCLUDED.rank, ranked_at = EXCLUDED.ranked_at";
             PostgresDirectConnector connection = new PostgresDirectConnector();
             connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{rank.getGame(), rank.getUsername(), rank.getRanking(), new Timestamp(rank.getRankedAt().getTime())}});
         }

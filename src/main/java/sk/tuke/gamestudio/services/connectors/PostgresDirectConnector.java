@@ -63,7 +63,7 @@ public class PostgresDirectConnector {
     }
 
     public int setQuery(String query, Object[][] values) throws SQLException {
-        if (values[0].length != query.replaceAll("[^?]*", "").length()) {
+        if ( query.replaceAll("[^?]*", "").length()%values[0].length>0) {
             throw new RuntimeException("Incorrect pattern or number of items in query: " + query);
         }
 
