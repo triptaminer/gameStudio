@@ -11,6 +11,7 @@ import sk.tuke.gamestudio.services.GameStudioServices;
 import sk.tuke.gamestudio.services.ScoreService;
 import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -43,7 +44,11 @@ public class GameStudioConsole {
         GAME_STUDIO_SERVICES.setUserName(playerName);
 
         while (shouldRepeat) {
-            printMenuOptions();
+            try {
+                printMenuOptions();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             String line = scanner.nextLine();
             switch (line.toUpperCase()) {
                 case "M":
@@ -85,11 +90,11 @@ public class GameStudioConsole {
 
     }
 
-    private void printMenuOptions() {
+    private void printMenuOptions() throws SQLException, FileNotFoundException {
         System.out.println("\nPlease choose option:");
-        System.out.println("M          play Minesweeper");
-        System.out.println("T          play Tiles");
-        System.out.println("L          play Lights");
+        System.out.println("M          play Minesweeper ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Mines")+"*)");
+        System.out.println("T          play Tiles ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Tiles")+"*)");
+        System.out.println("L          play Lights ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Light")+"*)");
         System.out.println("");
         System.out.println("X          exit\n\n");
         System.out.println("Your choise?");

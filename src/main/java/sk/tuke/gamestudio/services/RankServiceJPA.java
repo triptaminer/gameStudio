@@ -25,13 +25,13 @@ public class RankServiceJPA implements RankService{
     }
 
     @Override
-    public Rank getAvgRanking(String gameName) throws FileNotFoundException, SQLException {
+    public float getAvgRanking(String gameName) throws FileNotFoundException, SQLException {
         //final String STATEMENT_COMMENTS = "SELECT avg(ranking) FROM rank WHERE game= ?";
         final String STATEMENT_RANKING = "SELECT avg(sc.ranking) FROM Rank sc WHERE sc.game=:myGame";
 
-        return (Rank) entityManager.createQuery(STATEMENT_RANKING)
+        return Float.parseFloat(entityManager.createQuery(STATEMENT_RANKING)
                 .setParameter("myGame",gameName)
-                .getSingleResult();
+                .getSingleResult().toString()) ;
     }
 
     @Override
