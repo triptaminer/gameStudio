@@ -2,9 +2,9 @@
 
 **My DB is running on port 5433 !!!**
 
-**Configuration** is in file /psql.conf
+**JDBC Configuration** is in file /psql.conf
 
-**DB schemas** are in file /db.sql
+**JDBC DB schemas** are in file /db.sql
 
 BRANCHES:
 ---
