@@ -33,6 +33,6 @@ public class ScoreServiceJPA implements ScoreService{
     @Override
     public void reset(){
         final String STATEMENT_RESET = "DELETE FROM score";
-        entityManager.createNativeQuery(STATEMENT_RESET);
+        entityManager.createNativeQuery(STATEMENT_RESET).executeUpdate();
     }
 }

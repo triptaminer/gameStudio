@@ -32,6 +32,6 @@ public class CommentServiceJPA implements CommentService{
     @Override
     public void reset(){
         final String STATEMENT_RESET = "DELETE FROM comments";
-        entityManager.createNativeQuery(STATEMENT_RESET);
+        entityManager.createNativeQuery(STATEMENT_RESET).executeUpdate();
     }
 }

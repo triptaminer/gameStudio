@@ -14,7 +14,7 @@ public class SpringClient {
         SpringApplication.run(SpringClient.class);
     }
 
-    //@Bean
+//    @Bean
     public CommandLineRunner runnerSimple(){
         return args -> {
             System.out.println("hell ouch");
@@ -50,7 +50,7 @@ public class SpringClient {
 
     @Bean
     public RankService rankService(){
-        return new RankServiceJDBC();
+        return new RankServiceJPA();
     }
 
 }
