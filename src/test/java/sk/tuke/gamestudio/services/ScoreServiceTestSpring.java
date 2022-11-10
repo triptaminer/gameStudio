@@ -1,17 +1,26 @@
 package sk.tuke.gamestudio.services;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import sk.tuke.gamestudio.SpringClient;
 import sk.tuke.gamestudio.entity.Score;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class ScoreServiceTest {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-    private final ScoreService scoreService = new ScoreServiceJDBC();
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes= SpringClient.class)
+public class ScoreServiceTestSpring {
+
+    @Autowired
+    private ScoreService scoreService;
 
     @Test
     public void testReset() throws SQLException, FileNotFoundException {
@@ -22,7 +31,7 @@ public class ScoreServiceTest {
 
         scoreService.reset();
 
-        assertEquals(0,scoreService.getBestScores("mines").size());
+        assertEquals(0,scoreService.getBestScores("Mines").size());
     }
 
     @Test

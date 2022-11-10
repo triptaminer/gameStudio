@@ -1,30 +1,28 @@
 package sk.tuke.gamestudio.services;
 
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.Comment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.List;
 
 @Transactional
-public class ScoreServiceJPA implements ScoreService{
+public class CommentServiceJPA implements CommentService{
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public void addScore(Score score){
-        entityManager.persist(score);
+    public void addComment(Comment comment){
+        entityManager.persist(comment);
     }
 
     @Override
-    public List<Score> getBestScores(String gameName){
-        final String STATEMENT_BEST_SCORES = "SELECT sc FROM Score sc WHERE sc.game=:myGame ORDER BY sc.points DESC";
+    public List<Comment> getComments(String gameName){
+        final String STATEMENT_COMMENTS = "SELECT sc FROM Comment sc WHERE sc.game=:myGame ORDER BY sc.commented_at DESC";
 
-        return entityManager.createQuery(STATEMENT_BEST_SCORES)
+        return entityManager.createQuery(STATEMENT_COMMENTS)
                 .setParameter("myGame",gameName)
                 .setMaxResults(5)
                 .getResultList();
@@ -32,7 +30,7 @@ public class ScoreServiceJPA implements ScoreService{
 
     @Override
     public void reset(){
-        final String STATEMENT_RESET = "DELETE FROM score";
+        final String STATEMENT_RESET = "DELETE FROM comments";
         entityManager.createNativeQuery(STATEMENT_RESET).executeUpdate();
     }
 }

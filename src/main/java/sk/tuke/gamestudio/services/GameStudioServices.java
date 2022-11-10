@@ -15,13 +15,18 @@ import java.util.Date;
 
 public class GameStudioServices {
 
-    public final CommentService commentService;
-    public final RankService rankService;
+    //public final CommentService commentService;
     private String userName;
     private String gameName;
 
     @Autowired
     public ScoreService scoreService;
+
+    @Autowired
+    public CommentService commentService;
+
+    @Autowired
+    public RankService rankService;
 
     public ServiceUI serviceUI;
 
@@ -29,8 +34,8 @@ public class GameStudioServices {
     public GameStudioServices() {
 //        scoreService = new ScoreServiceJDBC();
    //     scoreService = new ScoreServiceJPA();
-        commentService = new CommentServiceJDBC();
-        rankService = new RankServiceJDBC();
+   //     commentService = new CommentServiceJDBC();
+   //     rankService = new RankServiceJDBC();
         serviceUI= new ServiceUIConsole(this);
     }
 

@@ -1,30 +1,28 @@
 package sk.tuke.gamestudio.entity;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class Comment {
 
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private int id;
     private String game;
-    private String user;
+    private String userName;
     private String text;
     private Date commentedAt;
 
     public Comment() {
     }
 
-    public Comment(String game, String user, String text, Date commentedAt) {
+    public Comment(String game, String userName, String text, Date commentedAt) {
 
-        this.id = id;
         this.game = game;
-        this.user = user;
+        this.userName = userName;
         this.text = text;
         this.commentedAt = commentedAt;
     }
@@ -38,11 +36,11 @@ public class Comment {
     }
 
     public String getUserName() {
-        return user;
+        return userName;
     }
 
     public void setUserName(String user) {
-        this.user = user;
+        this.userName = user;
     }
 
     public String getText() {

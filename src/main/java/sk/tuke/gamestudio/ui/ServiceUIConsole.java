@@ -53,8 +53,14 @@ public class ServiceUIConsole implements ServiceUI{
     }
 
     @Override
-    public void viewRanking() {
-
+    public float viewRanking() {
+        try {
+            return gss.rankService.getAvgRanking(gss.getGameName());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

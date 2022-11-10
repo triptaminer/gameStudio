@@ -18,7 +18,7 @@ public interface RankService {
      * @param gameName Name of the game
      * @return List&lt;Score&gt;
      */
-    Rank getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
+    float getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
 
     /**
      * deletes all scores from storage

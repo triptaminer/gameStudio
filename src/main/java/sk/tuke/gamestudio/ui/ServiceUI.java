@@ -7,7 +7,7 @@ public interface ServiceUI {
 
     void askForComment();
 
-    void viewRanking();
+    float viewRanking();
 
     void viewComments();
 

@@ -31,7 +31,7 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
     }
 
     @Override
-    public Rank getAvgRanking(String game) throws FileNotFoundException, SQLException {
+    public float getAvgRanking(String game) throws FileNotFoundException, SQLException {
         final String STATEMENT_AVG_RANK = "SELECT avg(rank) FROM score WHERE game= ?";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_AVG_RANK, new Object[]{game});
@@ -39,7 +39,8 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
 //        while (rs.next()) {
 //            scores.add(new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3)));
 //        }
-        return new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3));
+//        return new Rank(game, rs.getString(1), rs.getInt(2), rs.getTimestamp(3));
+        return 0.0f;
     }
 
     @Override

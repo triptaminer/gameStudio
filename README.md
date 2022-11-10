@@ -40,11 +40,12 @@ GameStudio
 - created ALL 3 services
 - highscores are working on every game
 - Spring runner
+- rankings displayed next to each game in main menu
 
 JPA
 - separate DB: gamestudiojpa
-- fixed issue with grouped *Services in GameStudioServices
-- hiscores
+- all services working
+- JPA playground package (user input not implemented yet)
 
 
 
