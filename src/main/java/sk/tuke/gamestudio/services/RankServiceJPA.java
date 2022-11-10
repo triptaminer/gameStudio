@@ -20,15 +20,15 @@ public class RankServiceJPA implements RankService{
 
 
     @Override
-    public void addRanking(Rank rank) throws FileNotFoundException, SQLException {
+    public void addRanking(Rank rank){
 
     }
 
     @Override
-    public float getAvgRanking(String gameName) throws FileNotFoundException, SQLException {
+    public float getAvgRanking(String gameName){
         //final String STATEMENT_COMMENTS = "SELECT avg(ranking) FROM rank WHERE game= ?";
         final String STATEMENT_RANKING = "SELECT avg(sc.ranking) FROM Rank sc WHERE sc.game=:myGame";
-
+        //TODO check if empty table still throws error
         return Float.parseFloat(entityManager.createQuery(STATEMENT_RANKING)
                 .setParameter("myGame",gameName)
                 .getSingleResult().toString()) ;

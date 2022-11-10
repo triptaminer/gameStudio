@@ -9,7 +9,7 @@ public class StudyGroup {
     @GeneratedValue
     private long ident;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 64, nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "ident")

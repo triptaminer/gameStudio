@@ -5,8 +5,6 @@ import sk.tuke.gamestudio.entity.Comment;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.List;
 
 @Transactional
@@ -21,11 +19,12 @@ public class CommentServiceJPA implements CommentService{
     }
 
     @Override
-    public List<Comment> getComments(String gameName) throws FileNotFoundException, SQLException {
+    public List<Comment> getComments(String gameName){
         final String STATEMENT_COMMENTS = "SELECT sc FROM Comment sc WHERE sc.game=:myGame ORDER BY sc.commented_at DESC";
 
         return entityManager.createQuery(STATEMENT_COMMENTS)
                 .setParameter("myGame",gameName)
+                .setMaxResults(5)
                 .getResultList();
     }
 

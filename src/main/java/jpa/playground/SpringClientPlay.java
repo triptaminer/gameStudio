@@ -15,11 +15,13 @@ public class SpringClientPlay {
     @Bean
     public CommandLineRunner runnerSimple(){
         return args -> {
-            System.out.println("jpaaaaa");
+//            System.out.println("jpaaaaa");
+            playground().play();
         };
 
     }
 
-
+    @Bean
+    public Playground playground(){return new Playground();}
 
 }
