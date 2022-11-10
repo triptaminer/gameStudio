@@ -4,7 +4,6 @@ import sk.tuke.gamestudio.entity.Rank;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.List;
 
 public interface RankService {
     /**
@@ -19,7 +18,7 @@ public interface RankService {
      * @param gameName Name of the game
      * @return List&lt;Score&gt;
      */
-    List<Rank> getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
+    Rank getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
 
     /**
      * deletes all scores from storage
