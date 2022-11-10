@@ -5,9 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import sk.tuke.gamestudio.services.GameStudioServices;
-import sk.tuke.gamestudio.services.ScoreService;
-import sk.tuke.gamestudio.services.ScoreServiceJPA;
+import sk.tuke.gamestudio.services.*;
 
 @SpringBootApplication
 //@Configuration
@@ -43,6 +41,16 @@ public class SpringClient {
     @Bean
     public ScoreService scoreService(){
         return new ScoreServiceJPA();
+    }
+
+    @Bean
+    public CommentService commentService(){
+        return new CommentServiceJPA();
+    }
+
+    @Bean
+    public RankService rankService(){
+        return new RankServiceJDBC();
     }
 
 }
