@@ -9,20 +9,20 @@ import java.util.List;
 
 public interface CommentService {
     /**
-     * Adds new score to storage
-     * @param score score object to be added
+     * Adds new comment to storage
+     * @param comment score object to be added
      */
     void addComment(Comment comment) throws FileNotFoundException, SQLException;
 
     /**
-     * Loads 5 best scores from given game
+     * Loads 5 comments from given game
      * @param gameName Name of the game
-     * @return List&lt;Score&gt;
+     * @return List&lt;Comment&gt;
      */
     List<Comment> getComments(String gameName) throws FileNotFoundException, SQLException;
 
     /**
-     * deletes all scores from storage
+     * deletes all comments from storage
      */
     void reset() throws FileNotFoundException, SQLException;
 

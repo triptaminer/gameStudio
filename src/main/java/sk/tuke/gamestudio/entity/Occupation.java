@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,9 @@ public class Occupation {
     @Id
     @GeneratedValue
     private int id;
-    private String name;
+
+    @Column(unique = true, length = 32, nullable = false)
+    private String occupation;
 
     public Occupation() {
     }
