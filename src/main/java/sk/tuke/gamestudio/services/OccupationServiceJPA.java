@@ -29,7 +29,7 @@ public class OccupationServiceJPA implements OccupationService {
         final String STATEMENT_COMMENTS = "SELECT sc FROM Occupation sc where sc.occupation=:myOccupation";
         return (Occupation) entityManager.createQuery(STATEMENT_COMMENTS)
                 .setParameter("myOccupation",name)
-                .getResultList();
+                .getSingleResult();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class PlayerServiceJPA implements PlayerService{
 
         return (Player) entityManager.createQuery(STATEMENT_COMMENTS)
                 .setParameter("myName",name)
-                .getResultList();
+                .getSingleResult();
     }
 
     @Override

@@ -3,6 +3,7 @@ package sk.tuke.gamestudio.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.GameStudioConsole;
+import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.ui.ServiceUI;
@@ -28,8 +29,16 @@ public class GameStudioServices {
     @Autowired
     public RankService rankService;
 
+    @Autowired
+    public PlayerService playerService;
+    @Autowired
+    public CountryService countryService;
+    @Autowired
+    public OccupationService occupationService;
+
     public ServiceUI serviceUI;
 
+    public Player currentPlayer;
 
     public GameStudioServices() {
 //        scoreService = new ScoreServiceJDBC();

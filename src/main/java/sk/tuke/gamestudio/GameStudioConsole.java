@@ -1,6 +1,10 @@
 package sk.tuke.gamestudio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import sk.tuke.gamestudio.entity.Country;
+import sk.tuke.gamestudio.entity.Occupation;
+import sk.tuke.gamestudio.entity.Player;
+import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.lights.ui.LightsConsoleUI;
@@ -38,10 +42,17 @@ public class GameStudioConsole {
         boolean shouldRepeat=true;
 
         printMenuHeader();
+
+
         askPlayerName();
+
+
+
+
         System.out.println("Hi "+playerName);
 
         GAME_STUDIO_SERVICES.setUserName(playerName);
+
 
         while (shouldRepeat) {
             try {
@@ -114,7 +125,36 @@ public class GameStudioConsole {
                 System.out.println("Your name is too long.");
                 }
                 else {
-                    playerName=name;
+
+                    try {
+                        Player p=GAME_STUDIO_SERVICES.playerService.getPlayerByUsername(name);
+                        if(p==null){
+                            //register
+
+
+                            Country c=new Country("country name");
+
+
+                            Occupation o=GAME_STUDIO_SERVICES.occupationService.getOccupation("employee");
+
+
+                            GAME_STUDIO_SERVICES.currentPlayer=new Player("dummy","Lorem ipsum",0,c,o);
+
+
+                        }
+                        else{
+                            //login
+                            GAME_STUDIO_SERVICES.currentPlayer=p;
+                        }
+
+
+
+
+
+                        //playerName=name;
+                    } catch (FileNotFoundException | SQLException e) {
+                        throw new ServiceException(e);
+                    }
                 }
 
         }while (isWrongName);

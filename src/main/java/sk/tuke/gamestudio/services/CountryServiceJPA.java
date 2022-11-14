@@ -30,7 +30,7 @@ public class CountryServiceJPA implements CountryService {
         final String STATEMENT_COMMENTS = "SELECT sc FROM Country sc where sc.country=:myCountry";
         return (Country) entityManager.createQuery(STATEMENT_COMMENTS)
                 .setParameter("myCountry",name)
-                .getResultList();
+                .getSingleResult();
     }
 
     @Override

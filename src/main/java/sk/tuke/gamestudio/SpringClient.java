@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import sk.tuke.gamestudio.entity.Occupation;
 import sk.tuke.gamestudio.services.*;
 
 @SpringBootApplication
@@ -51,6 +52,21 @@ public class SpringClient {
     @Bean
     public RankService rankService(){
         return new RankServiceJPA();
+    }
+
+    @Bean
+    public PlayerService playerService(){
+        return new PlayerServiceJPA();
+    }
+
+    @Bean
+    public CountryService countryService(){
+        return new CountryServiceJPA();
+    }
+
+    @Bean
+    public OccupationService occupationService(){
+        return new OccupationServiceJPA();
     }
 
 }
