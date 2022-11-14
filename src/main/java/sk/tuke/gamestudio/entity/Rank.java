@@ -1,11 +1,11 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+//TODO: switch String username to Player name !!!
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "game", "username" }) })
 public class Rank {
 
     @Id
@@ -13,6 +13,7 @@ public class Rank {
     private int id;
     private String game;
     private String username;
+    @Column(columnDefinition = "INT CHECK (ranking between 1 and 5)")
     private int ranking;
     private Date playedAt;
 
