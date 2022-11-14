@@ -244,7 +244,7 @@ public class TileConsoleUI {
         }
 
         for (Score score : hiScores) {
-            System.out.printf("%15s%15s%30s%n", score.getUsername(), score.getPoints(), score.getPlayedAt());
+            System.out.printf("%15s%15s%30s%n", score.getUserName(), score.getPoints(), score.getPlayedAt());
         }
     }
 

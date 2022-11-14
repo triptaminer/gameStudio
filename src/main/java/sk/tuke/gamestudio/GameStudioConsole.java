@@ -15,10 +15,13 @@ import sk.tuke.gamestudio.services.GameStudioServices;
 import sk.tuke.gamestudio.services.ScoreService;
 import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
+import javax.persistence.NoResultException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class GameStudioConsole {
 
@@ -49,9 +52,10 @@ public class GameStudioConsole {
 
 
 
-        System.out.println("Hi "+playerName);
+        System.out.println("Hi "+GAME_STUDIO_SERVICES.currentPlayer);
 
-        GAME_STUDIO_SERVICES.setUserName(playerName);
+        //TODO convert to Player
+//        GAME_STUDIO_SERVICES.setUserName(GAME_STUDIO_SERVICES.currentPlayer.getName());
 
 
         while (shouldRepeat) {
@@ -127,31 +131,23 @@ public class GameStudioConsole {
                 else {
 
                     try {
-                        Player p=GAME_STUDIO_SERVICES.playerService.getPlayerByUsername(name);
+                        Player p;
+                        try {
+                            p = GAME_STUDIO_SERVICES.playerService.getPlayerByUsername(name);
+                        }
+                        catch (NoResultException e){
+                            p = null;
+                        }
                         if(p==null){
                             //register
-
-
-                            Country c=new Country("country name");
-
-
-                            Occupation o=GAME_STUDIO_SERVICES.occupationService.getOccupation("employee");
-
-
-                            GAME_STUDIO_SERVICES.currentPlayer=new Player("dummy","Lorem ipsum",0,c,o);
-
-
+                            registerUser(scanner, name);
                         }
                         else{
                             //login
                             GAME_STUDIO_SERVICES.currentPlayer=p;
+                            System.out.println("Logging in...");
                         }
 
-
-
-
-
-                        //playerName=name;
                     } catch (FileNotFoundException | SQLException e) {
                         throw new ServiceException(e);
                     }
@@ -159,5 +155,57 @@ public class GameStudioConsole {
 
         }while (isWrongName);
 
+    }
+
+    private void registerUser(Scanner scanner, String name) throws FileNotFoundException, SQLException {
+        String aboutUser;
+        String countryUser;
+        String occupUser;
+        List<Occupation> occupList = GAME_STUDIO_SERVICES.occupationService.getAllOccupations();
+        int occupUserInt=0;
+
+        boolean registration=true;
+        do{
+
+            String  aCheck="[\\w\\W\\d]+";
+            String  cCheck="[\\w\\W]+";
+            String  oCheck="[\\d]+";
+            boolean occup=true;
+
+            System.out.println("This name is not registered yet, please provide few detais about you \n" +
+                    "(dont worry, we want just your money, your kidney is useless for us!)");
+            System.out.println("Describe youself in few words (required):");
+            aboutUser = scanner.nextLine();
+            System.out.println("From which country are you? (required)");
+            countryUser = scanner.nextLine();
+            do{
+                System.out.println("Choose your occupation:");
+                for (int i = 0; i < occupList.size(); i++) {
+                    System.out.println((i+1)+". "+occupList.get(i).getOccupationName());
+                }
+                occupUser = scanner.nextLine();
+                if(!occupUser.matches(oCheck)){
+                    System.out.println("Wrong input!");
+                }
+                else {
+                    occupUserInt=Integer.parseInt(occupUser);
+                    occup=false;
+                }
+
+
+            }while(occup);
+
+
+            if (aboutUser.matches(aCheck) && countryUser.matches(cCheck) && occupList.size()>occupUserInt-1){
+                registration=false;
+            }
+            else System.out.println("One ore more value(s) doesn't match required format! Please try again!");
+
+        }while (registration);
+        Country c=new Country(countryUser);
+        GAME_STUDIO_SERVICES.countryService.addCountry(c);
+        Occupation o=occupList.get(occupUserInt-1);
+        GAME_STUDIO_SERVICES.currentPlayer=new Player(name,aboutUser,0,c,o);
+        GAME_STUDIO_SERVICES.playerService.addPlayer(GAME_STUDIO_SERVICES.currentPlayer);
     }
 }

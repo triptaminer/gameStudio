@@ -113,7 +113,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         if (isSolved()) {
             state = TileFieldState.SOLVED;
 
-            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
+            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
 
             //scores.saveScore(category,);
         }

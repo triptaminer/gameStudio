@@ -1,16 +1,11 @@
 package sk.tuke.gamestudio.services;
-
-import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rank;
-import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @Transactional
 public class RankServiceJPA implements RankService{
@@ -26,12 +21,17 @@ public class RankServiceJPA implements RankService{
 
     @Override
     public float getAvgRanking(String gameName){
-        //final String STATEMENT_COMMENTS = "SELECT avg(ranking) FROM rank WHERE game= ?";
         final String STATEMENT_RANKING = "SELECT avg(sc.ranking) FROM Rank sc WHERE sc.game=:myGame";
         //TODO check if empty table still throws error
-        return Float.parseFloat(entityManager.createQuery(STATEMENT_RANKING)
-                .setParameter("myGame",gameName)
-                .getSingleResult().toString()) ;
+
+        float avg=0.0f;
+        var val= entityManager.createQuery(STATEMENT_RANKING)
+                        .setParameter("myGame",gameName)
+                        .getSingleResult();
+        if(val!=null){
+            avg=Float.parseFloat(val.toString());
+        }
+        return avg ;
     }
 
     @Override

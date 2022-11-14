@@ -5,8 +5,6 @@ import sk.tuke.gamestudio.entity.Score;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.List;
 
 @Transactional

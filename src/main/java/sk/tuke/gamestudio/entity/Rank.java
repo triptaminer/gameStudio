@@ -13,7 +13,7 @@ public class Rank {
     private int id;
     private String game;
     private String username;
-    @Column(columnDefinition = "INT CHECK (ranking between 1 and 5)")
+    @Column(columnDefinition = "INT CHECK (ranking between 0 and 6)")
     private int ranking;
     private Date playedAt;
 

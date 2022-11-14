@@ -1,8 +1,10 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import sk.tuke.gamestudio.services.PlayerService;
+import sk.tuke.gamestudio.services.PlayerServiceJPA;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -13,19 +15,27 @@ public class Score {
     private int id;
     private String game;
 
-    private String username;
+    @ManyToOne
+    @JoinColumn(name="Player.id", nullable = false)
+    private Player user;
     private int points;
     private Date playedAt;
 
     public Score() {
     }
 
-    public Score(String game, String username, int points, Date playedAt) {
+    public Score(String game, Player user, int points, Date playedAt) {
 //        this.id = id;
         this.game = game;
-        this.username = username;
+        this.user = user;
         this.points = points;
         this.playedAt = playedAt;
+    }
+
+    public Score(String game, String string, int points, Timestamp timestamp) {
+        //FIXME dirty workaround for now
+        Player p=new PlayerServiceJPA().getPlayerByUsername(string);
+        new Score(game, p, points, timestamp);
     }
 
     public String getGame() {
@@ -36,12 +46,8 @@ public class Score {
         this.game = game;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String userName) {
-        this.username = userName;
+    public String getUserName() {
+        return user.getName();
     }
 
     public int getPoints() {
@@ -67,7 +73,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" + "game='" + game + '\'' + ", username='" + username + '\'' + ", points=" + points + ", playedAt=" + playedAt + '}';
+        return "Score{" + "game='" + game + '\'' + ", username='" + user + '\'' + ", points=" + points + ", playedAt=" + playedAt + '}';
     }
 
 

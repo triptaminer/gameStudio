@@ -15,6 +15,14 @@ public class Occupation {
     @Column(unique = true, length = 32, nullable = false)
     private String occupation;
 
+    public Occupation(String o) {
+        occupation=o;
+    }
+
+    public String getOccupationName() {
+        return occupation;
+    }
+
     public Occupation() {
     }
 

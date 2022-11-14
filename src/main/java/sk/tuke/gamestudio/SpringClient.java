@@ -4,7 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import sk.tuke.gamestudio.entity.Occupation;
 import sk.tuke.gamestudio.services.*;
 
@@ -12,19 +11,49 @@ import sk.tuke.gamestudio.services.*;
 //@Configuration
 public class SpringClient {
     public static void main(String[] args) {
-        SpringApplication.run(SpringClient.class);
+        SpringApplication.run(SpringClient.class, args!=null?"y":"n");
     }
 
-//    @Bean
+//    @Bean //uncoment for load Occupation
     public CommandLineRunner runnerSimple(){
         return args -> {
-            System.out.println("hell ouch");
+            System.out.println("hell ouch lets hack the world!");
+            gameStudioServices().occupationService.addOccupation(new Occupation("pupil"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("student"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("employee"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("unemployeed"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("self-employeed"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("retired"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("invalid"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("other"));
         };
 
     }
-    @Bean
+    @Bean //uncoment for start game
     public CommandLineRunner runnerGameStudioConsole(GameStudioConsole gameStudioConsole){
         return args -> {
+            gameStudioConsole().run();
+        };
+    }
+
+
+
+    //FIXME grrr... @Bean
+    public CommandLineRunner runnerGameStudioConsoleWithDB(GameStudioConsole gameStudioConsole,String db){
+        return args -> {
+            if(db=="y"){
+                //with param we fill database first :)
+                System.out.println("setting DB");
+                gameStudioServices().occupationService.addOccupation(new Occupation("pupil"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("student"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("employee"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("unemployed"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("self-employed"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("retired"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("invalid"));
+                gameStudioServices().occupationService.addOccupation(new Occupation("other"));
+            }
+
             gameStudioConsole().run();
         };
     }
@@ -67,6 +96,10 @@ public class SpringClient {
     @Bean
     public OccupationService occupationService(){
         return new OccupationServiceJPA();
+    }
+
+    @Bean
+    public String db(){return "";
     }
 
 }

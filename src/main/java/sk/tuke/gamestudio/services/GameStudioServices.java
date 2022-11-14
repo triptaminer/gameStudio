@@ -50,12 +50,12 @@ public class GameStudioServices {
 
 
     public String getUserName() {
-        return userName;
+        return currentPlayer.getName();
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
     public String getGameName() {
         return gameName;
     }
@@ -64,10 +64,10 @@ public class GameStudioServices {
         this.gameName = gameName;
     }
 
-    public void processScore(String gameName, String userName, int score) {
+    public void processScore(String gameName, int score) {
         try {
             scoreService.addScore(
-                    new Score(gameName, userName, score, new Date())
+                    new Score(gameName, this.currentPlayer, score, new Date())
             );
         } catch (FileNotFoundException e) {
             throw new ServiceException("Missing configuration file! "+e);
