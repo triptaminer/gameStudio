@@ -1,6 +1,6 @@
 package sk.tuke.gamestudio.services;
 
-import sk.tuke.gamestudio.entity.Rank;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
 import java.io.FileNotFoundException;
@@ -8,11 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class RankServiceJDBC implements RankService {
+public class RatingServiceJDBC implements RatingService {
 
     @Override
-    public void addRanking(Rank rank) throws FileNotFoundException, SQLException {
-        if (rank.getRanking() > 0) {
+    public void addRating(Rating rating) throws FileNotFoundException, SQLException {
+        if (rating.getValue() > 0) {
 
             /* uz som sa bal, ze nieco take v postgres nie je :D
 INSERT INTO customers (name, email)
@@ -26,12 +26,12 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
             final String STATEMENT_ADD_SCORE = "INSERT INTO rankings (game,username,rank,ranked_at) VALUES (?, ?, ?, ?) " +
                     "ON CONFLICT ON CONSTRAINT uniq DO UPDATE SET rank = EXCLUDED.rank, ranked_at = EXCLUDED.ranked_at";
             PostgresDirectConnector connection = new PostgresDirectConnector();
-            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{rank.getGame(), rank.getUsername(), rank.getRanking(), new Timestamp(rank.getRankedAt().getTime())}});
+            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{rating.getGame(), rating.getUsername(), rating.getValue(), new Timestamp(rating.getRatedAt().getTime())}});
         }
     }
 
     @Override
-    public float getAvgRanking(String game) throws FileNotFoundException, SQLException {
+    public float getAvgRating(String game) throws FileNotFoundException, SQLException {
         final String STATEMENT_AVG_RANK = "SELECT avg(rank) FROM score WHERE game= ?";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         ResultSet rs = connection.getQuery(STATEMENT_AVG_RANK, new Object[]{game});

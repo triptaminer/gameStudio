@@ -1,8 +1,6 @@
 package sk.tuke.gamestudio.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import sk.tuke.gamestudio.GameStudioConsole;
 import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
@@ -27,7 +25,7 @@ public class GameStudioServices {
     public CommentService commentService;
 
     @Autowired
-    public RankService rankService;
+    public RatingService ratingService;
 
     @Autowired
     public PlayerService playerService;

@@ -12,8 +12,6 @@ import sk.tuke.gamestudio.game.lights.core.LightsGame;
 import sk.tuke.gamestudio.game.mines.ui.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.services.GameStudioServices;
-import sk.tuke.gamestudio.services.ScoreService;
-import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
 import javax.persistence.NoResultException;
 import java.io.FileNotFoundException;
@@ -21,7 +19,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class GameStudioConsole {
 
@@ -107,9 +104,9 @@ public class GameStudioConsole {
 
     private void printMenuOptions() throws SQLException, FileNotFoundException {
         System.out.println("\nPlease choose option:");
-        System.out.println("M          play Minesweeper ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Mines")+"*)");
-        System.out.println("T          play Tiles ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Tiles")+"*)");
-        System.out.println("L          play Lights ("+GAME_STUDIO_SERVICES.rankService.getAvgRanking("Light")+"*)");
+        System.out.println("M          play Minesweeper ("+GAME_STUDIO_SERVICES.ratingService.getAvgRating("Mines")+"*)");
+        System.out.println("T          play Tiles ("+GAME_STUDIO_SERVICES.ratingService.getAvgRating("Tiles")+"*)");
+        System.out.println("L          play Lights ("+GAME_STUDIO_SERVICES.ratingService.getAvgRating("Light")+"*)");
         System.out.println("");
         System.out.println("X          exit\n\n");
         System.out.println("Your choise?");

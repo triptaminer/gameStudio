@@ -21,8 +21,8 @@ public class SpringClient {
             gameStudioServices().occupationService.addOccupation(new Occupation("pupil"));
             gameStudioServices().occupationService.addOccupation(new Occupation("student"));
             gameStudioServices().occupationService.addOccupation(new Occupation("employee"));
-            gameStudioServices().occupationService.addOccupation(new Occupation("unemployeed"));
-            gameStudioServices().occupationService.addOccupation(new Occupation("self-employeed"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("unemployed"));
+            gameStudioServices().occupationService.addOccupation(new Occupation("self-employed"));
             gameStudioServices().occupationService.addOccupation(new Occupation("retired"));
             gameStudioServices().occupationService.addOccupation(new Occupation("invalid"));
             gameStudioServices().occupationService.addOccupation(new Occupation("other"));
@@ -79,8 +79,8 @@ public class SpringClient {
     }
 
     @Bean
-    public RankService rankService(){
-        return new RankServiceJPA();
+    public RatingService rankService(){
+        return new RatingServiceJPA();
     }
 
     @Bean

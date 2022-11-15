@@ -1,16 +1,16 @@
 package sk.tuke.gamestudio.services;
 
-import sk.tuke.gamestudio.entity.Rank;
+import sk.tuke.gamestudio.entity.Rating;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public interface RankService {
+public interface RatingService {
     /**
      * Adds new score to storage
-     * @param rank score object to be added
+     * @param rating object to be added
      */
-    void addRanking(Rank rank) throws FileNotFoundException, SQLException;
+    void addRating(Rating rating) throws FileNotFoundException, SQLException;
 
     /**
      * Loads 5 best scores from given game
@@ -18,7 +18,7 @@ public interface RankService {
      * @param gameName Name of the game
      * @return List&lt;Score&gt;
      */
-    float getAvgRanking(String gameName) throws FileNotFoundException, SQLException;
+    float getAvgRating(String gameName) throws FileNotFoundException, SQLException;
 
     /**
      * deletes all scores from storage

@@ -1,6 +1,6 @@
 package sk.tuke.gamestudio.ui;
 
-import sk.tuke.gamestudio.entity.Rank;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.services.GameStudioServices;
 
@@ -31,7 +31,7 @@ public class ServiceUIConsole implements ServiceUI{
                 int rating = Integer.parseInt(reply);
                 if (rating >= 1 && rating <= 5) {
                     try {
-                        gss.rankService.addRanking(new Rank(gss.getGameName(), gss.currentPlayer, rating, new Date()));
+                        gss.ratingService.addRating(new Rating(gss.getGameName(), gss.currentPlayer, rating, new Date()));
                     } catch (FileNotFoundException e) {
                         throw new ServiceException("Missing configuration file! " + e);
                     } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class ServiceUIConsole implements ServiceUI{
     @Override
     public float viewRanking() {
         try {
-            return gss.rankService.getAvgRanking(gss.getGameName());
+            return gss.ratingService.getAvgRating(gss.getGameName());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
