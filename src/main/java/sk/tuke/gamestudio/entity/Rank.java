@@ -3,27 +3,30 @@ package sk.tuke.gamestudio.entity;
 import javax.persistence.*;
 import java.util.Date;
 
-//TODO: switch String username to Player name !!!
+//TODO: switch String username to Player user !!!
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "game", "username" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "game", "userObject" }) })
 public class Rank {
 
     @Id
     @GeneratedValue
     private int id;
     private String game;
-    private String username;
-    @Column(columnDefinition = "INT CHECK (ranking between 0 and 6)")
+
+    @ManyToOne
+    @JoinColumn(name="Player.id", nullable = false)
+    private Player userObject;
+    @Column(columnDefinition = "INT CHECK (ranking between 1 and 5)")
     private int ranking;
     private Date playedAt;
 
     public Rank() {
     }
 
-    public Rank(String game, String username, int ranking, Date playedAt) {
+    public Rank(String game, Player userObject, int ranking, Date playedAt) {
 //        this.id = id;
         this.game = game;
-        this.username = username;
+        this.userObject = userObject;
         this.ranking = ranking;
         this.playedAt = playedAt;
     }
@@ -37,11 +40,11 @@ public class Rank {
     }
 
     public String getUsername() {
-        return username;
+        return userObject.getName();
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
+    public void setUser(Player userObject) {
+        this.userObject = userObject;
     }
 
     public int getRanking() {
@@ -64,7 +67,7 @@ public class Rank {
         public String toString() {
             return "Score{" +
                     "game='" + game + '\'' +
-                    ", username='" + username + '\'' +
+                    ", username='" + userObject.getName() + '\'' +
                     ", points=" + ranking +
                     ", playedAt=" + playedAt +
                     '}';

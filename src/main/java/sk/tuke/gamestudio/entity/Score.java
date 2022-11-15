@@ -1,6 +1,5 @@
 package sk.tuke.gamestudio.entity;
 
-import sk.tuke.gamestudio.services.PlayerService;
 import sk.tuke.gamestudio.services.PlayerServiceJPA;
 
 import javax.persistence.*;

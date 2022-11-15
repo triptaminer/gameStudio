@@ -31,7 +31,7 @@ public class ServiceUIConsole implements ServiceUI{
                 int rating = Integer.parseInt(reply);
                 if (rating >= 1 && rating <= 5) {
                     try {
-                        gss.rankService.addRanking(new Rank(gss.getGameName(), gss.getUserName(), rating, new Date()));
+                        gss.rankService.addRanking(new Rank(gss.getGameName(), gss.currentPlayer, rating, new Date()));
                     } catch (FileNotFoundException e) {
                         throw new ServiceException("Missing configuration file! " + e);
                     } catch (SQLException e) {

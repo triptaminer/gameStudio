@@ -14,7 +14,7 @@ public class SpringClient {
         SpringApplication.run(SpringClient.class, args!=null?"y":"n");
     }
 
-//    @Bean //uncoment for load Occupation
+    //@Bean //uncoment for load Occupation
     public CommandLineRunner runnerSimple(){
         return args -> {
             System.out.println("hell ouch lets hack the world!");
