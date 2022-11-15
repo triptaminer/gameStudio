@@ -5,7 +5,7 @@ import java.util.Date;
 
 //TODO: switch String username to Player user !!!
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "game", "userObject" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "game", "Player.id" }) })
 public class Rank {
 
     @Id
