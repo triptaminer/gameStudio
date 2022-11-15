@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.GameStudioConsole;
 import sk.tuke.gamestudio.entity.Score;
@@ -14,10 +15,12 @@ import java.util.Date;
 
 public class GameStudioServices {
 
-    public final CommentServiceJDBC commentService;
-    public final RankServiceJDBC rankService;
+    public final CommentService commentService;
+    public final RankService rankService;
     private String userName;
     private String gameName;
+
+    @Autowired
     public ScoreService scoreService;
 
     public ServiceUI serviceUI;
@@ -25,7 +28,7 @@ public class GameStudioServices {
 
     public GameStudioServices() {
 //        scoreService = new ScoreServiceJDBC();
-        scoreService = new ScoreServiceJPA();
+   //     scoreService = new ScoreServiceJPA();
         commentService = new CommentServiceJDBC();
         rankService = new RankServiceJDBC();
         serviceUI= new ServiceUIConsole(this);
