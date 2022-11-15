@@ -29,7 +29,7 @@ public class SpringClient {
         };
 
     }
-    @Bean //uncoment for start game
+    //@Bean //uncoment for start game
     public CommandLineRunner runnerGameStudioConsole(GameStudioConsole gameStudioConsole){
         return args -> {
             gameStudioConsole().run();
