@@ -22,7 +22,7 @@ public class MinesController {
 
         if (mineField == null) {
             gss=new GameStudioServices();
-            mineField = new Field(8, 8, 1, gss);
+            mineField = new Field(8, 8, 20, gss);
 
         }
 
@@ -65,7 +65,8 @@ public class MinesController {
                         sb.append("<img class='tile' src='/img/mine.ico' alt='[ ]' width='32' height='32'/>");
                         break;
                     case CLOSED:
-                        sb.append("<a href='?row="+i+"&amp;column="+j+"&amp;action=o'><img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32'/></a>");
+//                        sb.append("<a href='?row="+i+"&amp;column="+j+"&amp;action=o'><img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32'/></a>");
+                        sb.append("<img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32' onclick='open("+i+","+j+")' oncontextmenu='mark("+i+","+j+")' contextmenu='mymenu'/>");
                         break;
                     case MARKED:
                         sb.append("<img class='tile' src='/img/flag.PNG' alt='[ ]' width='32' height='32'/>");
