@@ -7,6 +7,7 @@ import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.GameStudioServices;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 
 @Controller
@@ -17,11 +18,21 @@ public class MinesController {
     private GameStudioServices gss;
 
     @RequestMapping
-    public String processUserInput() throws IOException {
+    public String processUserInput(Integer row, Integer column, String action) throws IOException {
 
-        if(mineField==null){
-            mineField = new Field(8,8,1,gss);
+        if (mineField == null) {
+            gss=new GameStudioServices();
+            mineField = new Field(8, 8, 1, gss);
 
+        }
+
+        if(row!=null&&column!=null){
+            if(action.equals("o")) {
+                mineField.openTile(row, column);
+            }
+            else{
+                mineField.markTile(row, column);
+            }
         }
 
         //return getHtmlField();
@@ -29,33 +40,35 @@ public class MinesController {
     }
 
 
-    public String getHtmlField(){
+    public String getHtmlField() {
 
         StringBuilder sb = new StringBuilder();
 
-sb.append("<table>\n");
-int rowCount = mineField.getRowCount();
-int colCount = mineField.getColumnCount();
+        sb.append("<table>\n");
+        int rowCount = mineField.getRowCount();
+        int colCount = mineField.getColumnCount();
 
         for (int i = 0; i < rowCount; i++) {
             sb.append("<tr>");
             for (int j = 0; j < colCount; j++) {
-                Tile tile=mineField.getTile(i,j);
+                Tile tile = mineField.getTile(i, j);
                 sb.append("<td>");
 
 
                 switch (tile.getState()) {
                     case OPEN:
-                        if (tile instanceof Clue)
-                            sb.append(String.valueOf(((Clue) tile).getValue()).replace("0"," "));
+                        if (tile instanceof Clue) {
+                            int v = ((Clue) tile).getValue();
+                            sb.append("<img class='tile' src='/img/MINESWEEPER_"+v+".PNG' alt='[ ]' width='32' height='32'/>");
+                        }
                         else
-                            sb.append("X");
+                        sb.append("<img class='tile' src='/img/mine.ico' alt='[ ]' width='32' height='32'/>");
                         break;
                     case CLOSED:
-                        sb.append("-");
+                        sb.append("<a href='?row="+i+"&amp;column="+j+"&amp;action=o'><img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32'/></a>");
                         break;
                     case MARKED:
-                        sb.append("M");
+                        sb.append("<img class='tile' src='/img/flag.PNG' alt='[ ]' width='32' height='32'/>");
                         break;
                 }
                 sb.append("</td>");
@@ -64,7 +77,7 @@ int colCount = mineField.getColumnCount();
             sb.append("</tr>\n");
 
         }
-sb.append("</table>\n");
+        sb.append("</table>\n");
 
 
         return sb.toString();
