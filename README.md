@@ -11,12 +11,15 @@ BRANCHES:
 
 test-221114 - self-explaining
 
-main - stable working version
+main - stable working version (currently thymeleaf chapter)
 
 work - not stable, sometimes not even working!
 
 STATUS:
 ---
+
+Thymeleaf
+- started with mines - not fully working
 
 Mines
 - working
@@ -24,6 +27,11 @@ Mines
 - fixed multiple hiscore records
 - ranking after each game (TODO: move it to exit from game :/ )
 - hiscores are using JPA now!
+- ** WEB UI ** (thymes): 
+- - working: 
+- - - left click: opens tile
+- - - right click: marks tile
+- - - 'little' tuning
 
 Tiles
 - working
