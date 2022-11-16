@@ -44,7 +44,7 @@ public class MinesController {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<table>\n");
+        sb.append("<table id='field'>\n");
         int rowCount = mineField.getRowCount();
         int colCount = mineField.getColumnCount();
 
@@ -59,17 +59,23 @@ public class MinesController {
                     case OPEN:
                         if (tile instanceof Clue) {
                             int v = ((Clue) tile).getValue();
-                            sb.append("<img class='tile' src='/img/MINESWEEPER_"+v+".PNG' alt='[ ]' width='32' height='32'/>");
+                            if(v>0)
+                            sb.append("<div class='field opened clue"+v+"'>"+v+"</div>");
+                            else
+                                sb.append("<div class='field opened'>&nbsp;</div>");
+
                         }
-                        else
-                        sb.append("<img class='tile' src='/img/mine.ico' alt='[ ]' width='32' height='32'/>");
+                        else {
+                            sb.append("<div class='field mineOpened'></div>");
+                        }
                         break;
                     case CLOSED:
 //                        sb.append("<a href='?row="+i+"&amp;column="+j+"&amp;action=o'><img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32'/></a>");
-                        sb.append("<img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32' onclick='open("+i+","+j+")' oncontextmenu='mark("+i+","+j+")' contextmenu='mymenu'/>");
+//                        sb.append("<img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32' onclick='open("+i+","+j+")' oncontextmenu='mark("+i+","+j+")' contextmenu='mymenu'/>");
+                        sb.append("<div class='field closed' onclick='openTile("+i+","+j+")' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                     case MARKED:
-                        sb.append("<img class='tile' src='/img/flag.PNG' alt='[ ]' width='32' height='32'/>");
+                        sb.append("<div class='field marked' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                 }
                 sb.append("</td>");
