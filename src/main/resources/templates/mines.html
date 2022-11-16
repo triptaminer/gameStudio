@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Minesweeper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/mines.css" media="screen" />
+
+
+</head>
+<body>
+<main>
+    <h2>Minesweeper</h2>
+    <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
+
+    <section th:utext="${@minesController.getHtmlField()}"></section>
+</main>
+
+<script>
+        function openTile(r,c) {
+            window.location="?row="+r+"&column="+c+"&action=o";
+}
+        function markTile(r,c) {
+            window.location="?row="+r+"&column="+c+"&action=m";
+            return false;
+}
+    </script>
+</body>
+</html>

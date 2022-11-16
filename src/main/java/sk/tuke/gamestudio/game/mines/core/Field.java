@@ -141,7 +141,7 @@ public class Field {
             if (isSolved()) {
                 //send score only once
                 if(state!=FieldState.SOLVED) {
-                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(), computeScore());
+                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
                 }
                 state = FieldState.SOLVED;
             }

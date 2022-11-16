@@ -6,7 +6,6 @@ import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
-import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,8 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static sk.tuke.gamestudio.GameStudioConsole.*;
 
 public class ConsoleUI {
     private final Field field;
@@ -139,7 +136,7 @@ public class ConsoleUI {
         }
 
         for (Score score:hiScores){
-            System.out.printf("%15s%15s%30s%n",score.getUsername(),score.getPoints(),score.getPlayedAt());
+            System.out.printf("%15s%15s%30s%n",score.getUserName(),score.getPoints(),score.getPlayedAt());
         }
     }
 

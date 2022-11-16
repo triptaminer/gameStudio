@@ -1,0 +1,29 @@
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+
+table,tr,td {padding:0px;margin:0px;border:0px;display:flex}
+
+.field {width:32px;height:32px;}
+.closed, .opened, .marked, .mine {width:32px;height:32px;}
+
+.closed {background-image: url("/img/closedTile.png");}
+.opened {background-image: url("/img/openedTile.png"); text-align: center; line-height: 32px; font-weight: bold; font-size: x-large;}
+.marked {background-image: url("/img/markedTile.png");}
+.mineOpened {background-image: url("/img/mineOTile.png");}
+.mineClosed {background-image: url("/img/mineCTile.png");}
+
+/* color range from https://colordesigner.io/gradient-generator */
+.clue1 {color:#017f01}
+.clue2 {color:#268301}
+.clue3 {color:#4e8801}
+.clue4 {color:#788c01}
+.clue5 {color:#917c00}
+.clue6 {color:#955500}
+.clue7 {color:#9a2c00}
+.clue8 {color:#9e0000}
+
+
+

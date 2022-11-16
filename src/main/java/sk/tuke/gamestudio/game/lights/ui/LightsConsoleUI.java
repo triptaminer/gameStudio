@@ -4,7 +4,6 @@ import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
-import sk.tuke.gamestudio.game.tiles.ui.TileConsoleUI;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -147,7 +146,7 @@ public class LightsConsoleUI {
         }
 
         for (Score score : hiScores) {
-            System.out.printf("%15s%15s%30s%n", score.getUsername(), score.getPoints(), score.getPlayedAt());
+            System.out.printf("%15s%15s%30s%n", score.getUserName(), score.getPoints(), score.getPlayedAt());
         }
     }
 }

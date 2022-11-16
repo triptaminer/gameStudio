@@ -18,7 +18,7 @@ CREATE TABLE rankings(
     id int generated always as identity,
     game VARCHAR(64) NOT NULL,
     username VARCHAR(64) NOT NULL,
-    rank INT NOT NULL CHECK(rank >= 1 AND rank <=9),
+    rating INT NOT NULL CHECK(rating >= 1 AND rating <=9),
     ranked_at TIMESTAMP NOT NULL,
     constraint uniq unique (game,username)
 );

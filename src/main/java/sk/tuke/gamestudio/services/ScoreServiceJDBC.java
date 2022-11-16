@@ -1,7 +1,6 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.exceptions.ServiceException;
 import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
 import java.io.FileNotFoundException;
@@ -16,7 +15,7 @@ public class ScoreServiceJDBC implements ScoreService {
         if (score.getPoints() > 0) {
             final String STATEMENT_ADD_SCORE = "INSERT INTO score (game,username,points,played_at) VALUES (?, ?, ?, ?)";
             PostgresDirectConnector connection = new PostgresDirectConnector();
-            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{score.getGame(), score.getUsername(), score.getPoints(), new Timestamp(score.getPlayedAt().getTime())}});
+            connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{score.getGame(), score.getUserName(), score.getPoints(), new Timestamp(score.getPlayedAt().getTime())}});
         }
     }
 

@@ -98,7 +98,7 @@ public class LightsGame {
         updateTimer();
         if (isSolved()) {
             state = LightsFieldState.SOLVED;
-            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), GAME_STUDIO_SERVICES.getUserName(),computeScore());
+            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
 
         }
     }
