@@ -22,7 +22,7 @@ public class MinesController {
 
         if (mineField == null) {
             gss=new GameStudioServices();
-            mineField = new Field(8, 8, 20, gss);
+            mineField = new Field(8, 8, 10, gss);
 
         }
 
