@@ -2,7 +2,9 @@ package sk.tuke.gamestudio;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.entity.Occupation;
 import sk.tuke.gamestudio.services.*;
@@ -10,8 +12,15 @@ import sk.tuke.gamestudio.services.*;
 @SpringBootApplication
 //@Configuration
 public class SpringClient {
+
+    //starts client AND server
+//    public static void main(String[] args) {
+//        SpringApplication.run(SpringClient.class);
+//    }
+
+
     public static void main(String[] args) {
-        SpringApplication.run(SpringClient.class, args!=null?"y":"n");
+        new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
 
     //@Bean //uncoment for load Occupation
@@ -29,7 +38,7 @@ public class SpringClient {
         };
 
     }
-    //@Bean //uncoment for start game
+    @Bean //uncoment for start game
     public CommandLineRunner runnerGameStudioConsole(GameStudioConsole gameStudioConsole){
         return args -> {
             gameStudioConsole().run();
@@ -38,25 +47,6 @@ public class SpringClient {
 
 
 
-    //FIXME grrr... @Bean
-    public CommandLineRunner runnerGameStudioConsoleWithDB(GameStudioConsole gameStudioConsole,String db){
-        return args -> {
-            if(db=="y"){
-                //with param we fill database first :)
-                System.out.println("setting DB");
-                gameStudioServices().occupationService.addOccupation(new Occupation("pupil"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("student"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("employee"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("unemployed"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("self-employed"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("retired"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("invalid"));
-                gameStudioServices().occupationService.addOccupation(new Occupation("other"));
-            }
-
-            gameStudioConsole().run();
-        };
-    }
 
     @Bean
     public GameStudioConsole gameStudioConsole(){
