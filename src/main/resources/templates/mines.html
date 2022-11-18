@@ -15,6 +15,7 @@
     <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
 
     <section th:utext="${@minesController.getHtmlField()}"></section>
+    <section th:text="${@minesController.getGameStatusMsg}"></section>
 </main>
 
 <script>

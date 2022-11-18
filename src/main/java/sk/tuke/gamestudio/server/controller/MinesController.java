@@ -6,6 +6,7 @@ import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.GameStudioServices;
+//import sk.tuke.gamestudio.entity.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
@@ -88,5 +89,17 @@ public class MinesController {
 
 
         return sb.toString();
+    }
+
+    public String getGameStatusMsg(){
+        String status="";
+
+        switch (mineField.getState()){
+            case FAILED -> status="You failed!";
+            case SOLVED -> status="You won! You get "+mineField.computeScore();
+            case PLAYING -> status="Playing...";
+        }
+
+        return status;
     }
 }
