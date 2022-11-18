@@ -1,11 +1,12 @@
 package sk.tuke.gamestudio.server.controller;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.Tile;
-import sk.tuke.gamestudio.services.GameStudioServices;
+import sk.tuke.gamestudio.services.*;
 //import sk.tuke.gamestudio.entity.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,16 +17,16 @@ import java.io.IOException;
 public class MinesController {
 
     private Field mineField = null;
-    private GameStudioServices gss;
+    public GameStudioServices gss;
+
+    private boolean isPlaying=true;
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column, String action) throws IOException {
 
-        if (mineField == null) {
-            gss=new GameStudioServices();
-            mineField = new Field(8, 8, 10, gss);
+        if (mineField==null)
+            startNewGame();
 
-        }
 
         if(row!=null&&column!=null){
             if(action.equals("o")) {
@@ -40,7 +41,22 @@ public class MinesController {
         return "mines";
     }
 
+    @RequestMapping("/new")
+    public String newGame(){
+        startNewGame();
+        return "mines";
+    }
+    public void startNewGame(){
+        gss=new GameStudioServices();
+        gss.scoreService=new ScoreServiceJPA();
 
+        try {
+            mineField = new Field(8, 8, 2, gss);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     public String getHtmlField() {
 
         StringBuilder sb = new StringBuilder();
@@ -102,4 +118,6 @@ public class MinesController {
 
         return status;
     }
+
+
 }

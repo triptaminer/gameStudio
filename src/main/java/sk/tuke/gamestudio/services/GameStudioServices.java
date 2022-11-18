@@ -40,9 +40,9 @@ public class GameStudioServices {
 
     public GameStudioServices() {
 //        scoreService = new ScoreServiceJDBC();
-   //     scoreService = new ScoreServiceJPA();
-   //     commentService = new CommentServiceJDBC();
-   //     rankService = new RankServiceJDBC();
+//        scoreService = new ScoreServiceJPA();
+//        commentService = new CommentServiceJPA();
+//        ratingService = new RatingServiceJPA();
         serviceUI= new ServiceUIConsole(this);
     }
 
