@@ -7,13 +7,12 @@ import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.services.*;
 
 @SpringBootApplication
-@EntityScan(basePackages = "sk.tuke.gamestudio.entity")
+@EntityScan(basePackages = "sk.tuke.gamestudio.entity, sk.tuke.gamestudio.services")
+
 public class SpringServer {
     public static void main(String[] args) {
         SpringApplication.run(SpringServer.class);
     }
-
-
 
 
     @Bean

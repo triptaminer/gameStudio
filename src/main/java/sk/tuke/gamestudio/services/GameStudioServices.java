@@ -1,6 +1,9 @@
 package sk.tuke.gamestudio.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import sk.tuke.gamestudio.entity.Country;
+import sk.tuke.gamestudio.entity.Occupation;
 import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
@@ -65,7 +68,9 @@ public class GameStudioServices {
     public void processScore(String gameName, int score) {
         try {
             scoreService.addScore(
+
                     new Score(gameName, this.currentPlayer, score, new Date())
+//                    new Score(gameName, new Player("Anonymous","",1,new Country("asd"),new Occupation("qwe")), score, new Date())
             );
         } catch (FileNotFoundException e) {
             throw new ServiceException("Missing configuration file! "+e);
