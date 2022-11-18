@@ -9,7 +9,7 @@ import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.*;
 //import sk.tuke.gamestudio.entity.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder;//
 import java.io.IOException;
 
 @Controller
