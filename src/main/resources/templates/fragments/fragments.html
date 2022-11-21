@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com"
+      lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/mines.css" />
+</head>
+
+<body>
+
+<header th:fragment="gsheader">
+  <h1>Game Studio</h1>
+
+  <div  th:if="${@userController.logged}" >
+    Logged as <span th:text="${@userController.loggedUser}"></span>
+    <a href="/logout">Log out.</a>
+  </div>
+  <div  th:if="not ${@userController.logged}" >
+    Logged out. Please, <a href="/gamestudio">log in</a>.
+  </div>
+
+</header>
+
+<footer  th:fragment="gsfooter">
+  <hr />
+  GameStudio ver.Tacad.3 2022-11
+</footer>
+</body>
+</html>

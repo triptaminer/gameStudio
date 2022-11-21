@@ -9,7 +9,7 @@
 <body>
 
 <main layout:fragment="content">
-
+<a href="/">&lt; Main page </a>
   <form th:if="not ${@userController.logged}" action="/login" method="post">
     <label for="login">Login:</label> <input type="text" id="login" name="login" required /> <br />
     <label for="pass">Password:</label> <input type="password" id="pass" name="password" required /> <br />
@@ -19,6 +19,8 @@
   <h2>Games</h2>
   <ul>
     <li><a href="/mines">Minesweeper</a></li>
+    <li><a href="/tiles">Tiles</a></li>
+    <li><a href="/lights">Lights off</a></li>
   </ul>
 
 </main>

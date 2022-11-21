@@ -7,7 +7,7 @@ public class TileControls {
 
     Map<String, Integer> controls = new HashMap<>();
 
-    TileControls() {
+    public TileControls() {
         controls.put("w",0);
         controls.put("a",1);
         controls.put("s",2);

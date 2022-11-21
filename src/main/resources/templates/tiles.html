@@ -5,22 +5,22 @@
         lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Minesweeper</title>
+    <title>Tiles</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/css/mines.css" media="screen" />
+    <link rel="stylesheet" href="/css/tiles.css" media="screen" />
 
 
 </head>
 <body>
 <main layout:fragment="content">
     <a href="/">&lt; Main page </a> | <a href="/gamestudio"> GameStudio </a>
-    <h2>Minesweeper</h2>
+    <h2>Tiles</h2>
     <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
-    <a href="/mines/new">Restart game</a><br/><br/>
+    <a href="/tiles/new">Restart game</a><br/><br/>
 
-    <section th:utext="${@minesController.getHtmlField()}"></section>
-    <section th:text="${@minesController.getGameStatusMsg}"></section>
+    <section th:utext="${@tilesController.getHtmlField()}"></section>
+    <section th:text="${@tilesController.getGameStatusMsg}"></section>
 
     <section>
         <h3>Best Scores</h3>
@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="score: ${@minesController.bestScores}">
+            <tr th:each="score: ${@tilesController.bestScores}">
                 <td th:text="${scoreStat.index+1}"></td>
                 <td th:text="${score.getUserName()}"></td>
                 <td th:text="${score.points}"></td>
@@ -44,13 +44,9 @@
         </table>
     </section>
     <script>
-        function openTile(r,c) {
-            window.location="/mines?row="+r+"&column="+c+"&action=o";
-}
-        function markTile(r,c) {
-            window.location="/mines?row="+r+"&column="+c+"&action=m";
-            return false;
-}
+        function switchTile(r,c) {
+            window.location="/tiles?row="+r+"&column="+c;
+        }
     </script>
 </main>
 

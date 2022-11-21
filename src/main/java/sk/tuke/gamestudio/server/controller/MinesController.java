@@ -1,22 +1,21 @@
 package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Player;
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.*;
-//import sk.tuke.gamestudio.entity.*;
 
-import javax.persistence.criteria.CriteriaBuilder;//
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/mines")
@@ -24,15 +23,11 @@ import java.sql.SQLException;
 public class MinesController {
 
     private Field mineField = null;
-    //public GameStudioServices gss;
 
     private boolean isPlaying=true;
 
-    //@Autowired
-    //public ScoreService scoreService;
     @Autowired
     private GameStudioServices gss;
-
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column, String action) throws IOException {
@@ -131,6 +126,16 @@ public class MinesController {
 
 
         return sb.toString();
+    }
+
+    public List<Score> getBestScores(){
+        try {
+            return gss.scoreService.getBestScores("Mines");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getGameStatusMsg(){

@@ -1,0 +1,21 @@
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+
+table,tr,td {padding:0px;margin:0px;border:0px;}
+
+.field,.field.tr,.field.tr.td {width:32px;height:32px;display:flex}
+
+.empty {background-color:#aaa}
+.filled {background-color:#888}
+
+
+.tile {width:32px;height:32px;}
+.light {background-color:#ff0}
+.light:hover {background-color:#dd0}
+.dark {background-color:#aaa}
+.dark:hover {background-color:#ccc}
+
+
