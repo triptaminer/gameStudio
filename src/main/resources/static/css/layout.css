@@ -4,6 +4,7 @@ a,a:hover,a:visited {color:#00f;text-decoration:none}
 a:hover{font-color:#44f;text-decoration:underline}
 
 #header {padding:5px 5px 15px 5px ;display: inline-block; width: 100%;}
+#header div {display: inline-block;}
 
 #logo{font-size:32px;font-weight:bold;display:inline-block}
 #footer{background-color:#000;color:#ddd;margin-top:20px;padding:10px}
