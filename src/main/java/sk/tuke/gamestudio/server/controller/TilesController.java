@@ -22,15 +22,15 @@ public class TilesController {
 
     private TileGame TilesField = null;
 
-    private boolean isPlaying=true;
+    private boolean isPlaying = true;
     private TileControls controls;
     @Autowired
     private GameStudioServices gss;
 
     @RequestMapping
-    public String processUserInput(Integer row, Integer column){
+    public String processUserInput(Integer row, Integer column) {
 
-        if (TilesField ==null) {
+        if (TilesField == null) {
             try {
                 startNewGame();
             } catch (IOException e) {
@@ -39,25 +39,19 @@ public class TilesController {
         }
 
 
-        if(row!=null&&column!=null){
+        if (row != null && column != null) {
+            int direction = -1;
 
-            //int direction = controls.translate(line);
-            int direction=1;
-
+            if (isEmptyAround(row, column)) {
+                direction=getDirection(row,column);
+            }
 
             if (direction == -1) {
                 System.err.println("Bad input");
                 return "ERROR wrong input!";
             }
 
-            String emptyTile = TilesField.getEmpty().toString().replace("[", "").replace("]", "");
-
-            //int row = Integer.parseInt(emptyTile.split("x")[0]);
-            //int column = Integer.parseInt(emptyTile.split("x")[1]);
-
-
-
-            TilesField.moveTile(row, column,direction);
+            TilesField.moveTile(row, column, direction);
         }
 
         return "tiles";
@@ -68,28 +62,18 @@ public class TilesController {
         startNewGame();
         return "tiles";
     }
+
     public void startNewGame() throws IOException {
-        //gss=new GameStudioServices();
-
-//        Player p=null;
-//        try {
-//            p = gss.playerService.getPlayerByUsername("viki");
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        gss.currentPlayer=p;
-
 
         gss.setGameName("Tiles");
         //scoreService =new ScoreServiceJPA();
 
-            TilesField = new TileGame(gss);
-            TilesField.setGameProperties(3,3,1);
-            controls = new TileControls();
+        TilesField = new TileGame(gss);
+        TilesField.setGameProperties(3, 3, 1);
+        controls = new TileControls();
 
     }
+
     public String getHtmlField() {
 
         StringBuilder sb = new StringBuilder();
@@ -104,10 +88,11 @@ public class TilesController {
                 int tile = TilesField.getTile(i, j);
                 sb.append("<td>");
 
+                String movable = (isEmptyAround(i, j)) ? "movable" : "fixed";
+                String onclick = (isEmptyAround(i, j)) ? "onclick='switchTile(" + i + "," + j + ")'" : "";
 
-                sb.append(tile>0?"<div class='field filled' onclick='switchTile("+i+","+j+")'>"+tile+"</div>"
-                        :"<div class='field empty' onclick='switchTile("+i+","+j+")'></div>");
-
+                sb.append(tile > 0 ? "<div class='field filled " + movable + "' " + onclick + ">" + tile + "</div>"
+                        : "<div class='field empty'></div>");
 
                 sb.append("</td>");
 
@@ -121,7 +106,29 @@ public class TilesController {
         return sb.toString();
     }
 
-    public List<Score> getBestScores(){
+    private boolean isEmptyAround(int r, int c) {
+        return (
+                (isValidTile(r + 1, c) && (TilesField.getTile(r + 1, c) == 0)) ||
+                        (isValidTile(r, c + 1) && (TilesField.getTile(r, c + 1) == 0)) ||
+                        (isValidTile(r - 1, c) && (TilesField.getTile(r - 1, c) == 0)) ||
+                        (isValidTile(r, c - 1) && (TilesField.getTile(r, c - 1) == 0))
+        );
+    }
+
+    private int getDirection(int r,int c){
+        int direction=0;
+        if(isValidTile(r + 1, c) && (TilesField.getTile(r + 1, c) == 0)) direction= 2;
+        if(isValidTile(r, c + 1) && (TilesField.getTile(r, c + 1) == 0)) direction= 3;
+        if(isValidTile(r - 1, c) && (TilesField.getTile(r - 1, c) == 0)) direction= 0;
+        if(isValidTile(r, c - 1) && (TilesField.getTile(r, c - 1) == 0)) direction= 1;
+        return direction;
+    }
+
+    private boolean isValidTile(int r, int c) {
+        return (r >= 0 && c >= 0 && r < TilesField.getRowCount() && c < TilesField.getColumnCount());
+    }
+
+    public List<Score> getBestScores() {
         try {
             return gss.scoreService.getBestScores("Tiles");
         } catch (FileNotFoundException e) {
@@ -131,12 +138,12 @@ public class TilesController {
         }
     }
 
-    public String getGameStatusMsg(){
-        String status="";
+    public String getGameStatusMsg() {
+        String status = "";
 
-        switch (TilesField.getState()){
-            case SOLVED -> status="You won! You get "+ TilesField.computeScore();
-            case PLAYING -> status="Playing...";
+        switch (TilesField.getState()) {
+            case SOLVED -> status = "You won! You get " + TilesField.computeScore();
+            case PLAYING -> status = "Playing...";
         }
 
         return status;

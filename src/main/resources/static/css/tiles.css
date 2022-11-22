@@ -9,13 +9,9 @@ table,tr,td {padding:0px;margin:0px;border:0px;}
 .field,.field.tr,.field.tr.td {width:32px;height:32px;display:flex}
 
 .empty {background-color:#aaa}
-.filled {background-color:#888}
+.filled {background-color:#888;width:30px;height:30px;border:#888 1px solid;}
 
-
-.tile {width:32px;height:32px;}
-.light {background-color:#ff0}
-.light:hover {background-color:#dd0}
-.dark {background-color:#aaa}
-.dark:hover {background-color:#ccc}
+.movable:hover {border:#0f0 1px solid;}
+.fixed:hover {border:#f00 1px solid;}
 
 

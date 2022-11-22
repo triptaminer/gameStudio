@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.services;
 
+import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Rating;
 
 import java.io.FileNotFoundException;
@@ -25,4 +26,5 @@ public interface RatingService {
      */
     void reset() throws FileNotFoundException, SQLException;
 
+    Rating getRating(Player player, String game);
 }

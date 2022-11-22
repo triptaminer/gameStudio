@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Player;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
 import sk.tuke.gamestudio.game.mines.core.Clue;
@@ -49,16 +51,6 @@ public class LightsController {
     }
     public void startNewGame(){
         //gss=new GameStudioServices();
-
-//        Player p=null;
-//        try {
-//            p = gss.playerService.getPlayerByUsername("viki");
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        gss.currentPlayer=p;
 
 
         gss.setGameName("Lights");
@@ -110,6 +102,26 @@ public class LightsController {
         }
     }
 
+    public List<Comment> getComments(){
+        try {
+            return gss.commentService.getComments("Lights");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public float getAvgRating(){
+        try {
+            return gss.ratingService.getAvgRating("Lights");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getGameStatusMsg(){
         String status="";
 
@@ -121,5 +133,29 @@ public class LightsController {
         return status;
     }
 
+    public String getUserRating(){
+        StringBuilder rating=new StringBuilder();
+
+        Rating r=gss.ratingService.getRating(gss.currentPlayer,"Lights");
+
+        if(r!=null){
+            for (int i = 1; i < 6; i++) {
+                if(i<=r.getValue()){
+                    rating.append("<a href='?star="+i+"' class='starRated'>*</a>");
+                }
+                else{
+                    rating.append("<a href='?star="+i+"' class='starBlank'>*</a>");
+                }
+            }
+
+        }
+        else{
+            for (int i = 1; i < 6; i++) {
+                    rating.append("<a href='?star="+i+"' class='starBlank'>*</a>");
+            }
+        }
+
+        return rating.toString();
+    }
 
 }

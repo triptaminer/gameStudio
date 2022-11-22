@@ -4,13 +4,14 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/css/mines.css" />
+  <link rel="stylesheet" href="/css/layout.css" media="screen" />
+
 </head>
 
 <body>
 
-<header th:fragment="gsheader">
-  <h1>Game Studio</h1>
+<header th:fragment="gsheader" id="header">
+  <a href="/" id="logo">Game Studio</a>
 
   <div  th:if="${@userController.logged}" >
     Logged as <span th:text="${@userController.loggedUser}"></span>
@@ -22,7 +23,7 @@
 
 </header>
 
-<footer  th:fragment="gsfooter">
+<footer  th:fragment="gsfooter" id="footer">
   <hr />
   GameStudio ver.Tacad.3 2022-11
 </footer>

@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.services;
 
+import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
@@ -48,5 +49,10 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
         final String STATEMENT_RESET = "DELETE FROM ranking";
         PostgresDirectConnector connection = new PostgresDirectConnector();
         connection.setQuery(STATEMENT_RESET);
+    }
+
+    @Override
+    public Rating getRating(Player player, String game) {
+        return null;
     }
 }

@@ -19,7 +19,7 @@ public class UserController {
     private GameStudioServices gss;
 
     Player loggedUser = null;
-    private String user = "trip";
+    //private String user = "trip";
     private final String PASS = "heslo";
 
     @RequestMapping("/login")

@@ -1,8 +1,6 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,17 +10,21 @@ public class Comment {
     @GeneratedValue
     private int id;
     private String game;
-    private String userName;
+
+    @ManyToOne
+    @JoinColumn(name="Player.id", nullable = false)
+
+    private Player user;
     private String text;
     private Date commentedAt;
 
     public Comment() {
     }
 
-    public Comment(String game, String userName, String text, Date commentedAt) {
+    public Comment(String game, Player user, String text, Date commentedAt) {
 
         this.game = game;
-        this.userName = userName;
+        this.user = user;
         this.text = text;
         this.commentedAt = commentedAt;
     }
@@ -36,11 +38,11 @@ public class Comment {
     }
 
     public String getUserName() {
-        return userName;
+        return user.getName();
     }
 
-    public void setUserName(String user) {
-        this.userName = user;
+    public void setUserName(Player user) {
+        this.user = user;
     }
 
     public String getText() {

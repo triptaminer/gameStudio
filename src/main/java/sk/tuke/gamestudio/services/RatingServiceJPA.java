@@ -45,7 +45,7 @@ public class RatingServiceJPA implements RatingService {
         }
         return avg ;
     }
-
+    @Override
     public Rating getRating(Player player, String game){
         final String STATEMENT_RANKING = "SELECT sc FROM Rating sc WHERE sc.game=:myGame and sc.user=:myUser";
         Rating r;

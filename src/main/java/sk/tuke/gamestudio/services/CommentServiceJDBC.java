@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.services.connectors.PostgresDirectConnector;
 
@@ -28,7 +29,7 @@ public class CommentServiceJDBC implements CommentService {
         ResultSet rs = connection.getQuery(STATEMENT_COMMENTS, new Object[]{gameName});
         ArrayList comments = new ArrayList<Comment>();
         while (rs.next()) {
-            comments.add(new Comment(gameName, rs.getString(1), rs.getString(2), rs.getTimestamp(3)));
+            comments.add(new Comment(gameName, (Player) rs.getObject(1), rs.getString(2), rs.getTimestamp(3)));
         }
         return comments;
     }
