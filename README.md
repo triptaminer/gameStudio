@@ -24,26 +24,20 @@ Thymeleaf and WEB ui
 - login working
 - TODO: 
   - register of new user
-  - re-work design
+  - re-work design (partially done)
+
+All WEB games
+- fixed bug when player was able to act after game ends
 
 Mines
 - working
-- hiscores displayed after game or in sub-menu
-- fixed multiple hiscore records
-- ranking after each game (TODO: move it to exit from game :/ )
-- hiscores are using JPA now!
-- left click open, right click (un)mark
+- left click open, right click (un)mark in web version
  
 Tiles
 - working
-- hiscores displayed after game or in sub-menu
-- removed obsolete HiScore class
 
 Light
 - working
-- hiscores displayed after game or in sub-menu
-- removed obsolete HiScore class
-- cleaned code from unused features of Tiles
 
 GameStudio
 - loading configuration from config file located in root
