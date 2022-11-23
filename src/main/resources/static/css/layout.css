@@ -5,10 +5,19 @@ a:hover{font-color:#44f;text-decoration:underline}
 
 table,tr,td {padding:0px;margin:auto;border:0px;}
 
-#header {padding:5px 5px 15px 5px ;display: inline-block; width: 100%;}
+#header {padding:5px 5px 15px 5px ;display: inline-block; width: 100%;background-color:#ddf;color:#00f;}
 #header div {display: inline-block;}
+#header table {width:100%}
+#headSpace {width: 50%;}
+#headLogin {padding-right: 60px; text-align: right;}
+#headLogin label {width:100px; height:21px;display: inline-block;}
+#headLogin input {border: none;background-color:#fff;color:#00f;width:100px}
+#headBtn {border: 1px solid;height: 40px; position: absolute; top: 7px;background-color:#fff;color:#00f;margin-left: 5px;}
+#headLogged {width: 100%; text-align: end;}
+#headLogged a {color:#f00;}
 
-#logo{font-size:32px;font-weight:bold;display:inline-block}
+#logo{font-size:32px;font-weight:bold;display:inline-block;width: 100%;text-align: left; margin-left: 20px;}
+
 #footer{background-color:#000;color:#ddd;margin-top:20px;padding:10px}
 
 section {text-align:center;margin:auto;}

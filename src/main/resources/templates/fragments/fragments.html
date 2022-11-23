@@ -11,15 +11,30 @@
 <body>
 
 <header th:fragment="gsheader" id="header">
-  <a href="/" id="logo">Game Studio</a>
+<!--  <a href="/" id="logo">Game Studio</a>-->
 
-  <div  th:if="${@userController.logged}" >
-    Logged as <span th:text="${@userController.loggedUser}"></span>
-    <a href="/logout">Log out.</a>
-  </div>
-  <div  th:if="not ${@userController.logged}" >
-    Logged out. Please, <a href="/gamestudio">log in</a>.
-  </div>
+
+  <table>
+    <tr>
+      <td><a href="/" id="logo">Game Studio</a></td>
+      <td id="headSpace"></td>
+      <td>
+        <div  th:if="${@userController.logged}" id="headLogged">
+        Welcome <b><span th:text="${@userController.loggedUser}"></span></b> !<br/>
+        <a href="/logout">Log out?</a>
+      </div>
+        <form th:if="not ${@userController.logged}" action="/login" method="post"  id="headLogin">
+          <label for="login">Login:</label> <input type="text" id="login" name="login" required /> <br />
+          <label for="pass">Password:</label> <input type="password" id="pass" name="password" required />
+          <button type="submit" id="headBtn">Log in</button>
+        </form>
+      </td>
+
+    </tr>
+  </table>
+
+
+
 
 </header>
 

@@ -4,7 +4,6 @@
    border: 0;
 }
 
-table,tr,td {padding:0px;margin:0px;border:0px;}
 
 .field,.field.tr,.field.tr.td {width:32px;height:32px;display:flex}
 .closed, .opened, .marked, .mine {width:32px;height:32px;}
