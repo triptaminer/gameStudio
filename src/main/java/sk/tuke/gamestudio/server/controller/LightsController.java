@@ -9,8 +9,10 @@ import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
 import sk.tuke.gamestudio.game.mines.core.Clue;
+import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.GameStudioServices;
 
@@ -38,8 +40,7 @@ public class LightsController {
         if (LightsField ==null)
             startNewGame();
 
-
-        if(row!=null&&column!=null){
+        if(row!=null && column!=null && LightsField.getState() == LightsFieldState.PLAYING){
                 LightsField.switchTile(row, column);
         }
 
@@ -52,6 +53,7 @@ public class LightsController {
         return "lights";
     }
     public void startNewGame(){
+        gss.setGameName("Lights");
             LightsField = new LightsGame(gss);
             LightsField.setGameProperties(5,5,1);
     }
@@ -69,10 +71,11 @@ public class LightsController {
             for (int j = 0; j < colCount; j++) {
                 Boolean tile = LightsField.getTile(i, j);
                 sb.append("<td>");
+                String tileSize="tile"+colCount;
 
 
-                sb.append(tile?"<div class='field tile light' onclick='switchTile("+i+","+j+")'></div>"
-                        :"<div class='field tile dark' onclick='switchTile("+i+","+j+")'></div>");
+                sb.append(tile?"<div class='field "+tileSize+" light' onclick='switchTile("+i+","+j+")'></div>"
+                        :"<div class='field "+tileSize+" dark' onclick='switchTile("+i+","+j+")'></div>");
 
 
                 sb.append("</td>");

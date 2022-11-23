@@ -1,13 +1,14 @@
-body{width:1300px;height:100%;padding:0px;margin:0px;position:relative;display:inline-block}
+body{width:100%;height:100%;padding:0px;margin:0px;position:relative;display:inline-block; background-color:#fff;}
+#body {  margin: 0px auto; padding: auto; position: relative; align-self: baseline; width: 90%;  background-color:#eef; border-left:1px solid #88f; border-right:1px solid #22f}
 
 a,a:hover,a:visited {color:#00f;text-decoration:none}
 a:hover{font-color:#44f;text-decoration:underline}
 
 table,tr,td {padding:0px;margin:auto;border:0px;}
 
-#header {padding:5px 5px 15px 5px ;display: inline-block; width: 100%;background-color:#ddf;color:#00f;}
+#header {padding:5px 0px 15px 0px ;display: inline-block; width: 100%;background-color:#ddf;color:#00f;}
 #header div {display: inline-block;}
-#header table {width:100%}
+#header table {width:99%}
 #headSpace {width: 50%;}
 #headLogin {padding-right: 60px; text-align: right;}
 #headLogin label {width:100px; height:21px;display: inline-block;}
@@ -18,7 +19,11 @@ table,tr,td {padding:0px;margin:auto;border:0px;}
 
 #logo{font-size:32px;font-weight:bold;display:inline-block;width: 100%;text-align: left; margin-left: 20px;}
 
-#footer{background-color:#000;color:#ddd;margin-top:20px;padding:10px}
+main {margin: auto;
+      display: table;}
+
+
+#footer{background-color:#00a;color:#ddd;margin-top:20px;padding:10px}
 
 section {text-align:center;margin:auto;}
 
@@ -33,4 +38,21 @@ section {text-align:center;margin:auto;}
 #addComment textarea{width:200px;height:50px;border:1px blue solid;}
 #addComment .submitBtn{width:200px;height:30px;border:none;}
 
+.comment { width: 400px; text-align: left; position: relative; margin: 5px 0px; border: 1px solid; padding: 5px; border-radius: 5px; color: #00f; background-color: #ddf;}
+.commentAuthor{display: inline-block; width: 150px; font-size: larger; font-weight: bold;}
+.commentDate{width: 250px; display: inline-block; position: absolute; text-align: right;}
+.comment div{padding: 5px 10px 5px 20px;}
+
 #field{align:center}
+
+#game{display: inline-block;width: 45%; text-align: center; position: relative}
+#socialGss{display:inline-block; width: 45%; text-align: center; position: relative;vertical-align: top;}
+#game section{margin-right: 20px;width: fit-content;}
+#socialGss section{margin-left: 20px; width: fit-content;}
+
+.tile13 {width:32px; height:32px; font-size:x-large; line-height: 32px;}
+.tile11 {width:38px; height:38px; font-size:x-large; line-height: 38px;}
+.tile9 {width:46px; height:46px; font-size:x-large; line-height: 46px;}
+.tile7 {width:60px; height:60px; font-size:xx-large; line-height: 60px;}
+.tile5 {width:83px; height:83px; font-size:xxx-large; line-height: 83px;}
+.tile3 {width:140px; height:140px; font-size:xxx-large; line-height: 140px;}

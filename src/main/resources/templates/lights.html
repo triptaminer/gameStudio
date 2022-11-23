@@ -13,8 +13,9 @@
 
 </head>
 <body>
+
 <main layout:fragment="content">
-    <a href="/">&lt; Main page </a> | <a href="/gamestudio"> GameStudio </a>
+    <a href="/gamestudio">&lt; All Games &lt;</a>
     <h2>Lights</h2>
     <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
     <a href="/lights/new">Restart game</a><br/><br/>
@@ -22,51 +23,6 @@
     <section th:utext="${@lightsController.getHtmlField()}"></section>
     <section th:text="${@lightsController.getGameStatusMsg}"></section>
 
-    <section>
-<!--        <h3>Best Scores</h3>-->
-<!--        <table class="scores">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>Number</th>-->
-<!--                <th>Name</th>-->
-<!--                <th>Score</th>-->
-<!--                <th>Date and time</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="score: ${@gssController.bestScores}">-->
-<!--                <td th:text="${scoreStat.index+1}"></td>-->
-<!--                <td th:text="${score.getUserName()}"></td>-->
-<!--                <td th:text="${score.points}"></td>-->
-<!--                <td th:text="${score.playedAt}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-    </section>
-    <section>
-<!--        <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>-->
-<!--        <div id="stars" th:utext="${@gssController.userRating}"></div>-->
-<!--        <form action="/lights/comment" method="post" id="addComment">-->
-<!--            <textarea name="text"></textarea><br/>-->
-<!--            <input type="submit" value="Add comment" class="submitBtn"/>-->
-<!--        </form>-->
-<!--        <table class="comments">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>User</th>-->
-<!--                <th>Comment</th>-->
-<!--                <th>Date and time</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="comment: ${@gssController.comments}">-->
-<!--                <td th:text="${comment.getUserName()}"></td>-->
-<!--                <td th:text="${comment.text}"></td>-->
-<!--                <td th:text="${comment.getCommentedAt()}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-    </section>
     <script>
         function switchTile(r,c) {
             window.location="/lights?row="+r+"&column="+c;

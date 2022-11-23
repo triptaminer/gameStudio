@@ -67,20 +67,24 @@
     <input type="submit" value="Add comment" class="submitBtn"/>
   </form>
   <table class="comments">
-    <thead>
-    <tr>
-      <th>User</th>
-      <th>Comment</th>
-      <th>Date and time</th>
-    </tr>
-    </thead>
-    <tbody>
+
+
     <tr th:each="comment: ${@gssController.comments}">
-      <td th:text="${comment.getUserName()}"></td>
-      <td th:text="${comment.text}"></td>
-      <td th:text="${comment.getCommentedAt()}"></td>
+      <td>
+<div class="comment">
+  <span class="commentAuthor" th:text="${comment.getUserName()}"></span>
+  <span class="commentDate" th:text="${comment.getCommentedAt()}"></span>
+  <div th:text="${comment.text}"></div>
+</div>
+
+      </td>
+
+
+<!--      <td th:text="${comment.getUserName()}"></td>-->
+<!--      <td th:text="${comment.text}"></td>-->
+<!--      <td th:text="${comment.getCommentedAt()}"></td>-->
     </tr>
-    </tbody>
+
   </table>
 
 
@@ -90,8 +94,7 @@
 </section>
 
 <footer  th:fragment="gsfooter" id="footer">
-  <hr />
-  GameStudio ver.Tacad.3 2022-11
+  GameStudio ver.: nula cela nula cela nula nula do renaultu
 </footer>
 </body>
 </html>

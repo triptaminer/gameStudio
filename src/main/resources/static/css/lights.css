@@ -5,9 +5,9 @@
 }
 
 
-.field,.field.tr,.field.tr.td {width:32px;height:32px;display:flex}
+.field,.field tr,.field tr td {display:flex}
 
-.tile {width:32px;height:32px;}
+
 .light {background-color:#ff0}
 .light:hover {background-color:#dd0}
 .dark {background-color:#aaa}

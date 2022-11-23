@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.tiles.ui.TileControls;
 import sk.tuke.gamestudio.services.GameStudioServices;
@@ -39,7 +40,7 @@ public class TilesController {
         }
 
 
-        if (row != null && column != null) {
+        if (row != null && column != null && TilesField.getState() == TileFieldState.PLAYING) {
             int direction = -1;
 
             if (isEmptyAround(row, column)) {
@@ -64,6 +65,7 @@ public class TilesController {
     }
 
     public void startNewGame() throws IOException {
+        gss.setGameName("Tiles");
 
         TilesField = new TileGame(gss);
         TilesField.setGameProperties(3, 3, 1);
@@ -85,12 +87,13 @@ public class TilesController {
             for (int j = 0; j < colCount; j++) {
                 int tile = TilesField.getTile(i, j);
                 sb.append("<td>");
+                String tileSize="tile"+colCount;
 
                 String movable = (isEmptyAround(i, j)) ? "movable" : "fixed";
                 String onclick = (isEmptyAround(i, j)) ? "onclick='switchTile(" + i + "," + j + ")'" : "";
 
-                sb.append(tile > 0 ? "<div class='field filled " + movable + "' " + onclick + ">" + tile + "</div>"
-                        : "<div class='field empty'></div>");
+                sb.append(tile > 0 ? "<div class='"+tileSize+" field filled " + movable + "' " + onclick + ">" + tile + "</div>"
+                        : "<div class='"+tileSize+" field empty'></div>");
 
                 sb.append("</td>");
 

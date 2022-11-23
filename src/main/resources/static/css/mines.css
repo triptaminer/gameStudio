@@ -5,11 +5,10 @@
 }
 
 
-.field,.field.tr,.field.tr.td {width:32px;height:32px;display:flex}
-.closed, .opened, .marked, .mine {width:32px;height:32px;}
+.field,.field.tr,.field.tr.td {display:flex}
 
-.closed {background-image: url("/img/closedTile.png");}
-.opened {background-image: url("/img/openedTile.png"); text-align: center; line-height: 32px; font-weight: bold; font-size: x-large;}
+.closed {border:1px solid;border-color:#aaa #444 #444 #aaa;background-color:#888;}
+.opened {border:1px solid;border-color: #888 #ddd #ddd #888;background-color:#aaa; display: block; text-align: center; font-weight: bold;}
 .marked {background-image: url("/img/markedTile.png");}
 .mineOpened {background-image: url("/img/mineOTile.png");}
 .mineClosed {background-image: url("/img/mineCTile.png");}

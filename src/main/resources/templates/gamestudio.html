@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html   xmlns:th="http://www.thymeleaf.com"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout/layoutGameStudio.html}"
+        layout:decorate="~{layout/layoutGameStudioMain.html}"
         lang="en">
 <head>
   <title>Gamestudio</title>
@@ -9,20 +9,20 @@
 <body>
 
 <main layout:fragment="content">
-<a href="/">&lt; Main page </a>
   <form th:if="not ${@userController.logged}" action="/login" method="post">
     <label for="login">Login:</label> <input type="text" id="login" name="login" required /> <br />
     <label for="pass">Password:</label> <input type="password" id="pass" name="password" required /> <br />
     <button type="submit">Log in</button>
   </form>
 
+  <div th:if="${@userController.logged}">
   <h2>Games</h2>
   <ul>
     <li><a href="/mines">Minesweeper</a></li>
     <li><a href="/tiles">Tiles</a></li>
     <li><a href="/lights">Lights out</a></li>
   </ul>
-
+  </div>
 </main>
 
 </body>

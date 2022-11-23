@@ -9,7 +9,9 @@ import sk.tuke.gamestudio.entity.Player;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
+import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
+import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
 import sk.tuke.gamestudio.services.*;
 
 import java.io.FileNotFoundException;
@@ -36,7 +38,7 @@ public class MinesController {
             startNewGame();
 
 
-        if(row!=null&&column!=null){
+        if(row!=null && column!=null && mineField.getState() == FieldState.PLAYING){
             if(action.equals("o")) {
                 mineField.openTile(row, column);
             }
@@ -55,8 +57,9 @@ public class MinesController {
         return "mines";
     }
     public void startNewGame(){
+        gss.setGameName("Mines");
         try {
-            mineField = new Field(8, 8, 2, gss);
+            mineField = new Field(13, 13, 2, gss);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -76,6 +79,7 @@ public class MinesController {
             for (int j = 0; j < colCount; j++) {
                 Tile tile = mineField.getTile(i, j);
                 sb.append("<td>");
+                String tileSize="tile"+colCount;
 
 
                 switch (tile.getState()) {
@@ -83,20 +87,20 @@ public class MinesController {
                         if (tile instanceof Clue) {
                             int v = ((Clue) tile).getValue();
                             if(v>0)
-                            sb.append("<div class='field opened clue"+v+"'>"+v+"</div>");
+                            sb.append("<div class='"+tileSize+" field opened clue"+v+"'>"+v+"</div>");
                             else
-                                sb.append("<div class='field opened'>&nbsp;</div>");
+                                sb.append("<div class='"+tileSize+" field opened'>&nbsp;</div>");
 
                         }
                         else {
-                            sb.append("<div class='field mineOpened'></div>");
+                            sb.append("<div class='"+tileSize+" field mineOpened'></div>");
                         }
                         break;
                     case CLOSED:
-                        sb.append("<div class='field closed' onclick='openTile("+i+","+j+")' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
+                        sb.append("<div class='"+tileSize+" field closed' onclick='openTile("+i+","+j+")' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                     case MARKED:
-                        sb.append("<div class='field marked' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
+                        sb.append("<div class='"+tileSize+" field marked' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                 }
                 sb.append("</td>");
