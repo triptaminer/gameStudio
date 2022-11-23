@@ -28,7 +28,9 @@ public class LightsController {
     private boolean isPlaying=true;
 
     @Autowired
-    private GameStudioServices gss;
+    public GameStudioServices gss;
+
+
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column){
@@ -50,18 +52,11 @@ public class LightsController {
         return "lights";
     }
     public void startNewGame(){
-        //gss=new GameStudioServices();
-
-
-        gss.setGameName("Lights");
-        //scoreService =new ScoreServiceJPA();
-
             LightsField = new LightsGame(gss);
             LightsField.setGameProperties(5,5,1);
-
-
     }
     public String getHtmlField() {
+        gss.setGameName("Lights");
 
         StringBuilder sb = new StringBuilder();
 
@@ -92,35 +87,6 @@ public class LightsController {
         return sb.toString();
     }
 
-    public List<Score> getBestScores(){
-        try {
-            return gss.scoreService.getBestScores("Lights");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<Comment> getComments(){
-        try {
-            return gss.commentService.getComments("Lights");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public float getAvgRating(){
-        try {
-            return gss.ratingService.getAvgRating("Lights");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public String getGameStatusMsg(){
         String status="";
@@ -133,29 +99,28 @@ public class LightsController {
         return status;
     }
 
-    public String getUserRating(){
-        StringBuilder rating=new StringBuilder();
 
-        Rating r=gss.ratingService.getRating(gss.currentPlayer,"Lights");
-
-        if(r!=null){
-            for (int i = 1; i < 6; i++) {
-                if(i<=r.getValue()){
-                    rating.append("<a href='?star="+i+"' class='starRated'>*</a>");
-                }
-                else{
-                    rating.append("<a href='?star="+i+"' class='starBlank'>*</a>");
-                }
-            }
-
-        }
-        else{
-            for (int i = 1; i < 6; i++) {
-                    rating.append("<a href='?star="+i+"' class='starBlank'>*</a>");
-            }
-        }
-
-        return rating.toString();
-    }
+//    @RequestMapping("/rate")
+//    public String rate(int star){
+//        try {
+//            gss.ratingService.addRating(gss,star);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return "redirect:/lights";
+//    }
+//    @RequestMapping("/comment")
+//    public String addComment(String text){
+//        try {
+//            gss.commentService.addComment(gss,text);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return "redirect:/lights";
+//    }
 
 }

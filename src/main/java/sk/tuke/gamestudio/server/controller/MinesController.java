@@ -27,7 +27,7 @@ public class MinesController {
     private boolean isPlaying=true;
 
     @Autowired
-    private GameStudioServices gss;
+    public GameStudioServices gss;
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column, String action) throws IOException {
@@ -55,22 +55,6 @@ public class MinesController {
         return "mines";
     }
     public void startNewGame(){
-        //gss=new GameStudioServices();
-
-        Player p=null;
-        try {
-            p = gss.playerService.getPlayerByUsername("viki");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        gss.currentPlayer=p;
-
-
-        gss.setGameName("Mines");
-        //scoreService =new ScoreServiceJPA();
-
         try {
             mineField = new Field(8, 8, 2, gss);
         } catch (IOException e) {
@@ -79,6 +63,7 @@ public class MinesController {
 
     }
     public String getHtmlField() {
+        gss.setGameName("Mines");
 
         StringBuilder sb = new StringBuilder();
 
@@ -108,8 +93,6 @@ public class MinesController {
                         }
                         break;
                     case CLOSED:
-//                        sb.append("<a href='?row="+i+"&amp;column="+j+"&amp;action=o'><img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32'/></a>");
-//                        sb.append("<img class='tile' src='/img/tile.PNG' alt='[ ]' width='32' height='32' onclick='open("+i+","+j+")' oncontextmenu='mark("+i+","+j+")' contextmenu='mymenu'/>");
                         sb.append("<div class='field closed' onclick='openTile("+i+","+j+")' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                     case MARKED:

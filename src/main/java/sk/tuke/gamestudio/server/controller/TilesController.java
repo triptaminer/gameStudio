@@ -25,7 +25,7 @@ public class TilesController {
     private boolean isPlaying = true;
     private TileControls controls;
     @Autowired
-    private GameStudioServices gss;
+    public GameStudioServices gss;
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column) {
@@ -65,9 +65,6 @@ public class TilesController {
 
     public void startNewGame() throws IOException {
 
-        gss.setGameName("Tiles");
-        //scoreService =new ScoreServiceJPA();
-
         TilesField = new TileGame(gss);
         TilesField.setGameProperties(3, 3, 1);
         controls = new TileControls();
@@ -75,6 +72,7 @@ public class TilesController {
     }
 
     public String getHtmlField() {
+        gss.setGameName("Tiles");
 
         StringBuilder sb = new StringBuilder();
 

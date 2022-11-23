@@ -22,27 +22,6 @@
     <section th:utext="${@tilesController.getHtmlField()}"></section>
     <section th:text="${@tilesController.getGameStatusMsg}"></section>
 
-    <section>
-        <h3>Best Scores</h3>
-        <table class="scores">
-            <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date and time</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="score: ${@tilesController.bestScores}">
-                <td th:text="${scoreStat.index+1}"></td>
-                <td th:text="${score.getUserName()}"></td>
-                <td th:text="${score.points}"></td>
-                <td th:text="${score.playedAt}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
     <script>
         function switchTile(r,c) {
             window.location="/tiles?row="+r+"&column="+c;

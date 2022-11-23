@@ -3,16 +3,25 @@ body{width:1300px;height:100%;padding:0px;margin:0px;position:relative;display:i
 a,a:hover,a:visited {color:#00f;text-decoration:none}
 a:hover{font-color:#44f;text-decoration:underline}
 
+table,tr,td {padding:0px;margin:auto;border:0px;}
+
 #header {padding:5px 5px 15px 5px ;display: inline-block; width: 100%;}
 #header div {display: inline-block;}
 
 #logo{font-size:32px;font-weight:bold;display:inline-block}
 #footer{background-color:#000;color:#ddd;margin-top:20px;padding:10px}
 
+section {text-align:center;margin:auto;}
+
+.submitBtn{border:1px blue solid;color:blue;background-color:white}
 
 .starRated, .starBlank{font-size:48px;font-weight:bold;}
-.starRated{color:#db0;}
-.starBlank{color:#555;}
+.starRated, .starRated:visited{color:#db0;}
+.starBlank, .starBlank:visited{color:#555;}
 .starRated:hover, .starBlank:hover{color:#ed6;text-decoration:none;}
 
+#addComment{}
+#addComment textarea{width:200px;height:50px;border:1px blue solid;}
+#addComment .submitBtn{width:200px;height:30px;border:none;}
 
+#field{align:center}

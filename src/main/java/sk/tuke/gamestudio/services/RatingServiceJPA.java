@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.Date;
 
 @Transactional
 public class RatingServiceJPA implements RatingService {
@@ -29,6 +30,10 @@ public class RatingServiceJPA implements RatingService {
         {
             entityManager.persist(rating);
         }
+    }
+
+    public void addRating(GameStudioServices gss, int rating){
+        addRating(new Rating(gss.getGameName(), gss.currentPlayer, rating, new Date()));
     }
 
     @Override

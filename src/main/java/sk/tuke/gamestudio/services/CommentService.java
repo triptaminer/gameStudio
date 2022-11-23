@@ -26,4 +26,5 @@ public interface CommentService {
      */
     void reset() throws FileNotFoundException, SQLException;
 
+    void addComment(GameStudioServices gss, String text) throws SQLException, FileNotFoundException;
 }

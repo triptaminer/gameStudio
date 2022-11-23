@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentServiceJDBC implements CommentService {
@@ -20,6 +21,12 @@ public class CommentServiceJDBC implements CommentService {
             PostgresDirectConnector connection = new PostgresDirectConnector();
             connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{comment.getGameName(), comment.getUserName(), comment.getText(), new Timestamp(comment.getCommentedAt().getTime())}});
         }
+    }
+
+    @Override
+    public void addComment(GameStudioServices gss, String text) throws SQLException, FileNotFoundException {
+        addComment(new Comment(gss.getGameName(), gss.currentPlayer, text, new Date()));
+
     }
 
     @Override
@@ -40,4 +47,5 @@ public class CommentServiceJDBC implements CommentService {
         PostgresDirectConnector connection = new PostgresDirectConnector();
         connection.setQuery(STATEMENT_RESET);
     }
+
 }

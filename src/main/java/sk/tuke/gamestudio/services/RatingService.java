@@ -13,6 +13,8 @@ public interface RatingService {
      */
     void addRating(Rating rating) throws FileNotFoundException, SQLException;
 
+    void addRating(GameStudioServices gss, int star) throws SQLException, FileNotFoundException;
+
     /**
      * Loads 5 best scores from given game
      *
@@ -27,4 +29,5 @@ public interface RatingService {
     void reset() throws FileNotFoundException, SQLException;
 
     Rating getRating(Player player, String game);
+
 }

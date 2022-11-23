@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class RatingServiceJDBC implements RatingService {
 
@@ -29,6 +30,11 @@ UPDATE SET email = EXCLUDED.email || ';' || customers.email;
             PostgresDirectConnector connection = new PostgresDirectConnector();
             connection.setQuery(STATEMENT_ADD_SCORE, new Object[][]{{rating.getGame(), rating.getUsername(), rating.getValue(), new Timestamp(rating.getRatedAt().getTime())}});
         }
+    }
+
+    @Override
+    public void addRating(GameStudioServices gss, int stars) throws SQLException, FileNotFoundException {
+        addRating(new Rating(gss.getGameName(), gss.currentPlayer, stars, new Date()));
     }
 
     @Override

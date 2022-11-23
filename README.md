@@ -18,8 +18,13 @@ work - not stable, sometimes not even working!
 STATUS:
 ---
 
-Thymeleaf
-- started with mines - not fully working
+Thymeleaf and WEB ui
+- ALL games working
+- all services working
+- login working
+- TODO: 
+  - register of new user
+  - re-work design
 
 Mines
 - working
@@ -27,12 +32,8 @@ Mines
 - fixed multiple hiscore records
 - ranking after each game (TODO: move it to exit from game :/ )
 - hiscores are using JPA now!
-- ** WEB UI ** (thymes): 
-- - working: 
-- - - left click: opens tile
-- - - right click: marks tile
-- - - 'little' tuning
-
+- left click open, right click (un)mark
+ 
 Tiles
 - working
 - hiscores displayed after game or in sub-menu

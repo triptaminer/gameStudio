@@ -1,10 +1,12 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -32,5 +34,11 @@ public class CommentServiceJPA implements CommentService{
     public void reset(){
         final String STATEMENT_RESET = "DELETE FROM comments";
         entityManager.createNativeQuery(STATEMENT_RESET).executeUpdate();
+    }
+
+    @Override
+    public void addComment(GameStudioServices gss, String text) {
+            addComment(new Comment(gss.getGameName(), gss.currentPlayer, text, new Date()));
+
     }
 }

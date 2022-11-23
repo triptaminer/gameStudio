@@ -22,27 +22,6 @@
     <section th:utext="${@minesController.getHtmlField()}"></section>
     <section th:text="${@minesController.getGameStatusMsg}"></section>
 
-    <section>
-        <h3>Best Scores</h3>
-        <table class="scores">
-            <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date and time</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="score: ${@minesController.bestScores}">
-                <td th:text="${scoreStat.index+1}"></td>
-                <td th:text="${score.getUserName()}"></td>
-                <td th:text="${score.points}"></td>
-                <td th:text="${score.playedAt}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
     <script>
         function openTile(r,c) {
             window.location="/mines?row="+r+"&column="+c+"&action=o";
