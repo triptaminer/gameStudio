@@ -38,6 +38,7 @@ public class CommentServiceJPA implements CommentService{
 
     @Override
     public void addComment(GameStudioServices gss, String text) {
+        if(gss.getGameName()!="" && gss.currentPlayer!=null && text != "")
             addComment(new Comment(gss.getGameName(), gss.currentPlayer, text, new Date()));
 
     }

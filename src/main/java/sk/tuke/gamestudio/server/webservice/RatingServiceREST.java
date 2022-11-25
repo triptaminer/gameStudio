@@ -21,9 +21,10 @@ public class RatingServiceREST {
     GameStudioServices gss;
 
     @RequestMapping(method = RequestMethod.POST)
-    void addRating(@RequestBody Rating Rating) {
+    void addRating(@RequestBody String[] gameRating) {
         try {
-            gss.ratingService.addRating(Rating);
+            gss.setGameName(gameRating[0]);
+            gss.ratingService.addRating(gss, Integer.parseInt(gameRating[1]));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

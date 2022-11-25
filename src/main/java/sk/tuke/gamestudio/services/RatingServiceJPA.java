@@ -33,6 +33,7 @@ public class RatingServiceJPA implements RatingService {
     }
 
     public void addRating(GameStudioServices gss, int rating){
+     if(gss.getGameName()!="" && gss.getUserName()!="" && rating>0)
         addRating(new Rating(gss.getGameName(), gss.currentPlayer, rating, new Date()));
     }
 
