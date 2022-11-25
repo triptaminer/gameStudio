@@ -5,12 +5,13 @@
 }
 
 
-.field,.field tr,.field tr td {display:flex}
+#field,#field tr,#field tr td {display:flex;}
+#field tr td {background-image:url("/img/grayPixel.png")}
 
 
-.light {background-color:#ff0}
+.light {background-color:#ff0; border-radius: 30%; }
 .light:hover {background-color:#dd0}
 .dark {background-color:#aaa}
-.dark:hover {background-color:#ccc}
+.dark:hover {background-color:#ccc; border-radius: 30%; }
 
 

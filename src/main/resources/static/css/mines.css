@@ -5,13 +5,13 @@
 }
 
 
-.field,.field.tr,.field.tr.td {display:flex}
+.field,.field.tr,.field.tr.td {display:flex;}
 
-.closed {border:1px solid;border-color:#aaa #444 #444 #aaa;background-color:#888;}
+.closed, .marked {border:1px solid;border-color:#aaa #444 #444 #aaa;background-color:#888;}
 .opened {border:1px solid;border-color: #888 #ddd #ddd #888;background-color:#aaa; display: block; text-align: center; font-weight: bold;}
-.marked {background-image: url("/img/markedTile.png");}
-.mineOpened {background-image: url("/img/mineOTile.png");}
-.mineClosed {background-image: url("/img/mineCTile.png");}
+.marked {color:#f00 !important; display: block; text-align: center; font-weight: bold;line-height: 1.5em;}
+.mineOpened {color:#000 !important; display: block; text-align: center; font-weight: bold; border: 1px solid; border-color: #888 #ddd #ddd #888; background-color:#f00; line-height: 1.3em; font-size: 3em;}
+.mineClosed {color:#000 !important; display: block; text-align: center; font-weight: bold; border: 1px solid; line-height: 1.3em; font-size: 3em;}
 
 /* color range from https://colordesigner.io/gradient-generator */
 .clue1 {color:#017f01}

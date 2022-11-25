@@ -93,14 +93,14 @@ public class MinesController {
 
                         }
                         else {
-                            sb.append("<div class='"+tileSize+" field mineOpened'></div>");
+                            sb.append("<div class='"+tileSize+" field mineOpened'>*</div>");
                         }
                         break;
                     case CLOSED:
                         sb.append("<div class='"+tileSize+" field closed' onclick='openTile("+i+","+j+")' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
                         break;
                     case MARKED:
-                        sb.append("<div class='"+tileSize+" field marked' oncontextmenu='markTile("+i+","+j+");return false;'></div>");
+                        sb.append("<div class='"+tileSize+" field marked' oncontextmenu='markTile("+i+","+j+");return false;'>!</div>");
                         break;
                 }
                 sb.append("</td>");

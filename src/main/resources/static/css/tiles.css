@@ -6,9 +6,10 @@
 
 
 .field,.field.tr,.field.tr.td {display:flex}
+#field tr td {background-image:url("/img/grayPixel.png")}
 
 .empty {background-color:#aaa}
-.filled {background-color:#888;border:#888 1px solid;display:block}
+.filled {background-color:#888;border:#888 1px solid;display:block; border-radius: 20%;}
 
 .movable:hover {border:#0f0 1px solid;}
 .fixed:hover {border:#f00 1px solid;}
