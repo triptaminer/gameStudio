@@ -9,7 +9,7 @@
 BRANCHES:
 ---
 
-test-221114 - self-explaining
+test-221114 - self-explaining (will be removed soon)
 
 main - stable working version (currently thymeleaf chapter)
 
@@ -22,6 +22,7 @@ Thymeleaf and WEB ui
 - ALL games working
 - all services working
 - login working
+- re-designed all game boards
 - TODO: 
   - register of new user
   - re-work design (partially done)
@@ -32,6 +33,7 @@ All WEB games
 Mines
 - working
 - left click open, right click (un)mark in web version
+- removed image-based design, now we are using CSS only
  
 Tiles
 - working
