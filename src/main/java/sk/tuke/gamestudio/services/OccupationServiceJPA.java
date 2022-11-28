@@ -1,7 +1,9 @@
 package sk.tuke.gamestudio.services;
 
+import sk.tuke.gamestudio.entity.Country;
 import sk.tuke.gamestudio.entity.Occupation;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,5 +37,17 @@ public class OccupationServiceJPA implements OccupationService {
     @Override
     public void reset(){
 
+    }
+
+    public Occupation getOccupationById(int id){
+        final String STATEMENT_COMMENTS = "SELECT sc FROM Occupation sc where sc.id=:myId";
+        try{
+            return (Occupation) entityManager.createQuery(STATEMENT_COMMENTS)
+                    .setParameter("myId",id)
+                    .getSingleResult();
+        }
+        catch (NoResultException e){
+            return null;
+        }
     }
 }

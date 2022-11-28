@@ -20,7 +20,7 @@ table,tr,td {padding:0px;margin:auto;border:0px;border-spacing:0px}
 #logo{font-size:32px;font-weight:bold;display:inline-block;width: 100%;text-align: left; margin-left: 20px;}
 
 main {margin: auto;
-      display: table;}
+      display: table;width: 90%;}
 
 
 #footer{background-color:#00a;color:#ddd;margin-top:20px;padding:10px}
@@ -56,3 +56,15 @@ section {text-align:center;margin:auto;}
 .tile7 {width:60px; height:60px; font-size:xx-large; line-height: 60px;}
 .tile5 {width:83px; height:83px; font-size:xxx-large; line-height: 83px;}
 .tile3 {width:140px; height:140px; font-size:xxx-large; line-height: 140px;}
+
+
+#reglogForm {display:flex; flex-direction:column; border:#dde 1px solid; width:50%; margin: 3rem auto; }
+#reglogForm>div {display: flex; align-content: space-around; flex-direction: row;height: 2rem;}
+#reglogForm>div>span, #reglogForm>div>a {display:block; width: 50%; text-align: center;padding: 5px;}
+#reglogForm>div>a {background-color:#dde; color:#666; }
+#reglogForm>div>a:hover {color:#00f; text-decoration:underline; }
+
+#reglogForm>label {padding-top: 1rem;padding-left: 2rem;}
+#reglogForm>input, #reglogForm>textarea, #reglogForm>select { margin: 0.5em 3rem 0em 3rem; }
+
+#reglogForm>.submitBtn {height: 3rem; margin: 2rem 3rem;}

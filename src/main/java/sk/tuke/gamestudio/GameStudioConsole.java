@@ -36,7 +36,7 @@ public class GameStudioConsole {
 
         //forSpring GAME_STUDIO_SERVICES = new GameStudioServices();
 
-
+        GAME_STUDIO_SERVICES.init.status();
         Scanner scanner=new Scanner(System.in);
 
         boolean shouldRepeat=true;

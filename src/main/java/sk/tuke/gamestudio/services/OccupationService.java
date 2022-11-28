@@ -32,4 +32,5 @@ public interface OccupationService {
      */
     void reset() throws FileNotFoundException, SQLException;
 
+    Occupation getOccupationById(int countryId);
 }

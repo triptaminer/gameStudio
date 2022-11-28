@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Country;
+import sk.tuke.gamestudio.entity.Player;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -31,4 +32,5 @@ public interface CountryService {
      */
     void reset() throws FileNotFoundException, SQLException;
 
+    Country getCountryById(int id);
 }

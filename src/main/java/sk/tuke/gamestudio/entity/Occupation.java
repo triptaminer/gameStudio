@@ -19,14 +19,18 @@ public class Occupation {
         occupation=o;
     }
 
+    public Occupation() {
+    }
+
     public String getOccupationName() {
         return occupation;
     }
 
-    public Occupation() {
+    public int getId() {
+        return id;
     }
 
-
-
-
+    public String getOccupation() {
+        return occupation;
+    }
 }

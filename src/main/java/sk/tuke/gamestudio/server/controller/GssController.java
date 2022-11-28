@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.*;
 import sk.tuke.gamestudio.services.GameStudioServices;
 
 import java.io.FileNotFoundException;
@@ -102,6 +100,24 @@ public class GssController {
         return "redirect:/"+gss.getGameName().toLowerCase();
     }
 
+    public List<Country> getCountries(){
+        try {
+            return gss.countryService.getAllCountries();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public List<Occupation> getOccupations(){
+        try {
+            return gss.occupationService.getAllOccupations();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

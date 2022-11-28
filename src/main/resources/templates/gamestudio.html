@@ -9,11 +9,33 @@
 <body>
 
 <main layout:fragment="content">
-  <form th:if="not ${@userController.logged}" action="/login" method="post">
+  <form th:if="not ${@userController.logged} and not ${@gameStudioController.register}" action="/login" method="post" id="reglogForm">
+    <div id="switch"><span id="log">Log in</span><a id="reg" href="?action=register">Register</a></div>
     <label for="login">Login:</label> <input type="text" id="login" name="login" required /> <br />
     <label for="pass">Password:</label> <input type="password" id="pass" name="password" required /> <br />
-    <button type="submit">Log in</button>
+    <input type="submit" class="submitBtn" value="Log in"/>
   </form>
+
+  <form th:if="not ${@userController.logged} and ${@gameStudioController.register}" action="/register" method="post" id="reglogForm">
+    <div id="switch"><a id="log" href="?action=login">Log in</a><span id="reg">Register</span></div>
+    <label for="login">Login:</label> <input type="text" id="login" name="login" required /> <br />
+    <label for="pass">Password:</label> <input type="password" id="pass" name="password" required /> <br />
+    <label for="repeat">Repeat password:</label> <input type="password" id="repeat" name="repeat" required /> <br />
+    <label for="about">About me:</label> <textarea id="about" name="about" required ></textarea> <br />
+    <label for="country">Country:</label>
+    <select id="country" name="countryId" required>
+      <option disabled selected>Please select...</option>
+      <option th:each="countries: ${@gssController.countries}" th:value="${countries.id}" th:text="${countries.country}"></option>
+    </select><br />
+    <label for="occupation">Occupation:</label>
+    <select id="occupation" name="occupationId" required>
+      <option disabled selected>Please select...</option>
+      <option th:each="occupations: ${@gssController.occupations}" th:value="${occupations.id}" th:text="${occupations.occupation}"></option>
+    </select><br />
+    <input type="submit" class="submitBtn" value="Register"/>
+  </form>
+
+
 
   <div th:if="${@userController.logged}">
   <h2>Games</h2>

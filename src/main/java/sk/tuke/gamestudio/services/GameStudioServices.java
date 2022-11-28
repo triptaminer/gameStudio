@@ -41,12 +41,17 @@ public class GameStudioServices {
 
     public Player currentPlayer;
 
+    @Autowired
+    public Init init;
+
     public GameStudioServices() {
 //        scoreService = new ScoreServiceJDBC();
 //        scoreService = new ScoreServiceJPA();
 //        commentService = new CommentServiceJPA();
 //        ratingService = new RatingServiceJPA();
+
         serviceUI= new ServiceUIConsole(this);
+        //this.init.status();
     }
 
 

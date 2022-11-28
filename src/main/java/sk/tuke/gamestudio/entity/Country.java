@@ -8,6 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Country {
 
+
     @Id
     @GeneratedValue
     private int id;
@@ -22,4 +23,14 @@ public class Country {
     public Country(String country) {
         this.country=country;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+
 }

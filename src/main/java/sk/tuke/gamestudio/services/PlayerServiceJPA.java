@@ -3,6 +3,7 @@ package sk.tuke.gamestudio.services;
 import sk.tuke.gamestudio.entity.Player;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
@@ -33,11 +34,16 @@ public class PlayerServiceJPA implements PlayerService{
     @Override
     public Player getPlayerByUsername(String name){
         final String STATEMENT_COMMENTS = "SELECT sc FROM Player sc WHERE sc.name=:myName";
-
-        return (Player) entityManager.createQuery(STATEMENT_COMMENTS)
-                .setParameter("myName",name)
-                .getSingleResult();
-    }
+try {
+    return (Player) entityManager.createQuery(STATEMENT_COMMENTS)
+            .setParameter("myName", name)
+            .getSingleResult();
+}
+catch (NoResultException e){
+    System.out.println("DB is empty");
+    return null;
+}
+}
 
     @Override
     public void reset(){

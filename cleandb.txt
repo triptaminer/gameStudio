@@ -1,0 +1,11 @@
+DROP TABLE public."comment" CASCADE;
+
+DROP TABLE public.country CASCADE;
+
+DROP TABLE public.occupation CASCADE;
+
+DROP TABLE public.player CASCADE;
+
+DROP TABLE public.rating CASCADE;
+
+DROP TABLE public.score CASCADE;

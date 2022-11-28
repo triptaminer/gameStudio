@@ -50,5 +50,10 @@ public class SpringServer {
         return new OccupationServiceJPA();
     }
 
+    @Bean
+    public Init init(){
+        return new Init();
+    }
+
 
 }

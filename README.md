@@ -9,7 +9,9 @@
 BRANCHES:
 ---
 
-test-221114 - self-explaining (will be removed soon)
+test-221128 - self-explaining (new)
+
+test-221114 - (will be removed soon)
 
 main - stable working version (currently thymeleaf chapter)
 
@@ -17,6 +19,15 @@ work - not stable, sometimes not even working!
 
 STATUS:
 ---
+Registration
+- new users are now able to register
+- FIXME: only hardcoded password 'heslo' is working, user passwords are not stored yet
+- login/register screens now looks little better
+
+Initialisation
+- when gameStudio is starting with blank DB, it will fill itself with some default users and other content
+- see JPA properties file for correct setup! 
+- FIXME: init triggered by login form only!
 
 Thymeleaf and WEB ui
 - ALL games working
