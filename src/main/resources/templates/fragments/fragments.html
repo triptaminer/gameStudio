@@ -72,7 +72,7 @@
     <tr th:each="comment: ${@gssController.comments}">
       <td>
 <div class="comment">
-  <span class="commentAuthor" th:text="${comment.getUserName()}"></span>
+  <span class="commentAuthor"><a th:href="'/profile/'+${comment.getUserName()}" th:text="${comment.getUserName()}"></a> </span>
   <span class="commentDate" th:text="${comment.getCommentedAt()}"></span>
   <div th:text="${comment.text}"></div>
 </div>

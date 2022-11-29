@@ -127,7 +127,7 @@ public class UserController {
         System.out.println("OK!");
         try {
             gss.playerService.addPlayer(
-                    new Player(login,about,0,c,o)
+                    new Player(login,about,c,o)
             );
         } catch (FileNotFoundException | SQLException e) {
             throw new RuntimeException(e);

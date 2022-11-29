@@ -88,21 +88,30 @@ public class Init {
         playerService.addPlayer(new Player(
                 "Admin",
                 "Admin account",
-                0,
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("other")
         ));
+        //Giving Admin rights
+        playerService.getPlayerByUsername("Admin").setPrivilege(4);
+
+        playerService.addPlayer(new Player(
+                "Moderator",
+                "MOD account",
+                countryService.getCountry("Slovakia"),
+                occupationService.getOccupation("other")
+        ));
+        //Giving MOD rights
+        playerService.getPlayerByUsername("Moderator").setPrivilege(2);
+
         playerService.addPlayer(new Player(
                 "viki",
                 "creator",
-                0,
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("employee")
         ));
         playerService.addPlayer(new Player(
                 "Guest",
                 "account for testing",
-                0,
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("invalid")
         ));

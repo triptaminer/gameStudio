@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.com"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layoutGameStudioMain.html}"
+        lang="en">
+<head>
+  <title>Gamestudio</title>
+  <link rel="stylesheet" href="/css/profile.css" media="screen" />
+
+</head>
+<body>
+
+<main layout:fragment="content" id="profile">
+
+  <div id="userDetails">
+    <img id="photo" alt="Photo" th:src="${@playerController.profileImage()}"/>
+    <h3 th:text="${@playerController.getUsername()}"></h3>
+
+    <div class="details">
+      Level/Points:
+      <span id="lvlPtsBar">
+        LVL: <span th:text="${@playerController.getPlayer().getPoints()}"></span> / <span th:text="${@playerController.getPlayer().getLevel()}"></span> pts.
+      </span>
+    </div>
+
+    <div class="details">
+      About:
+      <span th:text="${@playerController.getPlayer().getAbout()}" id="detailsAbout"></span>
+    </div>
+
+    <div class="details">
+      Country:
+      <span th:text="${@playerController.getPlayer().country.getCountry()}"></span>
+    </div>
+
+    <div class="details">
+      Occupation:
+      <span th:text="${@playerController.getPlayer().occupation.getOccupation()}"></span>
+    </div>
+
+
+  </div>
+  <div id="userActivity">
+
+
+
+
+  </div>
+
+
+<!--  <div th:if="${@userController.logged}">-->
+<!--  </div>-->
+
+</main>
+
+</body>
+</html>

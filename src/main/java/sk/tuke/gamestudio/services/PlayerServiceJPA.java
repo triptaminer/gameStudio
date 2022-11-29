@@ -40,7 +40,7 @@ try {
             .getSingleResult();
 }
 catch (NoResultException e){
-    System.out.println("DB is empty");
+    System.out.println("DB is empty or cannot find user with name "+name+": "+e);
     return null;
 }
 }

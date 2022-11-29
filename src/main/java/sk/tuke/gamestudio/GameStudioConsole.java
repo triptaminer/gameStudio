@@ -189,7 +189,6 @@ public class GameStudioConsole {
                     occup=false;
                 }
 
-
             }while(occup);
 
 
@@ -202,7 +201,7 @@ public class GameStudioConsole {
         Country c=new Country(countryUser);
         GAME_STUDIO_SERVICES.countryService.addCountry(c);
         Occupation o=occupList.get(occupUserInt-1);
-        GAME_STUDIO_SERVICES.currentPlayer=new Player(name,aboutUser,0,c,o);
+        GAME_STUDIO_SERVICES.currentPlayer=new Player(name,aboutUser,c,o);
         GAME_STUDIO_SERVICES.playerService.addPlayer(GAME_STUDIO_SERVICES.currentPlayer);
     }
 }

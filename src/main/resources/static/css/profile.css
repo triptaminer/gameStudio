@@ -1,0 +1,13 @@
+#profile {display:flex;flex-direction:row;width:auto;min-height:50rem;}
+
+#userDetails {display:flex;flex-direction:column;width:30rem;border-right:#ddf 3px solid; }
+#userDetails>h3 {margin-left:3rem;}
+#photo {width: 21rem; height: 21rem; margin: 0.6em auto;}
+
+.details {font-weight: bold; display: flex; flex-direction: column;padding: 2em 1.6em; }
+.details>span {font-weight: normal;padding-left:0px 2em;text-align: right;}
+
+#lvlPtsBar {text-align: center;}
+#detailsAbout {font-size: smaller;padding-left:0.5em;text-align: justify;}
+
+#userActivity {display:flex;flex-direction:row;width:100%;}

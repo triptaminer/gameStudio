@@ -19,8 +19,7 @@ table,tr,td {padding:0px;margin:auto;border:0px;border-spacing:0px}
 
 #logo{font-size:32px;font-weight:bold;display:inline-block;width: 100%;text-align: left; margin-left: 20px;}
 
-main {margin: auto;
-      display: table;width: 90%;}
+main {margin:auto; display:table; width:90%;}
 
 
 #footer{background-color:#00a;color:#ddd;margin-top:20px;padding:10px}

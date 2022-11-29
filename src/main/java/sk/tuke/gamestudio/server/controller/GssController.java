@@ -24,9 +24,7 @@ public class GssController {
     public List<Score> getBestScores(){
         try {
             return gss.scoreService.getBestScores(gss.getGameName());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (FileNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -19,6 +19,14 @@ work - not stable, sometimes not even working!
 
 STATUS:
 ---
+
+Profiles:
+- WiP
+- currently available only from nickname in comments
+- added "privileges" (user->admin)
+- added counter for points (not implemented yet)
+- added states for muted / banned 
+
 Registration
 - new users are now able to register
 - FIXME: only hardcoded password 'heslo' is working, user passwords are not stored yet
