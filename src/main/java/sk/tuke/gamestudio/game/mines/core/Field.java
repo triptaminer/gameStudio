@@ -30,8 +30,6 @@ public class Field {
 
     private long start;
 
-    private HiScores scores;
-    private int score;
 
     public GameStudioServices GAME_STUDIO_SERVICES;
 
@@ -45,7 +43,6 @@ public class Field {
         this.mineCount = mineCount;
         tiles = new Tile[rowCount][columnCount];
         moves = 0;
-        scores = new HiScores();
         generate();
         start = currentTimeMillis();
         GAME_STUDIO_SERVICES=gss;
@@ -182,9 +179,6 @@ public class Field {
         return score;
     }
 
-    public int getScore() {
-        return score;
-    }
 
     public void quit() {
         state = FieldState.FAILED;
@@ -201,5 +195,6 @@ public class Field {
 
         return daysText+hoursText+minutes;
     }
+
 
 }
