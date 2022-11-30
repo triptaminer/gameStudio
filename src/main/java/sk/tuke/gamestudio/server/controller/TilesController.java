@@ -40,6 +40,8 @@ public class TilesController {
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column) {
+        if (!userController.isLogged())
+            return "redirect:/welcome";
 
         if (TilesField == null) {
             try {

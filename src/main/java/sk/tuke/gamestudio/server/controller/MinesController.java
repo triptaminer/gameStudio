@@ -60,26 +60,23 @@ public class MinesController {
     }
 
     @RequestMapping
-    public String processUserInput(Integer row, Integer column, String action) throws IOException {
+    public String processUserInput(Integer row, Integer column, String action) {
+        if (!userController.isLogged())
+            return "redirect:/welcome";
 
         startOrUpdateGame(row, column, action);
 
-
         return "mines";
     }
-    //@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    //@JsonIgnore(true)
+
     @RequestMapping(value="/json",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Field processUserInputJson(Integer row, Integer column, String action) throws IOException {
+    public Field processUserInputJson(Integer row, Integer column, String action) {
 
        startOrUpdateGame(row, column, action);
 
         return mineField;
     }
-
-
-
 
     public void startNewGame(){
         gss.setGameName("Mines");

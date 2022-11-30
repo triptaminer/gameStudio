@@ -37,6 +37,8 @@ public class LightsController {
 
     @RequestMapping
     public String processUserInput(Integer row, Integer column){
+        if (!userController.isLogged())
+            return "redirect:/welcome";
 
         if (LightsField ==null)
             startNewGame();
