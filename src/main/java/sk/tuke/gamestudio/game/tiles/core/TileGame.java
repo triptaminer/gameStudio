@@ -25,6 +25,8 @@ public class TileGame {
 
     private final long startTime;
 
+    private int score;
+
     public int getActualTime() {
         return (int) actualTime;
     }
@@ -43,15 +45,10 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     generate();
 }
 
-    public TileGame(GameStudioServices gss) throws IOException {
-
+    public TileGame() {
         tiles = new HashMap<String, Integer>();
         userMoves=0;
         startTime=currentTimeMillis();
-        GAME_STUDIO_SERVICES=gss;
-        //actualTime=0;
-        //scores=new TileHiScores();
-
     }
 
     private void generate() {
@@ -112,8 +109,9 @@ public void setGameProperties(int rowCount, int columnCount, int category){
         updateTimer();
         if (isSolved()) {
             state = TileFieldState.SOLVED;
+            score=computeScore();
 
-            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
+            //GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
 
             //scores.saveScore(category,);
         }
@@ -190,7 +188,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
     }
 
     private boolean isSolved() {
-    //FIXME: position zero tile at the end
+    //FIXME: position zero tile at the end (maybe done)
         int totalCount = 1;
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
@@ -199,9 +197,8 @@ public void setGameProperties(int rowCount, int columnCount, int category){
                 }
             }
         }
-//erte        if (tiles.get(rowCount-1 + "x" + columnCount-1) == totalCount)
- //       System.out.println(totalCount + "=" + rowCount + "*" + columnCount);
-        return totalCount == rowCount * columnCount;
+        //fix for incorret position of empty tile
+        return (totalCount == rowCount * columnCount) && (tiles.get((rowCount-1)+"x"+(columnCount-1))==0);
     }
 
     public Set<String> getEmpty() {
@@ -227,6 +224,10 @@ public void setGameProperties(int rowCount, int columnCount, int category){
                     (int) ((currentTimeMillis() - startTime) / 1000);
             if (score < 0) score = 0;
         }
+        return score;
+    }
+
+    public int getScore() {
         return score;
     }
 }

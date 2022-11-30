@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         GameStudioServices GAME_STUDIO_SERVICES = new GameStudioServices();
 
-        LightsGame game = new LightsGame(GAME_STUDIO_SERVICES);
+        LightsGame game = new LightsGame();
 
         LightsConsoleUI LightsUI = new LightsConsoleUI(game);
 //        ui.playGame();

@@ -1,7 +1,5 @@
 package sk.tuke.gamestudio.server.controller;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -37,11 +35,10 @@ public class MinesController {
     public GameStudioServices gss;
 
     @Autowired
-    ScoreService ss;
+    public UserController userController;
 
-
-    private UserController userController;
-    private ScoreService scoreService;
+    @Autowired
+    public ScoreService scoreService;
 
     @RequestMapping("/new")
     public String newGame(){
@@ -67,18 +64,6 @@ public class MinesController {
 
         startOrUpdateGame(row, column, action);
 
-        FieldState stateBeforeMove =mineField.getState();
-
-        if (mineField.getState()==FieldState.SOLVED && mineField.getState()!=stateBeforeMove){
-
-            if(userController.isLogged()){
-                try {
-                    scoreService.addScore(new Score("Mines", userController.getLoggedUser(), mineField.getScore(), (Timestamp) new Date()));
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
 
         return "mines";
     }
@@ -110,6 +95,7 @@ public class MinesController {
         if (mineField==null)
             startNewGame();
 
+        FieldState stateBeforeMove =mineField.getState();
 
         if(row !=null && column !=null && mineField.getState() == FieldState.PLAYING){
             if(action.equals("o")) {
@@ -119,6 +105,18 @@ public class MinesController {
                 mineField.markTile(row, column);
             }
         }
+
+        //write score
+        if (mineField.getState()==FieldState.SOLVED && mineField.getState()!=stateBeforeMove){
+            if(userController.isLogged()){
+                try {
+                    scoreService.addScore(new Score("Mines", userController.getLoggedUserObject(), mineField.getScore(), new Date()));
+                } catch (SQLException | FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
     }
 
     public String getHtmlField() {
@@ -136,7 +134,6 @@ public class MinesController {
                 Tile tile = mineField.getTile(i, j);
                 sb.append("<td>");
                 String tileSize="tile"+colCount;
-
 
                 switch (tile.getState()) {
                     case OPEN:

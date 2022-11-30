@@ -6,14 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.tiles.ui.TileControls;
 import sk.tuke.gamestudio.services.GameStudioServices;
+import sk.tuke.gamestudio.services.ScoreService;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,6 +31,13 @@ public class TilesController {
     @Autowired
     public GameStudioServices gss;
 
+    @Autowired
+    public UserController userController;
+
+    @Autowired
+    public ScoreService scoreService;
+
+
     @RequestMapping
     public String processUserInput(Integer row, Integer column) {
 
@@ -39,6 +49,7 @@ public class TilesController {
             }
         }
 
+         TileFieldState stateBeforeMove =TilesField.getState();
 
         if (row != null && column != null && TilesField.getState() == TileFieldState.PLAYING) {
             int direction = -1;
@@ -55,6 +66,18 @@ public class TilesController {
             TilesField.moveTile(row, column, direction);
         }
 
+        //write score
+        if (TilesField.getState()== TileFieldState.SOLVED && TilesField.getState()!=stateBeforeMove){
+            if(userController.isLogged()){
+                try {
+                    scoreService.addScore(new Score("Tiles", userController.getLoggedUserObject(), TilesField.getScore(), new Date()));
+                } catch (SQLException | FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
         return "tiles";
     }
 
@@ -67,7 +90,7 @@ public class TilesController {
     public void startNewGame() throws IOException {
         gss.setGameName("Tiles");
 
-        TilesField = new TileGame(gss);
+        TilesField = new TileGame();
         TilesField.setGameProperties(3, 3, 1);
         controls = new TileControls();
 

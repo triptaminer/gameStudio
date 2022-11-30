@@ -75,16 +75,18 @@ public class GameStudioConsole {
                 case "T":
                     System.out.println("Starting Tiles...");
                     GAME_STUDIO_SERVICES.setGameName("Tiles");
-                    TileGame tiles = new TileGame(GAME_STUDIO_SERVICES);
+                    TileGame tiles = new TileGame();
                     TileConsoleUI uiTile = new TileConsoleUI(tiles);
                     uiTile.Menu();
+                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), tiles.computeScore());
                     break;
                 case "L":
                     System.out.println("Starting Lights...");
                     GAME_STUDIO_SERVICES.setGameName("Lights");
-                    LightsGame light = new LightsGame(GAME_STUDIO_SERVICES);
+                    LightsGame light = new LightsGame();
                     LightsConsoleUI lightsUI = new LightsConsoleUI(light);
                     lightsUI.Menu();
+                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), light.computeScore());
                     break;
                 case "X":
                     System.out.println("Exiting...");

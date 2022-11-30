@@ -22,15 +22,16 @@ public class LightsGame {
 
     private int category;
 
-    public GameStudioServices GAME_STUDIO_SERVICES;
+    //public GameStudioServices GAME_STUDIO_SERVICES;
 
-    public LightsGame(GameStudioServices gss){
+    private int score;
+
+    public LightsGame(){
 
         tiles = new HashMap<String, Boolean>();
         userMoves = 0;
         startTime = currentTimeMillis();
         actualTime = 0;
-        GAME_STUDIO_SERVICES=gss;
 
     }
 
@@ -98,7 +99,7 @@ public class LightsGame {
         updateTimer();
         if (isSolved()) {
             state = LightsFieldState.SOLVED;
-            GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), computeScore());
+            score=computeScore();
 
         }
     }
@@ -165,6 +166,10 @@ public class LightsGame {
                     (int) ((currentTimeMillis() - startTime) / 1000);
             if (score < 0) score = 0;
         }
+        return score;
+    }
+
+    public int getScore() {
         return score;
     }
 

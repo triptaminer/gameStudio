@@ -64,6 +64,7 @@ public class UserController {
     public String  getLoggedUser() {
         return loggedUser.getName();
     }
+
     public Player  getLoggedUserObject() {
         return loggedUser;
     }

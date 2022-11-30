@@ -47,7 +47,7 @@ public class LightsConsoleUI {
             }
         } while (game.getState() == LightsFieldState.PLAYING);
         printGame();
-        System.out.println("\n\nCongrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
+        //System.out.println("\n\nCongrats "+game.GAME_STUDIO_SERVICES.getUserName()+", you got "+game.computeScore()+"pts in "+game.GAME_STUDIO_SERVICES.getGameName()+"\n\n");
         viewLevel(0);
 
         return true;
@@ -136,17 +136,17 @@ public class LightsConsoleUI {
 
     private void viewLevel(int i) {
         System.out.println("HiScores:");
-        List<Score> hiScores = null;
-        try {
-            hiScores = game.GAME_STUDIO_SERVICES.scoreService.getBestScores(game.GAME_STUDIO_SERVICES.getGameName());
-        } catch (FileNotFoundException e) {
-            throw new ServiceException("Missing configuration file! " + e);
-        } catch (SQLException e) {
-            throw new ServiceException("Cannot execute SQL query! " + e);
-        }
-
-        for (Score score : hiScores) {
-            System.out.printf("%15s%15s%30s%n", score.getUserName(), score.getPoints(), score.getPlayedAt());
-        }
+//        List<Score> hiScores = null;
+//        try {
+//            hiScores = game.GAME_STUDIO_SERVICES.scoreService.getBestScores(game.GAME_STUDIO_SERVICES.getGameName());
+//        } catch (FileNotFoundException e) {
+//            throw new ServiceException("Missing configuration file! " + e);
+//        } catch (SQLException e) {
+//            throw new ServiceException("Cannot execute SQL query! " + e);
+//        }
+//
+//        for (Score score : hiScores) {
+//            System.out.printf("%15s%15s%30s%n", score.getUserName(), score.getPoints(), score.getPlayedAt());
+//        }
     }
 }

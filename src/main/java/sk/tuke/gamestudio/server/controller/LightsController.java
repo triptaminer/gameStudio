@@ -5,20 +5,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Player;
-import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.lights.core.LightsGame;
-import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
-import sk.tuke.gamestudio.game.mines.core.Tile;
 import sk.tuke.gamestudio.services.GameStudioServices;
+import sk.tuke.gamestudio.services.ScoreService;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/lights")
@@ -32,6 +28,11 @@ public class LightsController {
     @Autowired
     public GameStudioServices gss;
 
+    @Autowired
+    public UserController userController;
+
+    @Autowired
+    public ScoreService scoreService;
 
 
     @RequestMapping
@@ -40,10 +41,22 @@ public class LightsController {
         if (LightsField ==null)
             startNewGame();
 
+        LightsFieldState stateBeforeMove =LightsField.getState();
+
         if(row!=null && column!=null && LightsField.getState() == LightsFieldState.PLAYING){
                 LightsField.switchTile(row, column);
         }
 
+        //write score
+        if (LightsField.getState()== LightsFieldState.SOLVED && LightsField.getState()!=stateBeforeMove){
+            if(userController.isLogged()){
+                try {
+                    scoreService.addScore(new Score("Lights", userController.getLoggedUserObject(), LightsField.getScore(), new Date()));
+                } catch (SQLException | FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         return "lights";
     }
 
@@ -54,7 +67,7 @@ public class LightsController {
     }
     public void startNewGame(){
         gss.setGameName("Lights");
-            LightsField = new LightsGame(gss);
+            LightsField = new LightsGame();
             LightsField.setGameProperties(5,5,1);
     }
     public String getHtmlField() {
