@@ -2,8 +2,10 @@ package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.mines.core.Clue;
@@ -57,12 +59,14 @@ public class MinesControllerOld {
     public void startNewGame(){
         gss.setGameName("Mines");
         try {
-            mineField = new Field(13, 13, 2, gss);
+            mineField = new Field(13, 13, 2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+
+
     public String getHtmlField() {
         gss.setGameName("Mines");
 

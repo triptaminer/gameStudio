@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.com"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layoutGameStudio.html}"
+        lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minesweeper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/css/mines.css" media="screen" />
+
+
+</head>
+<body>
+<main layout:fragment="content" id="game">
+    <a href="/welcome">&lt; All Games &lt;</a>
+    <h2>Minesweeper v2</h2>
+    <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
+    <a href="/mines/new">Restart game</a><br/><br/>
+
+    <span id="gameStatus"></span>
+
+    <button type="button" id="btNewGame" class="abutton" onclick="processNewGameClick()">New Game</button>
+    <section id="minesField">
+    </section>
+
+    <section>
+        <h3>Best Scores</h3>
+        <table class="scores">
+            <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Date and time</th>
+            </tr>
+            </thead>
+            <tbody id="scoresTableBody">
+            </tbody>
+        </table>
+    </section>
+
+    <!--    <section th:utext="${@minesController.getHtmlField()}"></section>-->
+<!--    <section th:text="${@minesController.getGameStatusMsg}"></section>-->
+    <script type="text/javascript">
+
+        const viewElements={
+            gameStatus: document.getElementById("gameStatus"),
+            btToOpenOrMark: document.getElementById("btToOpenOrMark"),
+            minesField: document.getElementById("minesField"),
+            scoresTableBody: document.getElementById("scoresTableBody")
+        }
+
+        const bestScoresUrl="/api/score/Mines";
+        const fieldUrl="/mines/json";
+        const newGameUrl="/mines/jsonnew";
+        //const changeModeUrl="/mines/jsonchmode";
+
+
+        fetchAndRenderBestScores(bestScoresUrl,viewElements);
+
+        fetchGameFieldAndRenderAll(fieldUrl,bestScoresUrl,viewElements);
+
+
+        function fetchAndRenderBestScores(getJsonUrl,viewElements){
+            fetch(getJsonUrl)
+                .then(response => {
+                    if(response.ok){
+                        return response.json();
+                    }else{
+                        return Promise.reject(new Error('Best scores acquisition failed. Server answered with status '+response.status));
+                    }
+                })
+                .then(bestScoresData =>{
+                    renderBestScores(bestScoresData, viewElements);
+                })
+                .catch(error => {
+                    let errorMessage = "Failed to get or render best scores. Details:"+error;
+                    viewElements.scoresTableBody.innerHTML=errorMessage;
+
+                })
+        }
+
+        function fetchGameFieldAndRenderAll(getFieldJsonUrl,getBestScoresJsonUrl,viewElements){
+            fetch(getFieldJsonUrl)
+                .then(response => {
+                    if(response.ok){
+                        return response.json();
+                    }else{
+                        return Promise.reject(new Error('Game field acquisition failed. Server answered with status '+response.status));
+                    }
+                })
+                .then(gameFieldData =>{
+                    renderGameField(gameFieldData, viewElements);
+                    viewElements.gameStatus.innerHTML=getGameStatusMessage(gameFieldData);
+                    if(gameFieldData.state!= "PLAYING"){
+                        fetchAndRenderBestScores(getBestScoresJsonUrl,viewElements);
+                    }
+                })
+                .catch(error => {
+                    let errorMessage = "Failed to get or render the game field. Details:"+error;
+                    viewElements.minesField.innerHTML=errorMessage;
+
+                })
+        }
+
+        function renderBestScores(bestScoresData, viewElements){
+
+            const rowCount= bestScoresData.length;
+            let html2render="";
+            for (let row=0;row<rowCount;row++){
+                html2render+=
+                    `
+                    <tr>
+                        <td>${row+1}</td>
+                        <td>${bestScoresData[row].username}</td>
+                        <td>${bestScoresData[row].points}</td>
+                        <td>${bestScoresData[row].playedAt}</td>
+                    </tr>`;
+            }
+            viewElements.scoresTableBody.innerHTML=html2render;
+            //console.log(html2render);
+
+        }
+
+        function renderGameField(gameFieldData, viewElements){
+            console.log(gameFieldData);
+
+            let html2render="<table class='minefield'>\n";
+            for (let row=0;row<gameFieldData.rowCount;row++){
+                html2render+="<tr>\n";
+                for (let col=0;col<gameFieldData.columnCount;col++){
+
+                    let onClickHandling ="";
+
+                    if(gameFieldData.state=="PLAYING" && gameFieldData.tiles[row][col].state!="OPEN"){
+                        onClickHandling=`onclick='processTileClick(${row},${col})'`;
+                    }
+
+
+                    html2render+=
+                        `
+                        <td class ='${getTileClass(gameFieldData.tiles[row][col])}' ${onClickHandling}>
+                            <span>
+                                ${getTileText(gameFieldData.tiles[row][col])}
+                            </span>
+                        </td>
+                        `;
+                }
+                html2render+="</tr>\n";
+            }
+            html2render+="</table>\n";
+
+            viewElements.minesField.innerHTML=html2render;
+            //console.log(html2render);
+
+        }
+
+        function  getTileText(tile) {
+            switch (tile.state) {
+                case "OPEN":
+                    if (tile.value!= undefined)
+                        return "" + tile.value;
+                    else
+                        return "X";
+                case "CLOSED":
+                    return "-";
+                case "MARKED":
+                    return "M";
+                default:
+                    return "?";
+            }
+        }
+
+        function  getTileClass(tile) {
+            switch (tile.state) {
+                case "OPEN":
+                    if (tile.value!= undefined)
+                        return "open" + tile.value;
+                else
+                    return "mine";
+                case "CLOSED":
+                    return "closed";
+                case "MARKED":
+                    return "marked";
+                default:
+                    return "unknown";
+            }
+        }
+
+        function getGameStatusMessage(gameFieldData){
+            let gameStatus="";
+            if(gameFieldData.state== "FAILED"){
+                gameStatus="You failed.";
+            }else if(gameFieldData.state== "SOLVED"){
+                gameStatus="You won (score: "+gameFieldData.score+")";
+            }else{
+                gameStatus="Playing - ";
+                if(gameFieldData.marking){
+                    gameStatus+="marking";
+                }else{
+                    gameStatus+="opening";
+                }
+            }
+            return gameStatus;
+        }
+
+        function getModeButtonLabel(gameFieldData){
+            if(gameFieldData.marking){
+                return "Marking tiles";
+            }else{
+                return "Opening tiles";
+            }
+        }
+
+
+
+
+        function processTileClick(row,col){
+            const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}`;
+            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
+        }
+
+
+/*<!--        function processModeChangeClick(){
+            fetch(changeModeUrl)
+            .then(response => {
+                if(response.ok){
+                    return response.json();
+                }else{
+                    return Promise.reject(new Error('Mode change failed. Server answered with status '+response.status));
+                }
+            })
+            .then(field =>{
+                viewElements.gameStatus.innerHTML=getGameStatusMessage(field);
+                viewElements.btToOpenOrMark.innerHTML=getModeButtonLabel(field);
+            })
+            .catch(error => {
+                let errorMessage = "Failed to change mode. Details:"+error;
+                viewElements.minesField.innerHTML=errorMessage;
+            })
+        } */
+
+        function processNewGameClick(){
+            fetchGameFieldAndRenderAll(newGameUrl,bestScoresUrl,viewElements);
+        }
+
+    </script>
+
+    <script>
+        function openTile(r,c) {
+            window.location="/mines?row="+r+"&column="+c+"&action=o";
+}
+        function markTile(r,c) {
+            window.location="/mines?row="+r+"&column="+c+"&action=m";
+            return false;
+}
+    </script>
+</main>
+
+</body>
+</html>

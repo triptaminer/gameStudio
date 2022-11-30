@@ -67,9 +67,10 @@ public class GameStudioConsole {
                     System.out.println("Starting Minesweeper...");
                     GAME_STUDIO_SERVICES.setGameName("Mines");
 //                    Field field = new Field(8, 8, 10);
-                    Field mines = new Field(8, 8, 1,GAME_STUDIO_SERVICES);
+                    Field mines = new Field(8, 8, 1);
                     ConsoleUI uiMine = new ConsoleUI(mines);
                     uiMine.menu();
+                    GAME_STUDIO_SERVICES.processScore(GAME_STUDIO_SERVICES.getGameName(), mines.computeScore());
                     break;
                 case "T":
                     System.out.println("Starting Tiles...");

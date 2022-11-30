@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         GameStudioServices GAME_STUDIO_SERVICES = new GameStudioServices();
 
-        Field field = new Field(8, 8, 10,GAME_STUDIO_SERVICES);
+        Field field = new Field(8, 8, 10);
         ConsoleUI ui = new ConsoleUI(field);
         ui.play();
     }

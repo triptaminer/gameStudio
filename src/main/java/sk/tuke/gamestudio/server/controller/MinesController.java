@@ -20,6 +20,8 @@ import sk.tuke.gamestudio.services.ScoreService;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -37,10 +39,27 @@ public class MinesController {
     @Autowired
     ScoreService ss;
 
+
+    private UserController userController;
+    private ScoreService scoreService;
+
     @RequestMapping("/new")
     public String newGame(){
         startNewGame();
         return "mines";
+    }
+
+    @RequestMapping("/async")
+    public String asyncMode(){
+        startOrUpdateGame(null,null,"");
+        return "minesAsync";
+    }
+
+    @RequestMapping(value="/jsonnew", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Field newGameJson(){
+        startNewGame();
+        return mineField;
     }
 
     @RequestMapping
@@ -48,15 +67,28 @@ public class MinesController {
 
         startOrUpdateGame(row, column, action);
 
+        FieldState stateBeforeMove =mineField.getState();
+
+        if (mineField.getState()==FieldState.SOLVED && mineField.getState()!=stateBeforeMove){
+
+            if(userController.isLogged()){
+                try {
+                    scoreService.addScore(new Score("Mines", userController.getLoggedUser(), mineField.getScore(), (Timestamp) new Date()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
         return "mines";
     }
     //@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    @JsonIgnore(true)
+    //@JsonIgnore(true)
     @RequestMapping(value="/json",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Field processUserInputJson(Integer row, Integer column, String action) throws IOException {
 
-        startOrUpdateGame(row, column, action);
+       startOrUpdateGame(row, column, action);
 
         return mineField;
     }
@@ -67,7 +99,7 @@ public class MinesController {
     public void startNewGame(){
         gss.setGameName("Mines");
         try {
-            mineField = new Field(13, 13, 2, gss);
+            mineField = new Field(13, 13, 2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
