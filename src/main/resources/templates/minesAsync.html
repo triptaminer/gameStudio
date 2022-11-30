@@ -57,6 +57,8 @@
         const newGameUrl="/mines/jsonnew";
         //const changeModeUrl="/mines/jsonchmode";
 
+        var tileSize="";
+
 
         fetchAndRenderBestScores(bestScoresUrl,viewElements);
 
@@ -126,6 +128,7 @@
 
         function renderGameField(gameFieldData, viewElements){
             console.log(gameFieldData);
+            tileSize="tile"+gameFieldData.columnCount;
 
             let html2render="<table class='minefield'>\n";
             for (let row=0;row<gameFieldData.rowCount;row++){
@@ -141,10 +144,8 @@
 
                     html2render+=
                         `
-                        <td class ='${getTileClass(gameFieldData.tiles[row][col])}' ${onClickHandling}>
-                            <span>
-                                ${getTileText(gameFieldData.tiles[row][col])}
-                            </span>
+                        <td>
+                            ${getTileText(gameFieldData.tiles[row][col],row,col)}
                         </td>
                         `;
                 }
@@ -157,17 +158,23 @@
 
         }
 
-        function  getTileText(tile) {
+        //TODO
+
+        function  getTileText(tile,row,col) {
+
             switch (tile.state) {
                 case "OPEN":
                     if (tile.value!= undefined)
-                        return "" + tile.value;
+                        if(tile.value>0)
+                            return "<div class='"+tileSize+" field opened clue"+tile.value+"'>"+tile.value+"</div>";
+                        else
+                            return "<div class='"+tileSize+" field opened'>&nbsp;</div>"
                     else
-                        return "X";
+                        return "<div class='"+tileSize+" field mineOpened'>*</div>";
                 case "CLOSED":
-                    return "-";
+                    return "<div class='"+tileSize+" field closed' onclick='openTile("+row+","+col+")' oncontextmenu='markTile("+row+","+col+");return false;'></div>";
                 case "MARKED":
-                    return "M";
+                    return "<div class='"+tileSize+" field marked' oncontextmenu='markTile("+row+","+col+");return false;'>!</div>";
                 default:
                     return "?";
             }
@@ -222,41 +229,21 @@
             fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
         }
 
-
-/*<!--        function processModeChangeClick(){
-            fetch(changeModeUrl)
-            .then(response => {
-                if(response.ok){
-                    return response.json();
-                }else{
-                    return Promise.reject(new Error('Mode change failed. Server answered with status '+response.status));
-                }
-            })
-            .then(field =>{
-                viewElements.gameStatus.innerHTML=getGameStatusMessage(field);
-                viewElements.btToOpenOrMark.innerHTML=getModeButtonLabel(field);
-            })
-            .catch(error => {
-                let errorMessage = "Failed to change mode. Details:"+error;
-                viewElements.minesField.innerHTML=errorMessage;
-            })
-        } */
-
         function processNewGameClick(){
             fetchGameFieldAndRenderAll(newGameUrl,bestScoresUrl,viewElements);
         }
 
-    </script>
-
-    <script>
-        function openTile(r,c) {
-            window.location="/mines?row="+r+"&column="+c+"&action=o";
+        function openTile(row,col) {
+                    const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}&action=o`;
+            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
 }
-        function markTile(r,c) {
-            window.location="/mines?row="+r+"&column="+c+"&action=m";
+        function markTile(row,col) {
+                    const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}&action=m`;
+            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
             return false;
 }
-    </script>
+</script>
+
 </main>
 
 </body>
