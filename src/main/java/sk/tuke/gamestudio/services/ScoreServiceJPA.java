@@ -13,6 +13,9 @@ public class ScoreServiceJPA implements ScoreService{
     @PersistenceContext
     private EntityManager entityManager;
 
+    public ScoreServiceJPA() {
+    }
+
     @Override
     public void addScore(Score score){
         entityManager.persist(score);

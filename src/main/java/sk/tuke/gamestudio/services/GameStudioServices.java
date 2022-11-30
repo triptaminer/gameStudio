@@ -83,4 +83,6 @@ public class GameStudioServices {
             throw new ServiceException("Cannot execute SQL query! "+e);
         }
     }
+
+
 }

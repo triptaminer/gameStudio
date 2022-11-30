@@ -114,6 +114,10 @@ public class Field {
         return tiles[row][column];
     }
 
+    public Tile[][] getTiles(){
+        return tiles;
+    }
+
     public void markTile(int row, int column) {
         Tile tile = getTile(row, column);
         if (tile.getState() == TileState.CLOSED)

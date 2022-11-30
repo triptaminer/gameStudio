@@ -45,6 +45,10 @@ public class Score {
         this.game = game;
     }
 
+    public Player getUser() {
+        return user;
+    }
+
     public String getUserName() {
         return user.getName();
     }

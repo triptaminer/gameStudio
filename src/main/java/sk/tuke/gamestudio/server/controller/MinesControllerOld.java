@@ -1,21 +1,16 @@
 package sk.tuke.gamestudio.server.controller;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
-import sk.tuke.gamestudio.services.GameStudioServices;
-import sk.tuke.gamestudio.services.ScoreService;
+import sk.tuke.gamestudio.services.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,9 +18,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/mines")
+@RequestMapping("/mines-old")
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class MinesController {
+public class MinesControllerOld {
 
     private Field mineField = null;
 
@@ -34,36 +29,31 @@ public class MinesController {
     @Autowired
     public GameStudioServices gss;
 
-    @Autowired
-    ScoreService ss;
+    @RequestMapping
+    public String processUserInput(Integer row, Integer column, String action) throws IOException {
+
+        if (mineField==null)
+            startNewGame();
+
+
+        if(row!=null && column!=null && mineField.getState() == FieldState.PLAYING){
+            if(action.equals("o")) {
+                mineField.openTile(row, column);
+            }
+            else{
+                mineField.markTile(row, column);
+            }
+        }
+
+        //return getHtmlField();
+        return "mines";
+    }
 
     @RequestMapping("/new")
     public String newGame(){
         startNewGame();
         return "mines";
     }
-
-    @RequestMapping
-    public String processUserInput(Integer row, Integer column, String action) throws IOException {
-
-        startOrUpdateGame(row, column, action);
-
-        return "mines";
-    }
-    //@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    @JsonIgnore(true)
-    @RequestMapping(value="/json",produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Field processUserInputJson(Integer row, Integer column, String action) throws IOException {
-
-        startOrUpdateGame(row, column, action);
-
-        return mineField;
-    }
-
-
-
-
     public void startNewGame(){
         gss.setGameName("Mines");
         try {
@@ -73,22 +63,6 @@ public class MinesController {
         }
 
     }
-
-    private void startOrUpdateGame(Integer row, Integer column, String action) {
-        if (mineField==null)
-            startNewGame();
-
-
-        if(row !=null && column !=null && mineField.getState() == FieldState.PLAYING){
-            if(action.equals("o")) {
-                mineField.openTile(row, column);
-            }
-            else{
-                mineField.markTile(row, column);
-            }
-        }
-    }
-
     public String getHtmlField() {
         gss.setGameName("Mines");
 
