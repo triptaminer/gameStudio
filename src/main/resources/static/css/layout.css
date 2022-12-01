@@ -69,6 +69,6 @@ section {text-align:center;margin:auto;}
 #reglogForm>.submitBtn {height: 3rem; margin: 2rem 3rem;}
 
 #switch {display: flex; align-content: space-around; flex-direction: row;height: 2rem;}
-#switch>#sw1, #switch>#sw2 {display:block; width: 50%; text-align: center;padding: 5px;}
-#switch>#sw2 {background-color:#dde; color:#666; }
-#switch>#sw2:hover {color:#00f; text-decoration:underline; }
+#switch>.sw1, #switch>#sw2 {display:block; width: 50%; text-align: center;padding: 5px;}
+#switch>.sw2 {background-color:#dde; color:#666; }
+#switch>.sw2:hover {color:#00f; text-decoration:underline; }

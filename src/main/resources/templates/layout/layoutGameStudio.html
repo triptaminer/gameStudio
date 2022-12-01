@@ -10,6 +10,8 @@
 
 <body>
   <div id="body">
+    <script th:replace="fragments/fragments::gssScript"></script>
+
     <header th:replace="fragments/fragments::gsheader" ></header>
 
     <main layout:fragment="content" id="game"></main>

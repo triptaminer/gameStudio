@@ -10,6 +10,14 @@
 
 <body>
 
+<script th:fragment="gssScript" id="gssScript">
+  var myGame = "[[${@gameStudioServices.getGameName()}]]";
+  const bestScoresUrl="/api/score/"+myGame;
+
+
+
+</script>
+
 <header th:fragment="gsheader" id="header">
 <!--  <a href="/" id="logo">Game Studio</a>-->
 
@@ -36,13 +44,10 @@
 </header>
 
 <section th:fragment="gss" id="socialGss">
-  <script type="text/javascript" th:inline="javascript">
-  var myGame = /*[[${@gameStudioServices.getGameName()}]]*/ "";
-  const bestScoresUrl="/api/score/"+myGame;
-  </script>
 
-  <div id="switch"><span id="sw1">Hi Scores</span><span id="sw2" href="?action=register">Comments</span></div>
+  <div id="switch"><span id="sw1" class="sw1" onclick="switchCtl(1)">Hi Scores</span><span id="sw2" class="sw2"  onclick="switchCtl(2)">Comments</span></div>
 
+  <div id="sw1obj">
   <h3>Best Scores</h3>
   <table class="scores">
     <thead>
@@ -56,8 +61,10 @@
     <tbody id="scoresTableBody">
     </tbody>
   </table>
+  </div>
 
 
+  <div id="sw2obj">
   <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>
   <div id="stars" th:utext="${@gssController.userRating}"></div>
   <form action="/comment" method="post" id="addComment">
@@ -84,7 +91,7 @@
     </tr>
 
   </table>
-
+  </div>
 
 <script type="text/javascript">
         const viewGssElements={
@@ -92,6 +99,7 @@
         }
 
         fetchAndRenderBestScores(bestScoresUrl,viewGssElements);
+        switchCtl(1);
 
         function fetchAndRenderBestScores(getJsonUrl,viewGssElements){
             fetch(getJsonUrl)
@@ -130,6 +138,24 @@
             //console.log(html2render);
 
         }
+
+        function switchCtl(el){
+          if(el==1){
+          document.getElementById("sw1").classList = "sw1"
+          document.getElementById("sw2").classList = "sw2"
+          document.getElementById("sw1obj").style.display="block";
+          document.getElementById("sw2obj").style.display="none";
+          }
+          else{
+          document.getElementById("sw1").classList = "sw2"
+          document.getElementById("sw2").classList = "sw1"
+
+          document.getElementById("sw1obj").style.display="none";
+          document.getElementById("sw2obj").style.display="block";
+        }
+
+  }
+
 </script>
 
 
