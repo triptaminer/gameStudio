@@ -37,12 +37,8 @@
 
         var tileSize="";
 
-
-//move?
-//        fetchGameFieldAndRenderAll(fieldUrl,bestScoresUrl,viewElements);
         fetchGameFieldAndRenderAll(fieldUrl,viewElements);
 
-//        function fetchGameFieldAndRenderAll(getFieldJsonUrl,getBestScoresJsonUrl,viewElements){
         function fetchGameFieldAndRenderAll(getFieldJsonUrl,viewElements){
             fetch(getFieldJsonUrl)
                 .then(response => {
@@ -55,9 +51,6 @@
                 .then(gameFieldData =>{
                     renderGameField(gameFieldData, viewElements);
                     viewElements.gameStatus.innerHTML=getGameStatusMessage(gameFieldData);
-//                    if(gameFieldData.state!= "PLAYING"){
-//                        fetchAndRenderBestScores(getBestScoresJsonUrl,viewElements);
-//                    }
                 })
                 .catch(error => {
                     let errorMessage = "Failed to get or render the game field. Details:"+error;
@@ -93,8 +86,6 @@
             html2render+="</table>\n";
 
             viewElements.minesField.innerHTML=html2render;
-            //console.log(html2render);
-
         }
 
         function  getTileText(tile,row,col) {

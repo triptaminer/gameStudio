@@ -9,14 +9,14 @@
 </head>
 
 <body>
-<div id="body">
-<header th:replace="fragments/fragments::gsheader" ></header>
+  <div id="body">
+    <header th:replace="fragments/fragments::gsheader" ></header>
 
-<main layout:fragment="content" id="game"></main>
+    <main layout:fragment="content" id="game"></main>
 
-<main th:replace="fragments/fragments::gss" id="gss"></main>
+    <main th:replace="fragments/fragments::gss" id="gss"></main>
 
-<footer th:replace="fragments/fragments::gsfooter" ></footer>
-</div>
+    <footer th:replace="fragments/fragments::gsfooter" ></footer>
+  </div>
 </body>
 </html>

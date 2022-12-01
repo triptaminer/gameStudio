@@ -33,16 +33,13 @@
     </tr>
   </table>
 
-
-
-
 </header>
 
 <section th:fragment="gss" id="socialGss">
-<script type="text/javascript" th:inline="javascript">
-var myGame = /*[[${@gameStudioServices.getGameName()}]]*/ "";
-const bestScoresUrl="/api/score/"+myGame;
-</script>
+  <script type="text/javascript" th:inline="javascript">
+  var myGame = /*[[${@gameStudioServices.getGameName()}]]*/ "";
+  const bestScoresUrl="/api/score/"+myGame;
+  </script>
   <h3>Best Scores</h3>
   <table class="scores">
     <thead>
@@ -55,15 +52,6 @@ const bestScoresUrl="/api/score/"+myGame;
     </thead>
     <tbody id="scoresTableBody">
     </tbody>
-<!--
-    <tr th:each="score: ${@gssController.bestScores}">
-      <td th:text="${scoreStat.index+1}"></td>
-      <td th:text="${score.getUserName()}"></td>
-      <td th:text="${score.points}"></td>
-      <td th:text="${score.playedAt}"></td>
-    </tr>
-    </tbody>
--->
   </table>
 
   <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>
@@ -99,11 +87,7 @@ const bestScoresUrl="/api/score/"+myGame;
             scoresTableBody: document.getElementById("scoresTableBody")
         }
 
-
-
-
         fetchAndRenderBestScores(bestScoresUrl,viewGssElements);
-
 
         function fetchAndRenderBestScores(getJsonUrl,viewGssElements){
             fetch(getJsonUrl)
@@ -142,9 +126,6 @@ const bestScoresUrl="/api/score/"+myGame;
             //console.log(html2render);
 
         }
-
-
-
 </script>
 
 
