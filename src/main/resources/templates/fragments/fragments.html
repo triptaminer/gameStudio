@@ -40,6 +40,9 @@
   var myGame = /*[[${@gameStudioServices.getGameName()}]]*/ "";
   const bestScoresUrl="/api/score/"+myGame;
   </script>
+
+  <div id="switch"><span id="sw1">Hi Scores</span><span id="sw2" href="?action=register">Comments</span></div>
+
   <h3>Best Scores</h3>
   <table class="scores">
     <thead>
@@ -53,6 +56,7 @@
     <tbody id="scoresTableBody">
     </tbody>
   </table>
+
 
   <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>
   <div id="stars" th:utext="${@gssController.userRating}"></div>
