@@ -39,7 +39,10 @@
 </header>
 
 <section th:fragment="gss" id="socialGss">
-
+<script type="text/javascript" th:inline="javascript">
+var myGame = /*[[${@gameStudioServices.getGameName()}]]*/ "";
+const bestScoresUrl="/api/score/"+myGame;
+</script>
   <h3>Best Scores</h3>
   <table class="scores">
     <thead>
@@ -96,7 +99,7 @@
             scoresTableBody: document.getElementById("scoresTableBody")
         }
 
-                const bestScoresUrl="/api/score/Mines";
+
 
 
         fetchAndRenderBestScores(bestScoresUrl,viewGssElements);

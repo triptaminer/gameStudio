@@ -17,7 +17,7 @@
     <a href="/welcome">&lt; All Games &lt;</a>
     <h2>Minesweeper v2</h2>
     <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
-    <a href="/mines/new">Restart game</a><br/><br/>
+<!--    <a href="/mines/new">Restart game</a><br/><br/>-->
 
     <span id="gameStatus"></span>
 
@@ -152,16 +152,16 @@
         }
 
         function processNewGameClick(){
-            fetchGameFieldAndRenderAll(newGameUrl,bestScoresUrl,viewElements);
+            fetchGameFieldAndRenderAll(newGameUrl,viewElements);
         }
 
         function openTile(row,col) {
                     const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}&action=o`;
-            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
+            fetchGameFieldAndRenderAll(fieldUrlWCoords,viewElements);
 }
         function markTile(row,col) {
                     const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}&action=m`;
-            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
+            fetchGameFieldAndRenderAll(fieldUrlWCoords,viewElements);
             return false;
 }
 </script>
