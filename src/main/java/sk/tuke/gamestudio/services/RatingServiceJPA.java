@@ -47,7 +47,7 @@ public class RatingServiceJPA implements RatingService {
                         .setParameter("myGame",gameName)
                         .getSingleResult();
         if(val!=null){
-            avg=Float.parseFloat(val.toString());
+            avg=((int) (Float.parseFloat(val.toString())*10))/10f;
         }
         return avg ;
     }
