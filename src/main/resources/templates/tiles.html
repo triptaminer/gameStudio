@@ -17,7 +17,8 @@
     <a href="/welcome">&lt; All Games &lt;</a>
     <h2>Tiles</h2>
     <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
-    <a href="/tiles/new">Restart game</a><br/><br/>
+    <a href="/tiles/new">Restart game</a><br/>
+    Wrong moves:<span th:utext="${@tilesController.getWrongClicks()}"></span> <br/>
 
     <section th:utext="${@tilesController.getHtmlField()}"></section>
     <section th:text="${@tilesController.getGameStatusMsg}"></section>

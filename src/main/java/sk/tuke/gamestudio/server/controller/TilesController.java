@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.game.lights.core.LightsFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileFieldState;
 import sk.tuke.gamestudio.game.tiles.core.TileGame;
 import sk.tuke.gamestudio.game.tiles.ui.TileControls;
@@ -37,9 +36,11 @@ public class TilesController {
     @Autowired
     public ScoreService scoreService;
 
+    int wrongClicks =0;
+
 
     @RequestMapping
-    public String processUserInput(Integer row, Integer column) {
+    public Object processUserInput(Integer row, Integer column) {
         if (!userController.isLogged())
             return "redirect:/welcome";
 
@@ -59,10 +60,13 @@ public class TilesController {
             if (isEmptyAround(row, column)) {
                 direction=getDirection(row,column);
             }
+            else{
+                wrongClicks++;
+            }
 
             if (direction == -1) {
                 System.err.println("Bad input");
-                return "ERROR wrong input!";
+                return "tiles";
             }
 
             TilesField.moveTile(row, column, direction);
@@ -86,6 +90,7 @@ public class TilesController {
     @RequestMapping("/new")
     public String newGame() throws IOException {
         startNewGame();
+        wrongClicks =0;
         return "tiles";
     }
 
@@ -115,7 +120,8 @@ public class TilesController {
                 String tileSize="tile"+colCount;
 
                 String movable = (isEmptyAround(i, j)) ? "movable" : "fixed";
-                String onclick = (isEmptyAround(i, j)) ? "onclick='switchTile(" + i + "," + j + ")'" : "";
+                String onclick = "onclick='switchTile(" + i + "," + j + ")'";
+                //String onclick = (isEmptyAround(i, j)) ? "onclick='switchTile(" + i + "," + j + ")'" : "";
 
                 sb.append(tile > 0 ? "<div class='"+tileSize+" field filled " + movable + "' " + onclick + ">" + tile + "</div>"
                         : "<div class='"+tileSize+" field empty'></div>");
@@ -175,5 +181,7 @@ public class TilesController {
         return status;
     }
 
-
+    public int getWrongClicks() {
+        return wrongClicks;
+    }
 }
