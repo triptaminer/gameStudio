@@ -8,6 +8,10 @@
 .field,.field.tr,.field.tr.td {display:flex;}
 
 .closed, .marked {border:1px solid;border-color:#aaa #444 #444 #aaa;background-color:#888;}
+.closed:hover {border-color:#fa0;cursor: help;}
+.marked:hover {border-color:#0f0}
+.opened:hover {cursor: default;}
+
 .opened {border:1px solid;border-color: #888 #ddd #ddd #888;background-color:#aaa; display: block; text-align: center; font-weight: bold;}
 .marked {color:#f00 !important; display: block; text-align: center; font-weight: bold;line-height: 1.5em;}
 .mineOpened {color:#000 !important; display: block; text-align: center; font-weight: bold; border: 1px solid; border-color: #888 #ddd #ddd #888; background-color:#f00; line-height: 1.3em; font-size: 3em;}
