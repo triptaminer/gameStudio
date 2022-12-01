@@ -44,13 +44,15 @@
   <table class="scores">
     <thead>
     <tr>
-      <th>Number</th>
+      <th>#</th>
       <th>Name</th>
       <th>Score</th>
       <th>Date and time</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="scoresTableBody">
+    </tbody>
+<!--
     <tr th:each="score: ${@gssController.bestScores}">
       <td th:text="${scoreStat.index+1}"></td>
       <td th:text="${score.getUserName()}"></td>
@@ -58,6 +60,7 @@
       <td th:text="${score.playedAt}"></td>
     </tr>
     </tbody>
+-->
   </table>
 
   <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>
@@ -88,7 +91,58 @@
   </table>
 
 
+<script type="text/javascript">
+        const viewGssElements={
+            scoresTableBody: document.getElementById("scoresTableBody")
+        }
 
+                const bestScoresUrl="/api/score/Mines";
+
+
+        fetchAndRenderBestScores(bestScoresUrl,viewGssElements);
+
+
+        function fetchAndRenderBestScores(getJsonUrl,viewGssElements){
+            fetch(getJsonUrl)
+                .then(response => {
+                    if(response.ok){
+                        return response.json();
+                    }else{
+                        return Promise.reject(new Error('Best scores acquisition failed. Server answered with status '+response.status));
+                    }
+                })
+                .then(bestScoresData =>{
+                    renderBestScores(bestScoresData, viewGssElements);
+                })
+                .catch(error => {
+                    let errorMessage = "Failed to get or render best scores. Details:"+error;
+                    viewGssElements.scoresTableBody.innerHTML=errorMessage;
+
+                })
+        }
+
+        function renderBestScores(bestScoresData, viewGssElements){
+
+            const rowCount= bestScoresData.length;
+            let html2render="";
+            for (let row=0;row<rowCount;row++){
+                html2render+=
+                    `
+                    <tr>
+                        <td>${row+1}</td>
+                        <td>${bestScoresData[row].user.name}</td>
+                        <td>${bestScoresData[row].points}</td>
+                        <td>${bestScoresData[row].playedAt}</td>
+                    </tr>`;
+            }
+            viewGssElements.scoresTableBody.innerHTML=html2render;
+            //console.log(html2render);
+
+        }
+
+
+
+</script>
 
 
 </section>

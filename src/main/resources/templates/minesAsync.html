@@ -47,24 +47,22 @@
 
         const viewElements={
             gameStatus: document.getElementById("gameStatus"),
-            btToOpenOrMark: document.getElementById("btToOpenOrMark"),
             minesField: document.getElementById("minesField"),
-            scoresTableBody: document.getElementById("scoresTableBody")
         }
 
-        const bestScoresUrl="/api/score/Mines";
         const fieldUrl="/mines/json";
         const newGameUrl="/mines/jsonnew";
         //const changeModeUrl="/mines/jsonchmode";
 
         var tileSize="";
 
-
+//move
         fetchAndRenderBestScores(bestScoresUrl,viewElements);
 
+//move?
         fetchGameFieldAndRenderAll(fieldUrl,bestScoresUrl,viewElements);
 
-
+//move
         function fetchAndRenderBestScores(getJsonUrl,viewElements){
             fetch(getJsonUrl)
                 .then(response => {
@@ -141,7 +139,6 @@
                         onClickHandling=`onclick='processTileClick(${row},${col})'`;
                     }
 
-
                     html2render+=
                         `
                         <td>
@@ -157,8 +154,6 @@
             //console.log(html2render);
 
         }
-
-        //TODO
 
         function  getTileText(tile,row,col) {
 
@@ -180,6 +175,7 @@
             }
         }
 
+        /* to delete */
         function  getTileClass(tile) {
             switch (tile.state) {
                 case "OPEN":
@@ -203,7 +199,7 @@
             }else if(gameFieldData.state== "SOLVED"){
                 gameStatus="You won (score: "+gameFieldData.score+")";
             }else{
-                gameStatus="Playing - ";
+                gameStatus="Playing... ";
                 if(gameFieldData.marking){
                     gameStatus+="marking";
                 }else{
@@ -211,22 +207,6 @@
                 }
             }
             return gameStatus;
-        }
-
-        function getModeButtonLabel(gameFieldData){
-            if(gameFieldData.marking){
-                return "Marking tiles";
-            }else{
-                return "Opening tiles";
-            }
-        }
-
-
-
-
-        function processTileClick(row,col){
-            const fieldUrlWCoords=`${fieldUrl}?row=${row}&column=${col}`;
-            fetchGameFieldAndRenderAll(fieldUrlWCoords,bestScoresUrl,viewElements);
         }
 
         function processNewGameClick(){
