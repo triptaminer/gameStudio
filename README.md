@@ -9,6 +9,8 @@
 BRANCHES:
 ---
 
+mini-task - 1.12: self-explaining (will be removed soon?)
+
 test-221128 - self-explaining (new)
 
 test-221114 - (will be removed soon)
@@ -50,29 +52,31 @@ All WEB games
 - fixed bug when player was able to act after game ends
 
 Mines
+- !!! switching to dynamic version - working OK
 - working
 - left click open, right click (un)mark in web version
 - removed image-based design, now we are using CSS only
  
 Tiles
 - working
+- TODO: dynamic version?
 
 Light
 - working
+- TODO: dynamic version?
 
 GameStudio
+- !!! highscores are now dynamical !!! 
 - loading configuration from config file located in root
-- extracted service connections to separate class
-- preparation for different DB services
 - created ALL 3 services
-- highscores are working on every game
 - Spring runner
 - rankings displayed next to each game in main menu
+- TODO: make other services dynamic too
 
 JPA
 - separate DB: gamestudiojpa
 - all services working
-- JPA playground package (user input not implemented yet)
+-  ! removed JPA playground package
 
 
 
