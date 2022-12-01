@@ -93,7 +93,7 @@ public class TilesController {
         gss.setGameName("Tiles");
 
         TilesField = new TileGame();
-        TilesField.setGameProperties(3, 3, 1);
+        TilesField.setGameProperties(9, 9, 1);
         controls = new TileControls();
 
     }

@@ -28,7 +28,7 @@ section {text-align:center;margin:auto;}
 
 .submitBtn{border:1px blue solid;color:blue;background-color:white}
 
-.starRated, .starBlank{font-size:48px;font-weight:bold;}
+.starRated, .starBlank{font-size:60px;font-weight:bold;}
 .starRated, .starRated:visited{color:#db0;}
 .starBlank, .starBlank:visited{color:#555;}
 .starRated:hover, .starBlank:hover{color:#ed6;text-decoration:none;}
@@ -37,9 +37,9 @@ section {text-align:center;margin:auto;}
 #addComment textarea{width:200px;height:50px;border:1px blue solid;}
 #addComment .submitBtn{width:200px;height:30px;border:none;}
 
-.comment { width: 400px; text-align: left; position: relative; margin: 5px 0px; border: 1px solid; padding: 5px; border-radius: 5px; color: #00f; background-color: #ddf;}
+.comment { width: 35rem; text-align: left; position: relative; margin: 5px 0px; border: 1px solid; padding: 5px; border-radius: 5px; color: #00f; background-color: #ddf;}
 .commentAuthor{display: inline-block; width: 150px; font-size: larger; font-weight: bold;}
-.commentDate{width: 250px; display: inline-block; position: absolute; text-align: right;}
+.commentDate{ display: inline-block; position: absolute; text-align: right; right:1em;}
 .comment div{padding: 5px 10px 5px 20px;}
 
 #field{align:center}
@@ -68,7 +68,22 @@ section {text-align:center;margin:auto;}
 
 #reglogForm>.submitBtn {height: 3rem; margin: 2rem 3rem;}
 
-#switch {display: flex; align-content: space-around; flex-direction: row;height: 2rem;}
-#switch>.sw1, #switch>#sw2 {display:block; width: 50%; text-align: center;padding: 5px;}
+#socialGss {border:#dde 1px solid;min-height: 35rem; margin-top: 1rem; }
+#switch {display: flex; align-content: space-around; flex-direction: row;height: 2rem;margin-bottom: 2em;}
+#switch>.sw1, #switch>.sw2 {display:block; width: 50%; text-align: center;padding: 5px; line-height: 1.55em; }
 #switch>.sw2 {background-color:#dde; color:#666; }
 #switch>.sw2:hover {color:#00f; text-decoration:underline; }
+
+
+
+.gameDescription {width:100%;display: flex;}
+.gameDescription>a {display:inline-block;}
+.gameDescription>a>img {width: 16rem; margin: 1rem;}
+.gameDescription>div { display: inline-block; width: 50%; height: 16rem; padding: 3rem;}
+
+
+
+
+
+
+

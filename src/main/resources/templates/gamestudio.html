@@ -39,11 +39,48 @@
 
   <div th:if="${@userController.logged}">
   <h2>Games</h2>
-  <ul>
-    <li><a href="/mines">Minesweeper</a> [<a href="/mines/async">dyn</a>]</li>
-    <li><a href="/tiles">Tiles</a></li>
-    <li><a href="/lights">Lights out</a></li>
-  </ul>
+    <div class="gameDescription">
+      <a href="/mines/async">
+        Minesweeper<br>
+        <img src="/img/screens/minesImg.png" alt="Mines screenshot"/>
+      </a>
+      <div>
+        <div>Rating: <span th:text="${@gssController.getAvgRating('Mines')}"></span>*</div><br/>
+        <div>Version: Dynamic</div><br/>
+        <div>Description:
+          <span>Lorem ipsum</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gameDescription">
+      <a href="/tiles">
+        Tiles<br>
+        <img src="/img/screens/tilesImg.png" alt="Tiles screenshot"/>
+      </a>
+      <div>
+        <div>Rating: <span th:text="${@gssController.getAvgRating('Tiles')}"></span>*</div><br/>
+        <div>Version: Static</div><br/>
+        <div>Description:
+          <span>Lorem ipsum</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gameDescription">
+      <a href="/lights"><br/>
+        Lights out<br>
+        <img src="/img/screens/lightsImg.png" alt="Lights screenshot"/>
+      </a>
+      <div>
+        <div>Rating: <span th:text="${@gssController.getAvgRating('Lights')}"></span>*</div><br/>
+        <div>Version: Static</div><br/>
+        <div>Description:
+          <span>Lorem ipsum</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </main>
 

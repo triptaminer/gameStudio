@@ -48,6 +48,8 @@ public class MinesController {
 
     @RequestMapping("/async")
     public String asyncMode(){
+        if (!userController.isLogged())
+            return "redirect:/welcome";
         startOrUpdateGame(null,null,"");
         return "minesAsync";
     }
@@ -66,7 +68,9 @@ public class MinesController {
 
         startOrUpdateGame(row, column, action);
 
-        return "mines";
+        //overwriting all old links to new async version
+        //return "mines";
+        return "redirect:/mines/async";
     }
 
     @RequestMapping(value="/json",produces = MediaType.APPLICATION_JSON_VALUE)

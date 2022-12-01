@@ -70,7 +70,7 @@ public class LightsController {
     public void startNewGame(){
         gss.setGameName("Lights");
             LightsField = new LightsGame();
-            LightsField.setGameProperties(5,5,1);
+            LightsField.setGameProperties(9,9,1);
     }
     public String getHtmlField() {
         gss.setGameName("Lights");

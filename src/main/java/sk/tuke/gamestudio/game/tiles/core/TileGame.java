@@ -68,7 +68,7 @@ public void setGameProperties(int rowCount, int columnCount, int category){
 
         //shuffle
         int shuffleCount=2;// :DDD
-        //int shuffleCount=150;
+        //int shuffleCount=1500;
         for (int i = 0; i < shuffleCount; i++) {
             String[] empty=getEmpty().toString().replace("[","").replace("]","").split("x");
             moveShuffle(Integer.parseInt(empty[0]),Integer.parseInt(empty[1]));

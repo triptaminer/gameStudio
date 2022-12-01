@@ -48,6 +48,16 @@ public class GssController {
         }
     }
 
+    public float getAvgRating(String gameName){
+        try {
+            return gss.ratingService.getAvgRating(gameName);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public String getUserRating(){
         StringBuilder rating=new StringBuilder();

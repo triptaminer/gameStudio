@@ -22,8 +22,9 @@ work - not stable, sometimes not even working!
 STATUS:
 ---
 
-Profiles:
+Profiles
 - WiP
+- all usernames leading to its profiles
 - currently available only from nickname in comments
 - added "privileges" (user->admin)
 - added counter for points (not implemented yet)
@@ -44,6 +45,8 @@ Thymeleaf and WEB ui
 - all services working
 - login working
 - re-designed all game boards
+- re-designed GSS part in games
+- detailed version of GS landing page
 - TODO: 
   - register of new user
   - re-work design (partially done)
@@ -71,6 +74,7 @@ GameStudio
 - created ALL 3 services
 - Spring runner
 - rankings displayed next to each game in main menu
+- re-designed GSS part in games
 - TODO: make other services dynamic too
 
 JPA

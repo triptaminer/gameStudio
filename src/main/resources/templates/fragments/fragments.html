@@ -28,7 +28,7 @@
       <td id="headSpace"></td>
       <td>
         <div  th:if="${@userController.logged}" id="headLogged">
-        Welcome <b><span th:text="${@userController.loggedUser}"></span></b> !<br/>
+        Welcome <b><a th:href="'/profile/'+${@userController.loggedUser}" th:text="${@userController.loggedUser}"></a></b> !<br/>
         <a href="/logout">Log out?</a>
       </div>
         <form th:if="not ${@userController.logged}" action="/login" method="post"  id="headLogin">
@@ -45,10 +45,12 @@
 
 <section th:fragment="gss" id="socialGss">
 
-  <div id="switch"><span id="sw1" class="sw1" onclick="switchCtl(1)">Hi Scores</span><span id="sw2" class="sw2"  onclick="switchCtl(2)">Comments</span></div>
+  <div id="switch">
+    <span id="sw1" class="sw1" onclick="switchCtl(1)">Hi Scores</span>
+    <span id="sw2" class="sw2"  onclick="switchCtl(2)">Comments & ratings (<span th:text="${@gssController.getAvgRating(Mines)}"></span>*)</span>
+  </div>
 
   <div id="sw1obj">
-  <h3>Best Scores</h3>
   <table class="scores">
     <thead>
     <tr>
@@ -65,8 +67,9 @@
 
 
   <div id="sw2obj">
-  <h3>Comments (<span th:text="${@gssController.avgRating}"></span>*)</h3>
-  <div id="stars" th:utext="${@gssController.userRating}"></div>
+    <h3>Your rating<br/>
+      <div id="stars" th:utext="${@gssController.userRating}"></div>
+    </h3>
   <form action="/comment" method="post" id="addComment">
     <textarea name="text"></textarea><br/>
     <input type="submit" value="Add comment" class="submitBtn"/>
@@ -83,11 +86,6 @@
 </div>
 
       </td>
-
-
-<!--      <td th:text="${comment.getUserName()}"></td>-->
-<!--      <td th:text="${comment.text}"></td>-->
-<!--      <td th:text="${comment.getCommentedAt()}"></td>-->
     </tr>
 
   </table>
@@ -129,7 +127,7 @@
                     `
                     <tr>
                         <td>${row+1}</td>
-                        <td>${bestScoresData[row].user.name}</td>
+                        <td><a href="/profile/${bestScoresData[row].user.name}">${bestScoresData[row].user.name}</a></td>
                         <td>${bestScoresData[row].points}</td>
                         <td>${bestScoresData[row].playedAt}</td>
                     </tr>`;
