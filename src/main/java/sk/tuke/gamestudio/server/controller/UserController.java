@@ -29,6 +29,7 @@ public class UserController {
     @RequestMapping("/register")
     //TODO
     public String registerUser( String login, String password, String repeat, String about, Integer countryId, Integer occupationId) {
+//        gss.init.status();
 
         login=login.trim();
         password=password.trim();
@@ -66,8 +67,6 @@ public class UserController {
             System.out.println("Pass is too long.");
             return "redirect:/gamestudio?action=register";
         }
-
-
 
 
 
@@ -122,8 +121,9 @@ public class UserController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        loggedUser=player;
         gss.currentPlayer=player;
+        gss.setPassword(password);
+        loggedUser=player;
 
         register = true;
         return "redirect:/gamestudio?action=register";
@@ -131,6 +131,10 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login(String login, String password) {
+//        gss.init.status();
+
+
+        System.out.println("ph: "+gss.generateHash(login));
 
 
         login = login.trim();
@@ -141,6 +145,7 @@ public class UserController {
             return "redirect:/gamestudio?action=login";
         }
 
+//        gss.init.status();
 
         Player p;
         try {
@@ -153,16 +158,18 @@ public class UserController {
         if(p==null){
             return "redirect:/gamestudio?action=register";
         }
+        else{
+            gss.currentPlayer=p;
+        }
 
         //TODO better user management
-        if (p != null && password.equals(PASS)) {
-            gss.currentPlayer=p;
-            loggedUser = p;
-            gss.init.status();
-            return "redirect:/welcome";
+        if (p != null) {
+            if(gss.isCorrectPass(password)) {
+                loggedUser = p;
+                return "redirect:/welcome";
+            }
 
         }
-        gss.init.status();
 
 
         return logout();

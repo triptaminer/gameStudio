@@ -25,6 +25,8 @@ public class GameStudioController {
 
     @RequestMapping("/welcome")
     public String mainPageEmpty() {
+        gss.init.status();
+
         register=false;
         return "redirect:/gamestudio?action=welcome";
 //        return "gamestudio";

@@ -51,6 +51,11 @@ public class SpringServer {
     }
 
     @Bean
+    public HashService hashService(){
+        return new HashServiceJPA();
+    }
+
+    @Bean
     public Init init(){
         return new Init();
     }

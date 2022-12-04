@@ -1,6 +1,5 @@
 package sk.tuke.gamestudio.services;
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import sk.tuke.gamestudio.entity.*;
 
@@ -9,15 +8,13 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Init {
 
     //@Autowired
 
 //    @Autowired
-//     GameStudioServices gss;
+//    GameStudioServices gss;
 
     @Autowired
     CountryService countryService;
@@ -33,6 +30,9 @@ public class Init {
     ScoreService scoreService;
     @Autowired
     RatingService ratingService;
+
+    @Autowired
+    HashService hashService;
 
     public void status() {
         System.out.println("Checking DB...");
@@ -58,6 +58,7 @@ public class Init {
     }
 
     private void fillDB() throws SQLException, FileNotFoundException {
+
 
         System.out.println("Adding countries...");
         File f = new File("./src/main/resources/inits/countries");
@@ -85,36 +86,64 @@ public class Init {
 
         System.out.println("Adding few users...");
 
+        String userName,h1;
+        String[] hx;
+        GameStudioServices gss=new GameStudioServices();
+
+        userName="Admin";
         playerService.addPlayer(new Player(
-                "Admin",
+                userName,
                 "Admin account",
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("other")
         ));
         //Giving Admin rights
-        playerService.getPlayerByUsername("Admin").setPrivilege(4);
+        gss.currentPlayer=playerService.getPlayerByUsername(userName);
+        gss.currentPlayer.setPrivilege(4);
+        h1=gss.generateHash(userName);
+        hx=gss.generateHashes(userName, "IAm(G)root!");
+        hashService.addHash(new Hash(h1,hx[0],hx[1]));
 
+        userName="Moderator";
         playerService.addPlayer(new Player(
-                "Moderator",
+                userName,
                 "MOD account",
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("other")
         ));
+        playerService.getPlayerByUsername(userName).setPrivilege(2);
+        gss.currentPlayer=playerService.getPlayerByUsername(userName);
         //Giving MOD rights
-        playerService.getPlayerByUsername("Moderator").setPrivilege(2);
+        gss.currentPlayer.setPrivilege(2);
+        h1=gss.generateHash(userName);
+        hx=gss.generateHashes(userName, "ZASAheslo?");
+        hashService.addHash(new Hash(h1,hx[0],hx[1]));
 
+        userName="viki";
         playerService.addPlayer(new Player(
-                "viki",
+                userName,
                 "creator",
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("employee")
         ));
+        gss.currentPlayer=playerService.getPlayerByUsername(userName);
+        h1=gss.generateHash(userName);
+        hx=gss.generateHashes(userName, "password123456qwertyLOVEgod");
+        hashService.addHash(new Hash(h1,hx[0],hx[1]));
+
+        userName="Guest";
         playerService.addPlayer(new Player(
-                "Guest",
+                userName,
                 "account for testing",
                 countryService.getCountry("Slovakia"),
                 occupationService.getOccupation("invalid")
         ));
+        gss.currentPlayer=playerService.getPlayerByUsername(userName);
+        h1=gss.generateHash(userName);
+        hx=gss.generateHashes(userName, "heslo");
+        hashService.addHash(new Hash(h1,hx[0],hx[1]));
+
+
 
         System.out.println("Added users: Admin, viki, Guest. For guest use password: 'heslo' :)");
         System.out.println("Adding some content...");

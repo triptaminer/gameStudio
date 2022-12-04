@@ -47,7 +47,9 @@
 
   <div id="switch">
     <span id="sw1" class="sw1" onclick="switchCtl(1)">Hi Scores</span>
-    <span id="sw2" class="sw2"  onclick="switchCtl(2)">Comments & ratings (<span th:text="${@gssController.getAvgRating(Mines)}"></span>*)</span>
+    <span id="sw2" class="sw2"  onclick="switchCtl(2)">Comments & ratings (<span th:text="${@gssController.getAvgRating(
+        @gameStudioServices.getGameName()
+        )}"></span>*)</span>
   </div>
 
   <div id="sw1obj">
