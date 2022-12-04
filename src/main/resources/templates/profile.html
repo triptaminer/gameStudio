@@ -16,6 +16,11 @@
     <img id="photo" alt="Photo" th:src="${@playerController.profileImage()}"/>
     <h3 th:text="${@playerController.getUsername()}"></h3>
 
+    <a th:if="${@playerController.editable}" th:href="'/profile/'+${@userController.loggedUser}+'/edit'">Edit profile<br/></a>
+    <a th:if="${@playerController.admin}" th:href="'/profile/'+${@userController.loggedUser}+'/admin'"><b>ADMIN menu</b><br/></a>
+
+
+
     <div class="details">
       Level/Points:
       <span id="lvlPtsBar">
@@ -41,14 +46,33 @@
 
   </div>
   <div id="userActivity">
+    <div id="changePass" th:if="${@playerController.changeMenu}">
+      <a th:href="'/profile/'+${@userController.loggedUser}">Cancel</a>
+
+      <form th:action="${'/profile/'+@userController.loggedUser+'/changePassword'}" method="post">
+        <label for="old">Current password:</label>
+        <input id="old" name="oldPassword" type="password"/><br/>
+        <label for="new">New password:</label>
+        <input id="new" name="newPassword" type="password"/><br/>
+        <label for="verify">Re-type password:</label>
+        <input id="verify" name="verify" type="password"/><br/><br/>
+
+        <input class="submitBtn" type="reset" value="Reset">
+        <input class="submitBtn" type="submit" value="Change password"/>
+      </form><br/>
+    </div>
+    <div id="adminMenu" th:if="${@playerController.adminMenu}"></div>
+    <div id="editProfile" th:if="${@playerController.edit}">
+      <a th:href="${'/profile/'+@userController.loggedUser+'/password'}">Change password</a><br/><br/>
+      more items later...<br/>
+    </div>
 
 
-
-
+    <br/>not yet implemented...<br/>
   </div>
 
 
-<!--  <div th:if="${@userController.logged}">-->
+  <!--  <div th:if="${@userController.logged}">-->
 <!--  </div>-->
 
 </main>

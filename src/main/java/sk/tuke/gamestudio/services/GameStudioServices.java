@@ -149,7 +149,7 @@ public class GameStudioServices {
         System.out.println("h2: "+hash);
         return hash;
     }
-    String[] generateHashes(String user, String password){
+    public String[] generateHashes(String user, String password){
         String serverSalt1="solSkodi";
         String serverSalt2="Hackerom";
 

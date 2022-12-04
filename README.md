@@ -24,21 +24,20 @@ STATUS:
 
 Profiles
 - WiP
+- users are able to change their passwords (maybe a-team too-not tested)
 - all usernames leading to its profiles
-- currently available only from nickname in comments
 - added "privileges" (user->admin)
 - added counter for points (not implemented yet)
 - added states for muted / banned 
 
 Registration
+- user authentication secured by sha256-based hashes
 - new users are now able to register
-- FIXME: only hardcoded password 'heslo' is working, user passwords are not stored yet
 - login/register screens now looks little better
 
 Initialisation
-- when gameStudio is starting with blank DB, it will fill itself with some default users and other content
+- /welcome page will trigger initialisation with few profiles and content
 - see JPA properties file for correct setup! 
-- FIXME: init triggered by login form only!
 
 Thymeleaf and WEB ui
 - ALL games working
@@ -48,7 +47,6 @@ Thymeleaf and WEB ui
 - re-designed GSS part in games
 - detailed version of GS landing page
 - TODO: 
-  - register of new user
   - re-work design (partially done)
 
 All WEB games

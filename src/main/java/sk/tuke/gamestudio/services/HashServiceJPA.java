@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.services;
 
 import sk.tuke.gamestudio.entity.Hash;
+import sk.tuke.gamestudio.entity.Rating;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,17 +17,29 @@ public class HashServiceJPA implements HashService{
 
     //@Override
     public void addHash(Hash hash) {
-        entityManager.persist(hash);
+        final String STATEMENT_ADD_SCORE = "INSERT INTO hash (h1,h2,h3) VALUES (?, ?, ?) " +
+                "ON CONFLICT ON CONSTRAINT uniq DO UPDATE SET h2 = EXCLUDED.h2, h3 = EXCLUDED.h3";
+        Hash existing= getHash(hash.getH1());
+        if(existing!=null){
+            existing.setH2(hash.getH2());
+            existing.setH3(hash.getH3());
+        }
+        else
+            entityManager.persist(hash);
     }
 
+    public Hash getHash(String h1){
+        final String STATEMENT_HASH = "SELECT h FROM Hash h WHERE h.h1=:myH";
+        Hash hs = (Hash) entityManager.createQuery(STATEMENT_HASH)
+                .setParameter("myH", h1)
+                .setMaxResults(5)
+                .getSingleResult();
+        return hs;
+
+    }
     @Override
     public String[] getHashes(String hash) {
-        final String STATEMENT_COMMENTS = "SELECT h FROM Hash h WHERE h.h1=:myH";
-        System.out.println(hash);
-        List<Hash> hs = entityManager.createQuery(STATEMENT_COMMENTS)
-                .setParameter("myH", hash)
-                .setMaxResults(5)
-                .getResultList();
-        return new String[]{hs.get(0).getH2(),hs.get(0).getH3()};
+        Hash hs=getHash(hash);
+        return new String[]{hs.getH2(),hs.getH3()};
     }
 }
