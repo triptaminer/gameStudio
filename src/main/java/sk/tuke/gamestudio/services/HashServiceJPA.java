@@ -4,6 +4,7 @@ import sk.tuke.gamestudio.entity.Hash;
 import sk.tuke.gamestudio.entity.Rating;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.sql.ResultSet;
@@ -19,7 +20,13 @@ public class HashServiceJPA implements HashService{
     public void addHash(Hash hash) {
         final String STATEMENT_ADD_SCORE = "INSERT INTO hash (h1,h2,h3) VALUES (?, ?, ?) " +
                 "ON CONFLICT ON CONSTRAINT uniq DO UPDATE SET h2 = EXCLUDED.h2, h3 = EXCLUDED.h3";
-        Hash existing= getHash(hash.getH1());
+        Hash existing=null;
+        try{
+            existing = getHash(hash.getH1());
+        }
+        catch (NoResultException e){
+            System.out.println("no result: "+e);
+        }
         if(existing!=null){
             existing.setH2(hash.getH2());
             existing.setH3(hash.getH3());
